@@ -24,5 +24,5 @@ lazy val ros = project
 
 lazy val apps = project
   .settings(commonSettings,
-    assemblyJarName in assembly := "ros-apps.jar")
+    assemblyJarName in assembly := "spatial.ros-apps.jar")
   .dependsOn(ros)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps.iml" filepath="$PROJECT_DIR$/.idea/modules/apps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/apps-build.iml" filepath="$PROJECT_DIR$/.idea/modules/apps-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ros.iml" filepath="$PROJECT_DIR$/.idea/modules/ros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ros-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ros-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spatial-ros.iml" filepath="$PROJECT_DIR$/.idea/modules/spatial-ros.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spatial-ros-build.iml" filepath="$PROJECT_DIR$/.idea/modules/spatial-ros-build.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="SBT: stanford-ppl:forge_2.12:1.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/local/stanford-ppl/forge_2.12/1.0/jars/forge_2.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/local/stanford-ppl/forge_2.12/1.0/srcs/forge_2.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

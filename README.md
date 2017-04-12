@@ -1,2 +1,2 @@
-# spatial-ros
+# spatial-spatial.ros
 Ros integration with spatial

@@ -1,1 +1,1 @@
-libraryDependencies += "ppl-stanford" %% "spatial" % "1.0"
+libraryDependencies += "stanford-ppl" %% "spatial" % "1.0"
