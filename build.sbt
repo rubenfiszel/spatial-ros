@@ -10,7 +10,6 @@ val paradiseVersion = "2.1.0"
 
 publishArtifact := false
 
-
 val commonSettings = Seq(
 
 resolvers += Resolver.sonatypeRepo("snapshots"),
