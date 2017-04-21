@@ -3,11 +3,11 @@ package spatial.ros
 import argon.codegen.cppgen._
 import spatial.codegen.cppgen._
 import spatial._
-import spatial.ros._
-import spatial.ros.api.RosStaticExp
-import spatial.ros.codegen.rosgen.RosCodegen
+import spatial.ros.api._
+import spatial.ros.codegen.rosgen._
 
-trait RosExp extends SpatialExp with RosStaticExp
+trait RosExp extends SpatialExp with RosStaticExp with MavrosExp
+trait RosApi extends RosExp with  SpatialApi with RosStaticApi with MavrosApi 
 
 trait RosGenSpatial extends RosCodegen with RosFileGen
   with CppGenBool with CppGenVoid with CppGenFixPt with CppGenFltPt

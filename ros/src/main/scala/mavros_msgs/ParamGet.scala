@@ -1,2 +1,16 @@
-case class ParamGet.srv(param_id: string)/ncase class ParamGet.srvReply(success: bool, value: ParamValue)/nobject ParamGet.srv {
+package spatial.ros
+
+trait ParamGetApi extends ParamGetExp {
+self: RosApi =>
+
+  }
+
+trait ParamGetExp {
+    self: RosExp =>
+
+    case class ParamGet(param_id: Text)
+    case class ParamGetReply(success: Bool, value: ParamValue)
+}
+
+object ParamGet {
 }

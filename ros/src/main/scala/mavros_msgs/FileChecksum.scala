@@ -1,2 +1,16 @@
-case class FileChecksum.srv(file_path: string)/ncase class FileChecksum.srvReply(crc32: uint32, success: bool, r_errno: int32)/nobject FileChecksum.srv {
+package spatial.ros
+
+trait FileChecksumApi extends FileChecksumExp {
+self: RosApi =>
+
+  }
+
+trait FileChecksumExp {
+    self: RosExp =>
+
+    case class FileChecksum(file_path: Text)
+    case class FileChecksumReply(crc32: FixPt[FALSE,_32,_0], success: Bool, r_errno: FixPt[TRUE,_32,_0])
+}
+
+object FileChecksum {
 }

@@ -1,3 +1,15 @@
-case class State.msg(connected: bool, armed: bool, guided: bool, mode: string)
-object State.msg {
+package spatial.ros
+
+trait StateApi extends StateExp {
+    self: RosApi =>
+
+}
+
+trait StateExp {
+    self: RosExp =>
+
+    case class State(connected: Bool, armed: Bool, guided: Bool, mode: Text)
+}
+
+object State {
 }

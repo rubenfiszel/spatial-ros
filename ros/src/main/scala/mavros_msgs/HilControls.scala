@@ -1,3 +1,15 @@
-case class HilControls.msg(roll_ailerons: float32, pitch_elevator: float32, yaw_rudder: float32, throttle: float32, aux1: float32, aux2: float32, aux3: float32, aux4: float32, mode: uint8, nav_mode: uint8)
-object HilControls.msg {
+package spatial.ros
+
+trait HilControlsApi extends HilControlsExp {
+    self: RosApi =>
+
+}
+
+trait HilControlsExp {
+    self: RosExp =>
+
+    case class HilControls(roll_ailerons: FltPt[_24,_8], pitch_elevator: FltPt[_24,_8], yaw_rudder: FltPt[_24,_8], throttle: FltPt[_24,_8], aux1: FltPt[_24,_8], aux2: FltPt[_24,_8], aux3: FltPt[_24,_8], aux4: FltPt[_24,_8], mode: FixPt[FALSE,_8,_0], nav_mode: FixPt[FALSE,_8,_0])
+}
+
+object HilControls {
 }

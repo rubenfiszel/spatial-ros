@@ -1,3 +1,15 @@
-case class ParamValue.msg(integer: int64, real: float64)
-object ParamValue.msg {
+package spatial.ros
+
+trait ParamValueApi extends ParamValueExp {
+    self: RosApi =>
+
+}
+
+trait ParamValueExp {
+    self: RosExp =>
+
+    case class ParamValue(integer: FixPt[TRUE,_64,_0], real: FltPt[_53,_11])
+}
+
+object ParamValue {
 }

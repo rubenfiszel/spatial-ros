@@ -1,2 +1,16 @@
-case class FileOpen.srv(file_path: string, mode: uint8)/ncase class FileOpen.srvReply(size: uint32, success: bool, r_errno: int32)/nobject FileOpen.srv {
+package spatial.ros
+
+trait FileOpenApi extends FileOpenExp {
+self: RosApi =>
+
+  }
+
+trait FileOpenExp {
+    self: RosExp =>
+
+    case class FileOpen(file_path: Text, mode: FixPt[FALSE,_8,_0])
+    case class FileOpenReply(size: FixPt[FALSE,_32,_0], success: Bool, r_errno: FixPt[TRUE,_32,_0])
+}
+
+object FileOpen {
 }

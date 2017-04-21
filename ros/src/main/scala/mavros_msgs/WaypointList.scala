@@ -1,3 +1,15 @@
-case class WaypointList.msg(waypoints: mavros_msgs/Waypoint[])
-object WaypointList.msg {
+package spatial.ros
+
+trait WaypointListApi extends WaypointListExp {
+    self: RosApi =>
+
+}
+
+trait WaypointListExp {
+    self: RosExp =>
+
+    case class WaypointList(waypoints: Array[Waypoint])
+}
+
+object WaypointList {
 }

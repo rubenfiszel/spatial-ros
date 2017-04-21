@@ -1,3 +1,15 @@
-case class Altitude.msg(monotonic: float32, amsl: float32, local: float32, relative: float32, terrain: float32, bottom_clearance: float32)
-object Altitude.msg {
+package spatial.ros
+
+trait AltitudeApi extends AltitudeExp {
+    self: RosApi =>
+
+}
+
+trait AltitudeExp {
+    self: RosExp =>
+
+    case class Altitude(monotonic: FltPt[_24,_8], amsl: FltPt[_24,_8], local: FltPt[_24,_8], relative: FltPt[_24,_8], terrain: FltPt[_24,_8], bottom_clearance: FltPt[_24,_8])
+}
+
+object Altitude {
 }

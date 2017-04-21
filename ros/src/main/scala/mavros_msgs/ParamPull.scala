@@ -1,2 +1,16 @@
-case class ParamPull.srv(force_pull: bool)/ncase class ParamPull.srvReply(success: bool, param_received: uint32)/nobject ParamPull.srv {
+package spatial.ros
+
+trait ParamPullApi extends ParamPullExp {
+self: RosApi =>
+
+  }
+
+trait ParamPullExp {
+    self: RosExp =>
+
+    case class ParamPull(force_pull: Bool)
+    case class ParamPullReply(success: Bool, param_received: FixPt[FALSE,_32,_0])
+}
+
+object ParamPull {
 }

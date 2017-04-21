@@ -1,3 +1,15 @@
-case class Waypoint.msg(frame: uint8, command: uint16, is_current: bool, autocontinue: bool, param1: float32, param2: float32, param3: float32, param4: float32, x_lat: float64, y_long: float64, z_alt: float64)
-object Waypoint.msg {
+package spatial.ros
+
+trait WaypointApi extends WaypointExp {
+    self: RosApi =>
+
+}
+
+trait WaypointExp {
+    self: RosExp =>
+
+    case class Waypoint(frame: FixPt[FALSE,_8,_0], command: FixPt[FALSE,_16,_0], is_current: Bool, autocontinue: Bool, param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8], x_lat: FltPt[_53,_11], y_long: FltPt[_53,_11], z_alt: FltPt[_53,_11])
+}
+
+object Waypoint {
 }

@@ -1,2 +1,16 @@
-case class CommandInt.srv(frame: uint8, command: uint16, current: uint8, autocontinue: uint8, param1: float32, param2: float32, param3: float32, param4: float32)/ncase class CommandInt.srvReply(success: bool)/nobject CommandInt.srv {
+package spatial.ros
+
+trait CommandIntApi extends CommandIntExp {
+self: RosApi =>
+
+  }
+
+trait CommandIntExp {
+    self: RosExp =>
+
+    case class CommandInt(frame: FixPt[FALSE,_8,_0], command: FixPt[FALSE,_16,_0], current: FixPt[FALSE,_8,_0], autocontinue: FixPt[FALSE,_8,_0], param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8])
+    case class CommandIntReply(success: Bool)
+}
+
+object CommandInt {
 }

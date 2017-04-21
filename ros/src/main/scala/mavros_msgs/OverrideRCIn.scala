@@ -1,3 +1,16 @@
-case class OverrideRCIn.msg(CHAN_RELEASE=0: uint16, CHAN_NOCHANGE=65535: uint16, channels: uint16[8])
-object OverrideRCIn.msg {val CHAN_RELEASE = 0/nval CHAN_NOCHANGE = 65535
+package spatial.ros
+
+trait OverrideRCInApi extends OverrideRCInExp {
+    self: RosApi =>
+
+}
+
+trait OverrideRCInExp {
+    self: RosExp =>
+
+    case class OverrideRCIn(channels: FixPt[FALSE,_16,_0])
+}
+
+object OverrideRCIn {val CHAN_RELEASE = 0
+val CHAN_NOCHANGE = 65535
 }

@@ -1,3 +1,15 @@
-case class GlobalPositionTarget.msg(coordinate_frame: uint8, type_mask: uint16, latitude: float64, longitude: float64, velocity: geometry_msgs/Vector3, acceleration_or_force: geometry_msgs/Vector3, yaw: float32, yaw_rate: float32)
-object GlobalPositionTarget.msg {
+package spatial.ros
+
+trait GlobalPositionTargetApi extends GlobalPositionTargetExp {
+    self: RosApi =>
+
+}
+
+trait GlobalPositionTargetExp {
+    self: RosExp =>
+
+    case class GlobalPositionTarget(coordinate_frame: FixPt[FALSE,_8,_0], type_mask: FixPt[FALSE,_16,_0], latitude: FltPt[_53,_11], longitude: FltPt[_53,_11], velocity: Vector3, acceleration_or_force: Vector3, yaw: FltPt[_24,_8], yaw_rate: FltPt[_24,_8])
+}
+
+object GlobalPositionTarget {
 }

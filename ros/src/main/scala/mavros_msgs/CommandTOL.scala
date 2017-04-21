@@ -1,2 +1,16 @@
-case class CommandTOL.srv(yaw: float32, latitude: float32, longitude: float32, altitude: float32)/ncase class CommandTOL.srvReply(success: bool, result: uint8)/nobject CommandTOL.srv {
+package spatial.ros
+
+trait CommandTOLApi extends CommandTOLExp {
+self: RosApi =>
+
+  }
+
+trait CommandTOLExp {
+    self: RosExp =>
+
+    case class CommandTOL(yaw: FltPt[_24,_8], latitude: FltPt[_24,_8], longitude: FltPt[_24,_8], altitude: FltPt[_24,_8])
+    case class CommandTOLReply(success: Bool, result: FixPt[FALSE,_8,_0])
+}
+
+object CommandTOL {
 }

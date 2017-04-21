@@ -1,2 +1,16 @@
-case class WaypointClear.srv()/ncase class WaypointClear.srvReply(success: bool)/nobject WaypointClear.srv {
+package spatial.ros
+
+trait WaypointClearApi extends WaypointClearExp {
+self: RosApi =>
+
+  }
+
+trait WaypointClearExp {
+    self: RosExp =>
+
+    case class WaypointClear()
+    case class WaypointClearReply(success: Bool)
+}
+
+object WaypointClear {
 }

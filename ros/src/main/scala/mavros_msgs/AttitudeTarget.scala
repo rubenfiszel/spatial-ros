@@ -1,3 +1,15 @@
-case class AttitudeTarget.msg(type_mask: uint8, orientation: geometry_msgs/Quaternion, body_rate: geometry_msgs/Vector3, thrust: float32)
-object AttitudeTarget.msg {
+package spatial.ros
+
+trait AttitudeTargetApi extends AttitudeTargetExp {
+    self: RosApi =>
+
+}
+
+trait AttitudeTargetExp {
+    self: RosExp =>
+
+    case class AttitudeTarget(type_mask: FixPt[FALSE,_8,_0], orientation: Quaternion, body_rate: Vector3, thrust: FltPt[_24,_8])
+}
+
+object AttitudeTarget {
 }

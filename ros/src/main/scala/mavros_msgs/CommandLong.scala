@@ -1,2 +1,16 @@
-case class CommandLong.srv(command: uint16, confirmation: uint8, param1: float32, param2: float32, param3: float32, param4: float32)/ncase class CommandLong.srvReply(success: bool, result: uint8)/nobject CommandLong.srv {
+package spatial.ros
+
+trait CommandLongApi extends CommandLongExp {
+self: RosApi =>
+
+  }
+
+trait CommandLongExp {
+    self: RosExp =>
+
+    case class CommandLong(command: FixPt[FALSE,_16,_0], confirmation: FixPt[FALSE,_8,_0], param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8])
+    case class CommandLongReply(success: Bool, result: FixPt[FALSE,_8,_0])
+}
+
+object CommandLong {
 }

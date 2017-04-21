@@ -1,2 +1,16 @@
-case class SetMode.srv()/ncase class SetMode.srvReply(success: bool)/nobject SetMode.srv {
+package spatial.ros
+
+trait SetModeApi extends SetModeExp {
+self: RosApi =>
+
+  }
+
+trait SetModeExp {
+    self: RosExp =>
+
+    case class SetMode()
+    case class SetModeReply(success: Bool)
+}
+
+object SetMode {
 }

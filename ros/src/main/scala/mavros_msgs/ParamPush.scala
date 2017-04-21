@@ -1,2 +1,16 @@
-case class ParamPush.srv()/ncase class ParamPush.srvReply(success: bool, param_transfered: uint32)/nobject ParamPush.srv {
+package spatial.ros
+
+trait ParamPushApi extends ParamPushExp {
+self: RosApi =>
+
+  }
+
+trait ParamPushExp {
+    self: RosExp =>
+
+    case class ParamPush()
+    case class ParamPushReply(success: Bool, param_transfered: FixPt[FALSE,_32,_0])
+}
+
+object ParamPush {
 }

@@ -1,2 +1,16 @@
-case class StreamRate.srv(stream_id: uint8, message_rate: uint16, on_off: bool)/ncase class StreamRate.srvReply()/nobject StreamRate.srv {
+package spatial.ros
+
+trait StreamRateApi extends StreamRateExp {
+self: RosApi =>
+
+  }
+
+trait StreamRateExp {
+    self: RosExp =>
+
+    case class StreamRate(stream_id: FixPt[FALSE,_8,_0], message_rate: FixPt[FALSE,_16,_0], on_off: Bool)
+    case class StreamRateReply()
+}
+
+object StreamRate {
 }

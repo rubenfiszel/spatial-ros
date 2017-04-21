@@ -1,2 +1,16 @@
-case class FileList.srv(dir_path: string)/ncase class FileList.srvReply(list: mavros_msgs/FileEntry[], success: bool, r_errno: int32)/nobject FileList.srv {
+package spatial.ros
+
+trait FileListApi extends FileListExp {
+self: RosApi =>
+
+  }
+
+trait FileListExp {
+    self: RosExp =>
+
+    case class FileList(dir_path: Text)
+    case class FileListReply(list: Array[FileEntry], success: Bool, r_errno: FixPt[TRUE,_32,_0])
+}
+
+object FileList {
 }

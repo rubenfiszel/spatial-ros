@@ -1,2 +1,16 @@
-case class FileClose.srv(file_path: string)/ncase class FileClose.srvReply(success: bool, r_errno: int32)/nobject FileClose.srv {
+package spatial.ros
+
+trait FileCloseApi extends FileCloseExp {
+self: RosApi =>
+
+  }
+
+trait FileCloseExp {
+    self: RosExp =>
+
+    case class FileClose(file_path: Text)
+    case class FileCloseReply(success: Bool, r_errno: FixPt[TRUE,_32,_0])
+}
+
+object FileClose {
 }
