@@ -23,41 +23,63 @@ for (srv <- srvs) {
 }
 
 def msgToScala(f: File) = {
-  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#"))
-  println(f.getName)
+  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
+  val name = f.getName
 
-  lines foreach { _ match {
+  var cc = "case class " + name + "("
+  var o = "object " +name + " {"
+
+  val constants = lines collect {
     case constant(a,b,c) =>
-      println(a, b, c)
-
+      "val " + b + " = " + c
+  }
+  val datas = lines collect {
     case data(a, b) =>
-      println(a, b)
+      b + ": " + a
+  }
 
-    case _ => ()
-  }}
-  println()
+  cc += datas.mkString(",")
+  cc += ")"
+
+  o += constants.mkString("/n")
+  o += "\n}"
+
+  cc + "\n" + o
 }
 
 def srvToScala(f: File) = {
-  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#"))
-  var response = false
+  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
+  val (req, rep) = lines.splitAt(lines.indexOf("---"))
+  val name = f.getName
 
-  println(f.getName)
-  lines foreach { _ match {
+  var response = false  
+  var cc = "case class " + name+ "("
+  var o = "object " +name + " {"
+
+  val constantsReq = req collect {
     case constant(a,b,c) =>
-      println(a, b, c)
-
+      "val " + b + " = " + c
+  }
+  val datasReq = req collect {
     case data(a, b) =>
-      println(a, b)
+      b + ": " + a
+  }
 
-    case "---" =>
-      response = true
-      println("RESPONSE")
 
-    case _ =>
-      ()
-  }}
-  println()
+  val constantsRep = rep collect {
+    case constant(a,b,c) =>
+      "val " + b + " = " + c
+  }
+  val datasRep = rep collect {
+    case data(a, b) =>
+      b + ": " + a
+  }
+
+  cc += datasReq.mkString(",")
+  cc += ")"
+
+  o += constantsReq.mkString("/n")
+  o += "\n}"
 
 }
 def writeFile(f: File, c: String) = {
