@@ -20,7 +20,8 @@ trait RosApp extends SpatialApp{
         println(SpatialConfig.spatialConf)
         println("Starting generation")
     }
-    SpatialConfig.enableSim = false
+    SpatialConfig.enableSim = true
+    SpatialConfig.enableSynth = true
   }
 
 }

@@ -1,12 +1,18 @@
 package spatial.ros
 
-import spatial.SpatialCompiler
+import spatial._
 
 trait RosCompiler extends SpatialCompiler { self =>
-    lazy val rosgen = new RosGenSpatial { val IR: self.type = self; override def shouldRun = true}
-    override def createTraversalSchedule() = {
-      super.createTraversalSchedule()
-      passes += rosgen
-    }
+  lazy val rosGenScala = new RosGenScala { val IR: self.type = self; override def shouldRun = RosConfig.enableRosSim}
+  lazy val rosGen = new RosGen { val IR: self.type = self; override def shouldRun = RosConfig.enableRosSynth}
+
+  override def createTraversalSchedule() = {
+    super.createTraversalSchedule()
+
+    if (RosConfig.enableRosSim)
+      passes += rosGenScala
+    if (RosConfig.enableRosSynth)
+      passes += rosGen
+  }
 
 }

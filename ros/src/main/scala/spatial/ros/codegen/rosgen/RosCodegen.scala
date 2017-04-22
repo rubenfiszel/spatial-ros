@@ -13,3 +13,4 @@ trait RosCodegen extends CppCodegen{
   override val name = "Ros Codegen"
   //override def copyDependencies(out: String): Unit =
 }
+

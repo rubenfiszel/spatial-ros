@@ -7,3 +7,4 @@ trait RosFileGen extends CppFileGen {
   import IR._
 
 }
+

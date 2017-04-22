@@ -8,6 +8,17 @@ class RosArgParser extends ArgonArgParser{
   override def scriptName = "spatial-ros"
   override def description = "CLI for spatial-ros"
 
+  parser.opt[Unit]("synth").action( (_,_) => {
+    RosConfig.enableRosSynth = true
+    RosConfig.enableRosSim = false
+  }
+  ).text("enable codegen to chisel + cpp (Synthesis) (disable sim) [false]")
+
+  parser.opt[Unit]("sim").action( (_,_) => {
+    RosConfig.enableRosSim = true
+    RosConfig.enableRosSynth = false
+  }
+  ).text("enable codegen to Scala (Simulation) (disable synth) [true]")
 
   parser.opt[String]("fpga").action( (x,_) =>
     SpatialConfig.targetName = x
