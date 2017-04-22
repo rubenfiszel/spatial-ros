@@ -85,8 +85,7 @@ def msgToScala(f: File) = {
 
   var cc = "case class " + name + "("
   var o = "object " +name + " {"
-  if (!datas.isEmpty)
-    cc = "@struct " + cc
+ 
   cc += datas.mkString(", ")
   cc += ")"
 
@@ -143,12 +142,6 @@ def srvToScala(f: File) = {
   var ccReq = "case class " + name+ "("
   var ccRep = "case class " + name+ "Reply("
   var o = "object " +name + " {"
-
-  if (!datasReq.isEmpty)
-    ccReq = "@struct " + ccReq
-
-  if (!datasRep.isEmpty)
-    ccRep = "@struct " + ccRep
 
   ccReq += datasReq.mkString(", ")
   ccReq += ")"
