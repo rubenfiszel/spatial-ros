@@ -10,8 +10,8 @@ self: RosApi =>
 trait ParamGetExp {
     self: RosExp =>
 
-    case class ParamGet(param_id: Text)
-    case class ParamGetReply(success: Bool, value: ParamValue)
+    @struct case class ParamGet(param_id: Text)
+    @struct case class ParamGetReply(success: Bool, value: ParamValue)
 }
 
 object ParamGet {

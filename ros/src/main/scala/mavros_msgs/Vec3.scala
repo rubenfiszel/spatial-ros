@@ -10,7 +10,7 @@ trait Vec3Api extends Vec3Exp {
 trait Vec3Exp {
     self: RosExp =>
 
-    case class Vec3(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11])
+    @struct case class Vec3(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11])
 }
 
 object Vec3 {

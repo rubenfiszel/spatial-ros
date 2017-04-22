@@ -10,7 +10,7 @@ trait ActuatorControlApi extends ActuatorControlExp {
 trait ActuatorControlExp {
     self: RosExp =>
 
-    case class ActuatorControl(group_mix: FixPt[FALSE,_8,_0], controls: FltPt[_24,_8])
+    @struct case class ActuatorControl(group_mix: FixPt[FALSE,_8,_0], controls: FltPt[_24,_8])
 }
 
 object ActuatorControl {

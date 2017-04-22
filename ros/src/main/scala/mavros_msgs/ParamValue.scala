@@ -10,7 +10,7 @@ trait ParamValueApi extends ParamValueExp {
 trait ParamValueExp {
     self: RosExp =>
 
-    case class ParamValue(integer: FixPt[TRUE,_64,_0], real: FltPt[_53,_11])
+    @struct case class ParamValue(integer: FixPt[TRUE,_64,_0], real: FltPt[_53,_11])
 }
 
 object ParamValue {

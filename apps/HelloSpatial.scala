@@ -1,9 +1,12 @@
 import spatial.ros._
 import org.virtualized._
+import argon.ops._
 
 object HelloSpatial extends RosApp {
 
   import IR._
+
+
   @virtualize
   def main() {
     val x = ArgIn[Int]

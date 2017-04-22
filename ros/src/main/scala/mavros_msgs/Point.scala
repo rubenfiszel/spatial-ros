@@ -10,7 +10,7 @@ trait PointApi extends PointExp {
 trait PointExp {
     self: RosExp =>
 
-    case class Point(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11])
+    @struct case class Point(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11])
 }
 
 object Point {

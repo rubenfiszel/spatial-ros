@@ -10,7 +10,7 @@ trait RCOutApi extends RCOutExp {
 trait RCOutExp {
     self: RosExp =>
 
-    case class RCOut(channels: Array[FixPt[FALSE,_16,_0]])
+    @struct case class RCOut(channels: MetaArray[FixPt[FALSE,_16,_0]])
 }
 
 object RCOut {

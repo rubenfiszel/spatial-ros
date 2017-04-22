@@ -10,7 +10,7 @@ trait WaypointListApi extends WaypointListExp {
 trait WaypointListExp {
     self: RosExp =>
 
-    case class WaypointList(waypoints: Array[Waypoint])
+    @struct case class WaypointList(waypoints: MetaArray[Waypoint])
 }
 
 object WaypointList {

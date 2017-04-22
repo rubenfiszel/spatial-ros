@@ -11,7 +11,7 @@ trait WaypointClearExp {
     self: RosExp =>
 
     case class WaypointClear()
-    case class WaypointClearReply(success: Bool)
+    @struct case class WaypointClearReply(success: Bool)
 }
 
 object WaypointClear {

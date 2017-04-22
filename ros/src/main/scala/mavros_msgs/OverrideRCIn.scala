@@ -10,7 +10,7 @@ trait OverrideRCInApi extends OverrideRCInExp {
 trait OverrideRCInExp {
     self: RosExp =>
 
-    case class OverrideRCIn(channels: FixPt[FALSE,_16,_0])
+    @struct case class OverrideRCIn(channels: FixPt[FALSE,_16,_0])
 }
 
 object OverrideRCIn {val CHAN_RELEASE = 0

@@ -10,8 +10,8 @@ self: RosApi =>
 trait FileListExp {
     self: RosExp =>
 
-    case class FileList(dir_path: Text)
-    case class FileListReply(list: Array[FileEntry], success: Bool, r_errno: FixPt[TRUE,_32,_0])
+    @struct case class FileList(dir_path: Text)
+    @struct case class FileListReply(list: MetaArray[FileEntry], success: Bool, r_errno: FixPt[TRUE,_32,_0])
 }
 
 object FileList {

@@ -64,7 +64,7 @@ def remap(tp: String) = {
   var r = t
   while (toStrip.takeRight(2) == "[]") {
     toStrip = toStrip.dropRight(2)
-    r = "Array["+r+"]"
+    r = "MetaArray["+r+"]"
   }
   r
 }
@@ -73,8 +73,6 @@ def msgToScala(f: File) = {
   val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
   val name = getName(f)
   println(name)
-  var cc = "case class " + name + "("
-  var o = "object " +name + " {"
 
   val constants = lines collect {
     case constant(a,b,c) =>
@@ -85,7 +83,10 @@ def msgToScala(f: File) = {
       quote(b) + ": " + remap(a)
   }
 
-
+  var cc = "case class " + name + "("
+  var o = "object " +name + " {"
+  if (!datas.isEmpty)
+    cc = "@struct " + cc
   cc += datas.mkString(", ")
   cc += ")"
 
@@ -120,9 +121,6 @@ def srvToScala(f: File) = {
   val name = getName(f)
 
   var response = false  
-  var ccReq = "case class " + name+ "("
-  var ccRep = "case class " + name+ "Reply("
-  var o = "object " +name + " {"
 
   val constantsReq = req collect {
     case constant(a,b,c) =>
@@ -142,7 +140,15 @@ def srvToScala(f: File) = {
     case data(a, b) if !a.contains("Header") =>
       quote(b) + ": " + remap(a)
   }
+  var ccReq = "case class " + name+ "("
+  var ccRep = "case class " + name+ "Reply("
+  var o = "object " +name + " {"
 
+  if (!datasReq.isEmpty)
+    ccReq = "@struct " + ccReq
+
+  if (!datasRep.isEmpty)
+    ccRep = "@struct " + ccRep
 
   ccReq += datasReq.mkString(", ")
   ccReq += ")"
