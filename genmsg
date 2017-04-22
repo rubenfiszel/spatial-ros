@@ -31,20 +31,20 @@ val mavF = new File("Mavros.scala")
 writeFile(mavF, "package spatial.ros\n\n" + mavrosExp + "\n\n" + mavrosApi)
 
 def getName(file: File) =
-  file.getName.split('.')(0)
+  remap(file.getName.split('.')(0))
 
 def quote(s:String) = s match {
   case "type" => "`type`"
   case _ => s
 }
 def remap(tp: String) = {
-  val t = tp.takeWhile(_ != '[') match {
-    case "geometry_msgs/Quaternion" => "Quaternion"                
-    case "geometry_msgs/Point" => "Point"            
-    case "geometry_msgs/Vector3" => "Vector3"
-    case "mavros_msgs/ParamValue" => "ParamValue"          
-    case "mavros_msgs/FileEntry" => "FileEntry"    
-    case "mavros_msgs/Waypoint" => "Waypoint"
+  val t = tp.split('/').last.takeWhile(_ != '[') match {
+    case "Quaternion" => "Quaternion"                
+    case "Point" => "Point"            
+    case "Vector3" => "Vec3"
+    case "ParamValue" => "ParamValue"          
+    case "FileEntry" => "FileEntry"    
+    case "Waypoint" => "Waypoint"
     case "bool" => "Bool"
     case "float32" => "FltPt[_24,_8]"
     case "float64" => "FltPt[_53,_11]"      
@@ -72,7 +72,7 @@ def remap(tp: String) = {
 def msgToScala(f: File) = {
   val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
   val name = getName(f)
-
+  println(name)
   var cc = "case class " + name + "("
   var o = "object " +name + " {"
 
@@ -85,6 +85,7 @@ def msgToScala(f: File) = {
       quote(b) + ": " + remap(a)
   }
 
+
   cc += datas.mkString(", ")
   cc += ")"
 
@@ -92,6 +93,7 @@ def msgToScala(f: File) = {
   o += "\n}"
 
   var r = "package spatial.ros\n\n"
+  r += "import org.virtualized._\n\n"  
   r += "trait "+name+ "Api extends " + name
   r += """Exp {
     self: RosApi =>
@@ -153,6 +155,7 @@ def srvToScala(f: File) = {
   o += "\n}"
 
   var r = "package spatial.ros\n\n"
+  r += "import org.virtualized._\n\n"
   r += "trait "+name+ "Api extends " + name 
   r += """Exp {
 self: RosApi =>

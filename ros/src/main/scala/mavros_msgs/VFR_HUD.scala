@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait VFR_HUDApi extends VFR_HUDExp {
     self: RosApi =>
 

@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait SetModeApi extends SetModeExp {
 self: RosApi =>
 

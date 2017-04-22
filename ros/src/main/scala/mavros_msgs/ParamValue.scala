@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait ParamValueApi extends ParamValueExp {
     self: RosApi =>
 

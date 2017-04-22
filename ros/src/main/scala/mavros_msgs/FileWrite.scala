@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait FileWriteApi extends FileWriteExp {
 self: RosApi =>
 

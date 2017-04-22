@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait HilControlsApi extends HilControlsExp {
     self: RosApi =>
 

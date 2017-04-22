@@ -1,5 +1,7 @@
 package spatial.ros
 
+import org.virtualized._
+
 trait WaypointListApi extends WaypointListExp {
     self: RosApi =>
 
