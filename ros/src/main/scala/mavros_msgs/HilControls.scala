@@ -1,22 +1,75 @@
+
 package spatial.ros
 
 import forge._
 import org.virtualized._
 
 trait HilControlsApi extends HilControlsExp {
-    self: RosApi =>
+  self: RosApi =>
 
 }
 
 trait HilControlsExp {
-    self: RosExp =>
+  self: RosExp =>
+  
+  
+case class HilControls_roll_ailerons(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_roll_ailerons(f(msg))
+}
 
-      implicit object HilControlsType extends Meta[HilControls] {
+  
+case class HilControls_pitch_elevator(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_pitch_elevator(f(msg))
+}
+
+  
+case class HilControls_yaw_rudder(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_yaw_rudder(f(msg))
+}
+
+  
+case class HilControls_throttle(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_throttle(f(msg))
+}
+
+  
+case class HilControls_aux1(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_aux1(f(msg))
+}
+
+  
+case class HilControls_aux2(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_aux2(f(msg))
+}
+
+  
+case class HilControls_aux3(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_aux3(f(msg))
+}
+
+  
+case class HilControls_aux4(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//HilControls_aux4(f(msg))
+}
+
+  
+case class HilControls_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//HilControls_mode(f(msg))
+}
+
+  
+case class HilControls_nav_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//HilControls_nav_mode(f(msg))
+}
+
+
+  implicit object HilControlsType extends Meta[HilControls] {
     def wrapped(x: Exp[HilControls]) = HilControls(x)
     def stagedClass = classOf[HilControls]
     def isPrimitive = false
   }
-    case class HilControls(s: Exp[HilControls]) extends MetaAny[HilControls] {
+
+  case class HilControls(s: Exp[HilControls]) extends MetaAny[HilControls] {
     @api def roll_ailerons: FltPt[_24,_8] = ???
     @api def pitch_elevator: FltPt[_24,_8] = ???
     @api def yaw_rudder: FltPt[_24,_8] = ???
@@ -27,12 +80,14 @@ trait HilControlsExp {
     @api def aux4: FltPt[_24,_8] = ???
     @api def mode: FixPt[FALSE,_8,_0] = ???
     @api def nav_mode: FixPt[FALSE,_8,_0] = ???
-
-    @api def ===(that: HilControls) = ??? 
-    @api def =!=(that: HilControls) = ??? 
-    @api def toText: Text = ??? 
+    @api def ===(that: HilControls) = ???
+    @api def =!=(that: HilControls) = ???
+    @api def toText: Text = ???
   }
+  
+  object HilControls {
+
+  }
+
 }
 
-object HilControls{
-}

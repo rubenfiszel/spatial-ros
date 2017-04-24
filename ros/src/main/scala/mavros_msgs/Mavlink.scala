@@ -1,22 +1,65 @@
+
 package spatial.ros
 
 import forge._
 import org.virtualized._
 
 trait MavlinkApi extends MavlinkExp {
-    self: RosApi =>
+  self: RosApi =>
 
 }
 
 trait MavlinkExp {
-    self: RosExp =>
+  self: RosExp =>
+  
+  
+case class Mavlink_is_valid(msg: Exp[Mavlink]) extends Op[Bool] {
+  def mirror(f: Tx) = ???//Mavlink_is_valid(f(msg))
+}
 
-      implicit object MavlinkType extends Meta[Mavlink] {
+  
+case class Mavlink_len(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_len(f(msg))
+}
+
+  
+case class Mavlink_seq(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_seq(f(msg))
+}
+
+  
+case class Mavlink_sysid(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_sysid(f(msg))
+}
+
+  
+case class Mavlink_compid(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_compid(f(msg))
+}
+
+  
+case class Mavlink_msgid(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_msgid(f(msg))
+}
+
+  
+case class Mavlink_checksum(msg: Exp[Mavlink]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = ???//Mavlink_checksum(f(msg))
+}
+
+  
+case class Mavlink_payload64(msg: Exp[Mavlink]) extends Op[MetaArray[FixPt[FALSE,_64,_0]]] {
+  def mirror(f: Tx) = ???//Mavlink_payload64(f(msg))
+}
+
+
+  implicit object MavlinkType extends Meta[Mavlink] {
     def wrapped(x: Exp[Mavlink]) = Mavlink(x)
     def stagedClass = classOf[Mavlink]
     def isPrimitive = false
   }
-    case class Mavlink(s: Exp[Mavlink]) extends MetaAny[Mavlink] {
+
+  case class Mavlink(s: Exp[Mavlink]) extends MetaAny[Mavlink] {
     @api def is_valid: Bool = ???
     @api def len: FixPt[FALSE,_8,_0] = ???
     @api def seq: FixPt[FALSE,_8,_0] = ???
@@ -25,12 +68,14 @@ trait MavlinkExp {
     @api def msgid: FixPt[FALSE,_8,_0] = ???
     @api def checksum: FixPt[FALSE,_16,_0] = ???
     @api def payload64: MetaArray[FixPt[FALSE,_64,_0]] = ???
-
-    @api def ===(that: Mavlink) = ??? 
-    @api def =!=(that: Mavlink) = ??? 
-    @api def toText: Text = ??? 
+    @api def ===(that: Mavlink) = ???
+    @api def =!=(that: Mavlink) = ???
+    @api def toText: Text = ???
   }
+  
+  object Mavlink {
+
+  }
+
 }
 
-object Mavlink{
-}

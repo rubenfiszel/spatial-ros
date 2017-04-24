@@ -69,60 +69,72 @@ def remap(tp: String) = {
   r
 }
 
+def ident(x: Seq[Any], tab: Int) =
+  x.map(" "*(2*tab) + _).mkString("\n")
+
 def msgToScala(f: File) = {
   val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
   val name = getName(f)
   println(name)
 
   val constants = lines collect {
-    case constant(a,b,c) =>
-      "val " + quote(b) + " = " + c
+    case constant(a, b, c) => (a, b, c)
   }
+
   val datas = lines collect {
-    case data(a, b) if !a.contains("Header") =>
-      quote(b) + ": " + remap(a)
+    case data(a, b) if !a.contains("Header") => (a, b)
   }
 
-  val apis = (datas.map(x => "    @api def " + x + " = ???")  :+ "\n").mkString("\n")
-  var cc = "case class " + name + "(s: Exp[" + name + "]) extends MetaAny[" + name + "] {\n"
-  cc += apis
-  cc += "    @api def ===(that: " + name +") = ??? \n"
-  cc += "    @api def =!=(that: " + name +") = ??? \n"
-  cc += "    @api def toText: Text = ??? \n"  
-  cc += "  }"
+  val apis = datas.map { case (t, n) =>
+    s"@api def ${quote(n)}: ${remap(t)} = ???"
+  }
+  val nodes = datas map { case (t, n) =>
+    s"""
+case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
+  def mirror(f: Tx) = ???//${name}_${n}(f(msg))
+}
+"""
+  }
+  
+  val cs = constants.map { case (t, n, v) =>
+    s"val ${quote(n)}: ${remap(t)} = $v"
+  }
 
-  var typ = "  implicit object " +name + "Type extends Meta[" + name + "] {\n"
-  typ += "    def wrapped(x: Exp[" + name + "]) = " + name +"(x)\n"
-  typ += "    def stagedClass = classOf["+ name + "]\n"  
-  typ += "    def isPrimitive = false\n"
-  typ += "  }"
+s"""
+package spatial.ros
 
-  var o = "object " + name + "{"
+import forge._
+import org.virtualized._
 
-  o += constants.mkString("\n")
-  o += "\n}"
-
-  var r = "package spatial.ros\n\n"
-  r += "import forge._\n"    
-  r += "import org.virtualized._\n\n"  
-  r += "trait "+name+ "Api extends " + name
-  r += """Exp {
-    self: RosApi =>
+trait ${name}Api extends ${name}Exp {
+  self: RosApi =>
 
 }
 
-trait """
+trait ${name}Exp {
+  self: RosExp =>
+  
+${ident(nodes, 1)}
 
-  r += name +"Exp {\n"
-  r += "    self: RosExp =>\n\n"
-  r += "    " + typ + "\n"    
-  r += "    " + cc + "\n"
-  r += "}\n\n"
-  r += o
+  implicit object ${name}Type extends Meta[$name] {
+    def wrapped(x: Exp[$name]) = $name(x)
+    def stagedClass = classOf[$name]
+    def isPrimitive = false
+  }
 
-  r
+  case class $name(s: Exp[$name]) extends MetaAny[$name] {
+${ident(apis, 2)}
+    @api def ===(that: $name) = ???
+    @api def =!=(that: $name) = ???
+    @api def toText: Text = ???
+  }
+  
+  object $name {
+${ident(cs, 2)}
+  }
 
-
+}
+"""
 }
 
 def srvToScala(f: File) = {
@@ -130,58 +142,109 @@ def srvToScala(f: File) = {
   val (req, repP) = lines.splitAt(lines.indexOf("---"))
   val rep = repP.drop(1)
   val name = getName(f)
+  val nameRep = name+"Rep"
 
-  var response = false  
-
-  val constantsReq = req collect {
-    case constant(a,b,c) =>
-      "val " + quote(b) + " = " + c
-  }
-  val datasReq = req collect {
-    case data(a, b) if !a.contains("Header") =>
-      quote(b) + ": " + remap(a)
+  val constants = req collect {
+    case constant(a, b, c) => (a, b, c)
   }
 
+  val datas = req collect {
+    case data(a, b) if !a.contains("Header") => (a, b)
+  }
 
   val constantsRep = rep collect {
-    case constant(a,b,c) =>
-      "val " + quote(b) + " = " + c
+    case constant(a, b, c) => (a, b, c)
   }
+
   val datasRep = rep collect {
-    case data(a, b) if !a.contains("Header") =>
-      quote(b) + ": " + remap(a)
-  }
-  var ccReq = "case class " + name+ "("
-  var ccRep = "case class " + name+ "Reply("
-  var o = "object " +name + " {"
-
-  ccReq += datasReq.mkString(", ")
-  ccReq += ")"
-
-  ccRep += datasRep.mkString(", ")
-  ccRep += ")"
-
-  o += constantsReq.mkString("\n")
-  o += constantsRep.mkString("\n")  
-  o += "\n}"
-
-  var r = "package spatial.ros\n\n"
-  r += "import org.virtualized._\n\n"
-  r += "trait "+name+ "Api extends " + name 
-  r += """Exp {
-self: RosApi =>
-
+    case data(a, b) if !a.contains("Header") => (a, b)
   }
 
-trait """
+  val apis = datas map { case (t, n) =>
+    s"@api def ${quote(n)}: ${remap(t)} = ???"
+  }
+  val apisRep = datasRep map { case (t, n) =>
+    s"@api def ${quote(n)}: ${remap(t)} = ???"
+  }
+  val nodes = datas map { case (t, n) =>
+    s"""
+case class ${name}_${n}(srv: Exp[$name]) extends Op[${remap(t)}] {
+  def mirror(f: Tx) = ???//(${name}_${n}(f(srv)): Exp[${remap(t)}])
+}
+"""
+  }
+  val nodesRep = datas map { case (t, n) =>
+    s"""
+case class ${nameRep}_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
+  def mirror(f: Tx) = ???//${nameRep}_${n}(f(srv))
+}
+"""
+  }
+  val cs = constants map { case (t, n, v) =>
+    s"val ${quote(n)}: ${remap(t)} = $v"
+  }
+  val csRep = constantsRep map { case (t, n, v) =>
+    s"val ${quote(n)}: ${remap(t)} = $v"
+  }
 
-  r += name +"Exp {\n"
-  r += "    self: RosExp =>\n\n"
-  r += "    " + ccReq + "\n    " + ccRep + "\n"  
-  r += "}\n\n"
-  r += o
 
-  r
+s"""
+package spatial.ros
+
+import forge._
+import org.virtualized._
+
+trait ${name}Api extends ${name}Exp {
+  self: RosApi =>
+
+}
+
+trait ${name}Exp {
+  self: RosExp =>
+  
+${ident(nodes, 1)}
+${ident(nodesRep, 1)}
+  case class ${name}Reply(srv: Exp[$name]) extends Op[$nameRep]{
+    def mirror(f: Tx) = ???//${name}Reply(f(srv))
+  }
+
+  implicit object ${name}Type extends Meta[$name] {
+    def wrapped(x: Exp[$name]) = $name(x)
+    def stagedClass = classOf[$name]
+    def isPrimitive = false
+  }
+
+  implicit object ${nameRep}Type extends Meta[$nameRep] {
+    def wrapped(x: Exp[$nameRep]) = $nameRep(x)
+    def stagedClass = classOf[$nameRep]
+    def isPrimitive = false
+  }
+
+  case class $name(s: Exp[$name]) extends MetaAny[$name] {
+${ident(apis, 2)}
+    @api def response: $nameRep = ???//$nameRep(${name}Reply(s))
+    @api def ===(that: $name): Bool = ???
+    @api def =!=(that: $name): Bool = ???
+    @api def toText: Text = ???
+  }
+
+  case class $nameRep(s: Exp[$nameRep]) extends MetaAny[$nameRep] {
+${ident(apisRep, 2)}
+    @api def ===(that: $nameRep): Bool = ???
+    @api def =!=(that: $nameRep): Bool = ???
+    @api def toText: Text = ???
+  }
+  
+  object $name {
+${ident(cs, 2)}
+  }
+
+  object $nameRep {
+${ident(csRep, 2)}
+  }
+
+}
+"""  
 }
 def writeFile(f: File, s: String) = {
   val name = getName(f)

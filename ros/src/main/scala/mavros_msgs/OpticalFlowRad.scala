@@ -1,22 +1,75 @@
+
 package spatial.ros
 
 import forge._
 import org.virtualized._
 
 trait OpticalFlowRadApi extends OpticalFlowRadExp {
-    self: RosApi =>
+  self: RosApi =>
 
 }
 
 trait OpticalFlowRadExp {
-    self: RosExp =>
+  self: RosExp =>
+  
+  
+case class OpticalFlowRad_integration_time_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integration_time_us(f(msg))
+}
 
-      implicit object OpticalFlowRadType extends Meta[OpticalFlowRad] {
+  
+case class OpticalFlowRad_integrated_x(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_x(f(msg))
+}
+
+  
+case class OpticalFlowRad_integrated_y(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_y(f(msg))
+}
+
+  
+case class OpticalFlowRad_integrated_xgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_xgyro(f(msg))
+}
+
+  
+case class OpticalFlowRad_integrated_ygyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_ygyro(f(msg))
+}
+
+  
+case class OpticalFlowRad_integrated_zgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_zgyro(f(msg))
+}
+
+  
+case class OpticalFlowRad_temperature(msg: Exp[OpticalFlowRad]) extends Op[FixPt[TRUE,_16,_0]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_temperature(f(msg))
+}
+
+  
+case class OpticalFlowRad_quality(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_quality(f(msg))
+}
+
+  
+case class OpticalFlowRad_time_delta_distance_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_time_delta_distance_us(f(msg))
+}
+
+  
+case class OpticalFlowRad_distance(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = ???//OpticalFlowRad_distance(f(msg))
+}
+
+
+  implicit object OpticalFlowRadType extends Meta[OpticalFlowRad] {
     def wrapped(x: Exp[OpticalFlowRad]) = OpticalFlowRad(x)
     def stagedClass = classOf[OpticalFlowRad]
     def isPrimitive = false
   }
-    case class OpticalFlowRad(s: Exp[OpticalFlowRad]) extends MetaAny[OpticalFlowRad] {
+
+  case class OpticalFlowRad(s: Exp[OpticalFlowRad]) extends MetaAny[OpticalFlowRad] {
     @api def integration_time_us: FixPt[FALSE,_32,_0] = ???
     @api def integrated_x: FltPt[_24,_8] = ???
     @api def integrated_y: FltPt[_24,_8] = ???
@@ -27,12 +80,14 @@ trait OpticalFlowRadExp {
     @api def quality: FixPt[FALSE,_8,_0] = ???
     @api def time_delta_distance_us: FixPt[FALSE,_32,_0] = ???
     @api def distance: FltPt[_24,_8] = ???
-
-    @api def ===(that: OpticalFlowRad) = ??? 
-    @api def =!=(that: OpticalFlowRad) = ??? 
-    @api def toText: Text = ??? 
+    @api def ===(that: OpticalFlowRad) = ???
+    @api def =!=(that: OpticalFlowRad) = ???
+    @api def toText: Text = ???
   }
+  
+  object OpticalFlowRad {
+
+  }
+
 }
 
-object OpticalFlowRad{
-}
