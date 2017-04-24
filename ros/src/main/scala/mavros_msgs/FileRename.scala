@@ -27,7 +27,7 @@ trait FileRenameExp {
   case class FileRename(s: Exp[FileRename]) extends MetaAny[FileRename] {
     @api def old_path: Text = Text(stage(FileRename_old_path(s))(ctx))
     @api def new_path: Text = Text(stage(FileRename_new_path(s))(ctx))
-    @api def response: FileRenameRep = ???//FileRenameRep(FileRenameReply(s))
+    @api def response: FileRenameRep = FileRenameRep(stage(FileRenameReply(s))(ctx))
     @api def ===(that: FileRename): Bool = ???
     @api def =!=(that: FileRename): Bool = ???
     @api def toText: Text = textify(this)

@@ -29,7 +29,7 @@ trait CommandHomeExp {
     @api def latitude: FltPt[_24,_8] = FltPt(stage(CommandHome_latitude(s))(ctx))
     @api def longitude: FltPt[_24,_8] = FltPt(stage(CommandHome_longitude(s))(ctx))
     @api def altitude: FltPt[_24,_8] = FltPt(stage(CommandHome_altitude(s))(ctx))
-    @api def response: CommandHomeRep = ???//CommandHomeRep(CommandHomeReply(s))
+    @api def response: CommandHomeRep = CommandHomeRep(stage(CommandHomeReply(s))(ctx))
     @api def ===(that: CommandHome): Bool = ???
     @api def =!=(that: CommandHome): Bool = ???
     @api def toText: Text = textify(this)

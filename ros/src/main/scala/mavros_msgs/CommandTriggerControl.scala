@@ -26,7 +26,7 @@ trait CommandTriggerControlExp {
 
   case class CommandTriggerControl(s: Exp[CommandTriggerControl]) extends MetaAny[CommandTriggerControl] {
 
-    @api def response: CommandTriggerControlRep = ???//CommandTriggerControlRep(CommandTriggerControlReply(s))
+    @api def response: CommandTriggerControlRep = CommandTriggerControlRep(stage(CommandTriggerControlReply(s))(ctx))
     @api def ===(that: CommandTriggerControl): Bool = ???
     @api def =!=(that: CommandTriggerControl): Bool = ???
     @api def toText: Text = textify(this)

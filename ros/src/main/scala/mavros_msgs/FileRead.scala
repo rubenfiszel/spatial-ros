@@ -28,7 +28,7 @@ trait FileReadExp {
     @api def file_path: Text = Text(stage(FileRead_file_path(s))(ctx))
     @api def offset: FixPt[FALSE,_64,_0] = FixPt(stage(FileRead_offset(s))(ctx))
     @api def size: FixPt[FALSE,_64,_0] = FixPt(stage(FileRead_size(s))(ctx))
-    @api def response: FileReadRep = ???//FileReadRep(FileReadReply(s))
+    @api def response: FileReadRep = FileReadRep(stage(FileReadReply(s))(ctx))
     @api def ===(that: FileRead): Bool = ???
     @api def =!=(that: FileRead): Bool = ???
     @api def toText: Text = textify(this)

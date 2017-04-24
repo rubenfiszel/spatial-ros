@@ -28,7 +28,7 @@ trait FileWriteExp {
     @api def file_path: Text = Text(stage(FileWrite_file_path(s))(ctx))
     @api def offset: FixPt[FALSE,_64,_0] = FixPt(stage(FileWrite_offset(s))(ctx))
     @api def data: MetaArray[FixPt[FALSE,_8,_0]] = MetaArray(stage(FileWrite_data(s))(ctx))
-    @api def response: FileWriteRep = ???//FileWriteRep(FileWriteReply(s))
+    @api def response: FileWriteRep = FileWriteRep(stage(FileWriteReply(s))(ctx))
     @api def ===(that: FileWrite): Bool = ???
     @api def =!=(that: FileWrite): Bool = ???
     @api def toText: Text = textify(this)

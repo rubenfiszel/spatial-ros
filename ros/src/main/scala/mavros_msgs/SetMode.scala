@@ -26,7 +26,7 @@ trait SetModeExp {
 
   case class SetMode(s: Exp[SetMode]) extends MetaAny[SetMode] {
 
-    @api def response: SetModeRep = ???//SetModeRep(SetModeReply(s))
+    @api def response: SetModeRep = SetModeRep(stage(SetModeReply(s))(ctx))
     @api def ===(that: SetMode): Bool = ???
     @api def =!=(that: SetMode): Bool = ???
     @api def toText: Text = textify(this)

@@ -26,7 +26,7 @@ trait ParamPullExp {
 
   case class ParamPull(s: Exp[ParamPull]) extends MetaAny[ParamPull] {
     @api def force_pull: Bool = Bool(stage(ParamPull_force_pull(s))(ctx))
-    @api def response: ParamPullRep = ???//ParamPullRep(ParamPullReply(s))
+    @api def response: ParamPullRep = ParamPullRep(stage(ParamPullReply(s))(ctx))
     @api def ===(that: ParamPull): Bool = ???
     @api def =!=(that: ParamPull): Bool = ???
     @api def toText: Text = textify(this)

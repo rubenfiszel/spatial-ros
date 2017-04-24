@@ -26,7 +26,7 @@ trait FileCloseExp {
 
   case class FileClose(s: Exp[FileClose]) extends MetaAny[FileClose] {
     @api def file_path: Text = Text(stage(FileClose_file_path(s))(ctx))
-    @api def response: FileCloseRep = ???//FileCloseRep(FileCloseReply(s))
+    @api def response: FileCloseRep = FileCloseRep(stage(FileCloseReply(s))(ctx))
     @api def ===(that: FileClose): Bool = ???
     @api def =!=(that: FileClose): Bool = ???
     @api def toText: Text = textify(this)

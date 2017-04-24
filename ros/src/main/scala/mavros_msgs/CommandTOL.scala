@@ -29,7 +29,7 @@ trait CommandTOLExp {
     @api def latitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_latitude(s))(ctx))
     @api def longitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_longitude(s))(ctx))
     @api def altitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_altitude(s))(ctx))
-    @api def response: CommandTOLRep = ???//CommandTOLRep(CommandTOLReply(s))
+    @api def response: CommandTOLRep = CommandTOLRep(stage(CommandTOLReply(s))(ctx))
     @api def ===(that: CommandTOL): Bool = ???
     @api def =!=(that: CommandTOL): Bool = ???
     @api def toText: Text = textify(this)

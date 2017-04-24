@@ -28,7 +28,7 @@ trait StreamRateExp {
     @api def stream_id: FixPt[FALSE,_8,_0] = FixPt(stage(StreamRate_stream_id(s))(ctx))
     @api def message_rate: FixPt[FALSE,_16,_0] = FixPt(stage(StreamRate_message_rate(s))(ctx))
     @api def on_off: Bool = Bool(stage(StreamRate_on_off(s))(ctx))
-    @api def response: StreamRateRep = ???//StreamRateRep(StreamRateReply(s))
+    @api def response: StreamRateRep = StreamRateRep(stage(StreamRateReply(s))(ctx))
     @api def ===(that: StreamRate): Bool = ???
     @api def =!=(that: StreamRate): Bool = ???
     @api def toText: Text = textify(this)

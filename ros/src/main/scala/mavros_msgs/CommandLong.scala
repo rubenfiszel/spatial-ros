@@ -31,7 +31,7 @@ trait CommandLongExp {
     @api def param2: FltPt[_24,_8] = FltPt(stage(CommandLong_param2(s))(ctx))
     @api def param3: FltPt[_24,_8] = FltPt(stage(CommandLong_param3(s))(ctx))
     @api def param4: FltPt[_24,_8] = FltPt(stage(CommandLong_param4(s))(ctx))
-    @api def response: CommandLongRep = ???//CommandLongRep(CommandLongReply(s))
+    @api def response: CommandLongRep = CommandLongRep(stage(CommandLongReply(s))(ctx))
     @api def ===(that: CommandLong): Bool = ???
     @api def =!=(that: CommandLong): Bool = ???
     @api def toText: Text = textify(this)

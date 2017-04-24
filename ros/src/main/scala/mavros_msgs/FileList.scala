@@ -26,7 +26,7 @@ trait FileListExp {
 
   case class FileList(s: Exp[FileList]) extends MetaAny[FileList] {
     @api def dir_path: Text = Text(stage(FileList_dir_path(s))(ctx))
-    @api def response: FileListRep = ???//FileListRep(FileListReply(s))
+    @api def response: FileListRep = FileListRep(stage(FileListReply(s))(ctx))
     @api def ===(that: FileList): Bool = ???
     @api def =!=(that: FileList): Bool = ???
     @api def toText: Text = textify(this)

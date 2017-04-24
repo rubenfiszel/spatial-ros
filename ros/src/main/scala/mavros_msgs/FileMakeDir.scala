@@ -26,7 +26,7 @@ trait FileMakeDirExp {
 
   case class FileMakeDir(s: Exp[FileMakeDir]) extends MetaAny[FileMakeDir] {
     @api def dir_path: Text = Text(stage(FileMakeDir_dir_path(s))(ctx))
-    @api def response: FileMakeDirRep = ???//FileMakeDirRep(FileMakeDirReply(s))
+    @api def response: FileMakeDirRep = FileMakeDirRep(stage(FileMakeDirReply(s))(ctx))
     @api def ===(that: FileMakeDir): Bool = ???
     @api def =!=(that: FileMakeDir): Bool = ???
     @api def toText: Text = textify(this)

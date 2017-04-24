@@ -27,7 +27,7 @@ trait ParamSetExp {
   case class ParamSet(s: Exp[ParamSet]) extends MetaAny[ParamSet] {
     @api def param_id: Text = Text(stage(ParamSet_param_id(s))(ctx))
     @api def value: ParamValue = ParamValue(stage(ParamSet_value(s))(ctx))
-    @api def response: ParamSetRep = ???//ParamSetRep(ParamSetReply(s))
+    @api def response: ParamSetRep = ParamSetRep(stage(ParamSetReply(s))(ctx))
     @api def ===(that: ParamSet): Bool = ???
     @api def =!=(that: ParamSet): Bool = ???
     @api def toText: Text = textify(this)

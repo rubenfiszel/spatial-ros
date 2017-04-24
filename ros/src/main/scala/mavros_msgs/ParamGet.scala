@@ -26,7 +26,7 @@ trait ParamGetExp {
 
   case class ParamGet(s: Exp[ParamGet]) extends MetaAny[ParamGet] {
     @api def param_id: Text = Text(stage(ParamGet_param_id(s))(ctx))
-    @api def response: ParamGetRep = ???//ParamGetRep(ParamGetReply(s))
+    @api def response: ParamGetRep = ParamGetRep(stage(ParamGetReply(s))(ctx))
     @api def ===(that: ParamGet): Bool = ???
     @api def =!=(that: ParamGet): Bool = ???
     @api def toText: Text = textify(this)

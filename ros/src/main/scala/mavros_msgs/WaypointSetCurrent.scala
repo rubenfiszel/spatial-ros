@@ -26,7 +26,7 @@ trait WaypointSetCurrentExp {
 
   case class WaypointSetCurrent(s: Exp[WaypointSetCurrent]) extends MetaAny[WaypointSetCurrent] {
     @api def wp_seq: FixPt[FALSE,_16,_0] = FixPt(stage(WaypointSetCurrent_wp_seq(s))(ctx))
-    @api def response: WaypointSetCurrentRep = ???//WaypointSetCurrentRep(WaypointSetCurrentReply(s))
+    @api def response: WaypointSetCurrentRep = WaypointSetCurrentRep(stage(WaypointSetCurrentReply(s))(ctx))
     @api def ===(that: WaypointSetCurrent): Bool = ???
     @api def =!=(that: WaypointSetCurrent): Bool = ???
     @api def toText: Text = textify(this)

@@ -26,7 +26,7 @@ trait FileChecksumExp {
 
   case class FileChecksum(s: Exp[FileChecksum]) extends MetaAny[FileChecksum] {
     @api def file_path: Text = Text(stage(FileChecksum_file_path(s))(ctx))
-    @api def response: FileChecksumRep = ???//FileChecksumRep(FileChecksumReply(s))
+    @api def response: FileChecksumRep = FileChecksumRep(stage(FileChecksumReply(s))(ctx))
     @api def ===(that: FileChecksum): Bool = ???
     @api def =!=(that: FileChecksum): Bool = ???
     @api def toText: Text = textify(this)

@@ -27,7 +27,7 @@ trait FileOpenExp {
   case class FileOpen(s: Exp[FileOpen]) extends MetaAny[FileOpen] {
     @api def file_path: Text = Text(stage(FileOpen_file_path(s))(ctx))
     @api def mode: FixPt[FALSE,_8,_0] = FixPt(stage(FileOpen_mode(s))(ctx))
-    @api def response: FileOpenRep = ???//FileOpenRep(FileOpenReply(s))
+    @api def response: FileOpenRep = FileOpenRep(stage(FileOpenReply(s))(ctx))
     @api def ===(that: FileOpen): Bool = ???
     @api def =!=(that: FileOpen): Bool = ???
     @api def toText: Text = textify(this)

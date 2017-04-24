@@ -26,7 +26,7 @@ trait ParamPushExp {
 
   case class ParamPush(s: Exp[ParamPush]) extends MetaAny[ParamPush] {
 
-    @api def response: ParamPushRep = ???//ParamPushRep(ParamPushReply(s))
+    @api def response: ParamPushRep = ParamPushRep(stage(ParamPushReply(s))(ctx))
     @api def ===(that: ParamPush): Bool = ???
     @api def =!=(that: ParamPush): Bool = ???
     @api def toText: Text = textify(this)

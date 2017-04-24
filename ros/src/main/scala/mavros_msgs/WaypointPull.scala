@@ -26,7 +26,7 @@ trait WaypointPullExp {
 
   case class WaypointPull(s: Exp[WaypointPull]) extends MetaAny[WaypointPull] {
 
-    @api def response: WaypointPullRep = ???//WaypointPullRep(WaypointPullReply(s))
+    @api def response: WaypointPullRep = WaypointPullRep(stage(WaypointPullReply(s))(ctx))
     @api def ===(that: WaypointPull): Bool = ???
     @api def =!=(that: WaypointPull): Bool = ???
     @api def toText: Text = textify(this)

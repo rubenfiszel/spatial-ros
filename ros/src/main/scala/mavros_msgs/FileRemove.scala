@@ -26,7 +26,7 @@ trait FileRemoveExp {
 
   case class FileRemove(s: Exp[FileRemove]) extends MetaAny[FileRemove] {
     @api def file_path: Text = Text(stage(FileRemove_file_path(s))(ctx))
-    @api def response: FileRemoveRep = ???//FileRemoveRep(FileRemoveReply(s))
+    @api def response: FileRemoveRep = FileRemoveRep(stage(FileRemoveReply(s))(ctx))
     @api def ===(that: FileRemove): Bool = ???
     @api def =!=(that: FileRemove): Bool = ???
     @api def toText: Text = textify(this)

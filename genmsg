@@ -219,7 +219,7 @@ trait ${name}Exp {
 
   case class $name(s: Exp[$name]) extends MetaAny[$name] {
 ${ident(apis, 2)}
-    @api def response: $nameRep = ???//$nameRep(${name}Reply(s))
+    @api def response: $nameRep = $nameRep(stage(${name}Reply(s))(ctx))
     @api def ===(that: $name): Bool = ???
     @api def =!=(that: $name): Bool = ???
     @api def toText: Text = textify(this)

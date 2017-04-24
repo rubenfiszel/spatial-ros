@@ -26,7 +26,7 @@ trait WaypointClearExp {
 
   case class WaypointClear(s: Exp[WaypointClear]) extends MetaAny[WaypointClear] {
 
-    @api def response: WaypointClearRep = ???//WaypointClearRep(WaypointClearReply(s))
+    @api def response: WaypointClearRep = WaypointClearRep(stage(WaypointClearReply(s))(ctx))
     @api def ===(that: WaypointClear): Bool = ???
     @api def =!=(that: WaypointClear): Bool = ???
     @api def toText: Text = textify(this)

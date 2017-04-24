@@ -27,7 +27,7 @@ trait FileTruncateExp {
   case class FileTruncate(s: Exp[FileTruncate]) extends MetaAny[FileTruncate] {
     @api def file_path: Text = Text(stage(FileTruncate_file_path(s))(ctx))
     @api def length: FixPt[FALSE,_64,_0] = FixPt(stage(FileTruncate_length(s))(ctx))
-    @api def response: FileTruncateRep = ???//FileTruncateRep(FileTruncateReply(s))
+    @api def response: FileTruncateRep = FileTruncateRep(stage(FileTruncateReply(s))(ctx))
     @api def ===(that: FileTruncate): Bool = ???
     @api def =!=(that: FileTruncate): Bool = ???
     @api def toText: Text = textify(this)

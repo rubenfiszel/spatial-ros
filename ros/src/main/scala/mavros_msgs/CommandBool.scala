@@ -26,7 +26,7 @@ trait CommandBoolExp {
 
   case class CommandBool(s: Exp[CommandBool]) extends MetaAny[CommandBool] {
     @api def value: Bool = Bool(stage(CommandBool_value(s))(ctx))
-    @api def response: CommandBoolRep = ???//CommandBoolRep(CommandBoolReply(s))
+    @api def response: CommandBoolRep = CommandBoolRep(stage(CommandBoolReply(s))(ctx))
     @api def ===(that: CommandBool): Bool = ???
     @api def =!=(that: CommandBool): Bool = ???
     @api def toText: Text = textify(this)
