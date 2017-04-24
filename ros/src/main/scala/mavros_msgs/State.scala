@@ -1,5 +1,6 @@
 package spatial.ros
 
+import forge._
 import org.virtualized._
 
 trait StateApi extends StateExp {
@@ -10,8 +11,22 @@ trait StateApi extends StateExp {
 trait StateExp {
     self: RosExp =>
 
-    @struct case class State(connected: Bool, armed: Bool, guided: Bool, mode: Text)
+      implicit object StateType extends Meta[State] {
+    def wrapped(x: Exp[State]) = State(x)
+    def stagedClass = classOf[State]
+    def isPrimitive = false
+  }
+    case class State(s: Exp[State]) extends MetaAny[State] {
+    @api def connected: Bool = ???
+    @api def armed: Bool = ???
+    @api def guided: Bool = ???
+    @api def mode: Text = ???
+
+    @api def ===(that: State) = ??? 
+    @api def =!=(that: State) = ??? 
+    @api def toText: Text = ??? 
+  }
 }
 
-object State {
+object State{
 }

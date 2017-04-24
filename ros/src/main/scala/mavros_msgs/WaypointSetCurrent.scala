@@ -10,8 +10,8 @@ self: RosApi =>
 trait WaypointSetCurrentExp {
     self: RosExp =>
 
-    @struct case class WaypointSetCurrent(wp_seq: FixPt[FALSE,_16,_0])
-    @struct case class WaypointSetCurrentReply(success: Bool)
+    case class WaypointSetCurrent(wp_seq: FixPt[FALSE,_16,_0])
+    case class WaypointSetCurrentReply(success: Bool)
 }
 
 object WaypointSetCurrent {

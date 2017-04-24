@@ -10,8 +10,8 @@ self: RosApi =>
 trait FileRemoveDirExp {
     self: RosExp =>
 
-    @struct case class FileRemoveDir(dir_path: Text)
-    @struct case class FileRemoveDirReply(success: Bool, r_errno: FixPt[TRUE,_32,_0])
+    case class FileRemoveDir(dir_path: Text)
+    case class FileRemoveDirReply(success: Bool, r_errno: FixPt[TRUE,_32,_0])
 }
 
 object FileRemoveDir {

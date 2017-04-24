@@ -1,5 +1,6 @@
 package spatial.ros
 
+import forge._
 import org.virtualized._
 
 trait VibrationApi extends VibrationExp {
@@ -10,8 +11,18 @@ trait VibrationApi extends VibrationExp {
 trait VibrationExp {
     self: RosExp =>
 
-    case class Vibration()
+      implicit object VibrationType extends Meta[Vibration] {
+    def wrapped(x: Exp[Vibration]) = Vibration(x)
+    def stagedClass = classOf[Vibration]
+    def isPrimitive = false
+  }
+    case class Vibration(s: Exp[Vibration]) extends MetaAny[Vibration] {
+
+    @api def ===(that: Vibration) = ??? 
+    @api def =!=(that: Vibration) = ??? 
+    @api def toText: Text = ??? 
+  }
 }
 
-object Vibration {
+object Vibration{
 }

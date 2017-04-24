@@ -11,7 +11,7 @@ trait SetModeExp {
     self: RosExp =>
 
     case class SetMode()
-    @struct case class SetModeReply(success: Bool)
+    case class SetModeReply(success: Bool)
 }
 
 object SetMode {

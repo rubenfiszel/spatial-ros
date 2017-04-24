@@ -1,5 +1,6 @@
 package spatial.ros
 
+import forge._
 import org.virtualized._
 
 trait AltitudeApi extends AltitudeExp {
@@ -10,8 +11,24 @@ trait AltitudeApi extends AltitudeExp {
 trait AltitudeExp {
     self: RosExp =>
 
-    @struct case class Altitude(monotonic: FltPt[_24,_8], amsl: FltPt[_24,_8], local: FltPt[_24,_8], relative: FltPt[_24,_8], terrain: FltPt[_24,_8], bottom_clearance: FltPt[_24,_8])
+      implicit object AltitudeType extends Meta[Altitude] {
+    def wrapped(x: Exp[Altitude]) = Altitude(x)
+    def stagedClass = classOf[Altitude]
+    def isPrimitive = false
+  }
+    case class Altitude(s: Exp[Altitude]) extends MetaAny[Altitude] {
+    @api def monotonic: FltPt[_24,_8] = ???
+    @api def amsl: FltPt[_24,_8] = ???
+    @api def local: FltPt[_24,_8] = ???
+    @api def relative: FltPt[_24,_8] = ???
+    @api def terrain: FltPt[_24,_8] = ???
+    @api def bottom_clearance: FltPt[_24,_8] = ???
+
+    @api def ===(that: Altitude) = ??? 
+    @api def =!=(that: Altitude) = ??? 
+    @api def toText: Text = ??? 
+  }
 }
 
-object Altitude {
+object Altitude{
 }

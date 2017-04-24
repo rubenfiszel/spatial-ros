@@ -11,7 +11,7 @@ trait WaypointPullExp {
     self: RosExp =>
 
     case class WaypointPull()
-    @struct case class WaypointPullReply(success: Bool, wp_received: FixPt[FALSE,_32,_0])
+    case class WaypointPullReply(success: Bool, wp_received: FixPt[FALSE,_32,_0])
 }
 
 object WaypointPull {

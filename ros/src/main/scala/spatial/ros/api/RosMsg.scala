@@ -1,4 +1,4 @@
-package spatial.ros.api
+/*package spatial.ros.api
 
 
 import argon._
@@ -136,3 +136,4 @@ trait RosMsgExp extends Staging { self: RosExp =>
   }
 
 }
+ */

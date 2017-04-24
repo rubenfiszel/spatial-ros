@@ -83,16 +83,27 @@ def msgToScala(f: File) = {
       quote(b) + ": " + remap(a)
   }
 
-  var cc = "case class " + name + "("
-  var o = "object " +name + " {"
- 
-  cc += datas.mkString(", ")
-  cc += ")"
+  val apis = (datas.map(x => "    @api def " + x + " = ???")  :+ "\n").mkString("\n")
+  var cc = "case class " + name + "(s: Exp[" + name + "]) extends MetaAny[" + name + "] {\n"
+  cc += apis
+  cc += "    @api def ===(that: " + name +") = ??? \n"
+  cc += "    @api def =!=(that: " + name +") = ??? \n"
+  cc += "    @api def toText: Text = ??? \n"  
+  cc += "  }"
+
+  var typ = "  implicit object " +name + "Type extends Meta[" + name + "] {\n"
+  typ += "    def wrapped(x: Exp[" + name + "]) = " + name +"(x)\n"
+  typ += "    def stagedClass = classOf["+ name + "]\n"  
+  typ += "    def isPrimitive = false\n"
+  typ += "  }"
+
+  var o = "object " + name + "{"
 
   o += constants.mkString("\n")
   o += "\n}"
 
   var r = "package spatial.ros\n\n"
+  r += "import forge._\n"    
   r += "import org.virtualized._\n\n"  
   r += "trait "+name+ "Api extends " + name
   r += """Exp {
@@ -104,6 +115,7 @@ trait """
 
   r += name +"Exp {\n"
   r += "    self: RosExp =>\n\n"
+  r += "    " + typ + "\n"    
   r += "    " + cc + "\n"
   r += "}\n\n"
   r += o

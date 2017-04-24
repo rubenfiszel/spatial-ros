@@ -11,7 +11,7 @@ trait CommandTriggerControlExp {
     self: RosExp =>
 
     case class CommandTriggerControl()
-    @struct case class CommandTriggerControlReply(success: Bool, result: FixPt[FALSE,_8,_0])
+    case class CommandTriggerControlReply(success: Bool, result: FixPt[FALSE,_8,_0])
 }
 
 object CommandTriggerControl {

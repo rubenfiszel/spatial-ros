@@ -10,8 +10,8 @@ self: RosApi =>
 trait FileRenameExp {
     self: RosExp =>
 
-    @struct case class FileRename(old_path: Text, new_path: Text)
-    @struct case class FileRenameReply(success: Bool, r_errno: FixPt[TRUE,_32,_0])
+    case class FileRename(old_path: Text, new_path: Text)
+    case class FileRenameReply(success: Bool, r_errno: FixPt[TRUE,_32,_0])
 }
 
 object FileRename {

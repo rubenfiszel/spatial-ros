@@ -1,5 +1,6 @@
 package spatial.ros
 
+import forge._
 import org.virtualized._
 
 trait FileEntryApi extends FileEntryExp {
@@ -10,8 +11,21 @@ trait FileEntryApi extends FileEntryExp {
 trait FileEntryExp {
     self: RosExp =>
 
-    @struct case class FileEntry(name: Text, `type`: FixPt[FALSE,_8,_0], size: FixPt[FALSE,_64,_0])
+      implicit object FileEntryType extends Meta[FileEntry] {
+    def wrapped(x: Exp[FileEntry]) = FileEntry(x)
+    def stagedClass = classOf[FileEntry]
+    def isPrimitive = false
+  }
+    case class FileEntry(s: Exp[FileEntry]) extends MetaAny[FileEntry] {
+    @api def name: Text = ???
+    @api def `type`: FixPt[FALSE,_8,_0] = ???
+    @api def size: FixPt[FALSE,_64,_0] = ???
+
+    @api def ===(that: FileEntry) = ??? 
+    @api def =!=(that: FileEntry) = ??? 
+    @api def toText: Text = ??? 
+  }
 }
 
-object FileEntry {
+object FileEntry{
 }
