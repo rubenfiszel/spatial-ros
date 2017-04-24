@@ -11,57 +11,6 @@ trait HilControlsApi extends HilControlsExp {
 
 trait HilControlsExp {
   self: RosExp =>
-  
-  
-case class HilControls_roll_ailerons(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_roll_ailerons(f(msg))
-}
-
-  
-case class HilControls_pitch_elevator(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_pitch_elevator(f(msg))
-}
-
-  
-case class HilControls_yaw_rudder(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_yaw_rudder(f(msg))
-}
-
-  
-case class HilControls_throttle(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_throttle(f(msg))
-}
-
-  
-case class HilControls_aux1(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_aux1(f(msg))
-}
-
-  
-case class HilControls_aux2(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_aux2(f(msg))
-}
-
-  
-case class HilControls_aux3(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_aux3(f(msg))
-}
-
-  
-case class HilControls_aux4(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//HilControls_aux4(f(msg))
-}
-
-  
-case class HilControls_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//HilControls_mode(f(msg))
-}
-
-  
-case class HilControls_nav_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//HilControls_nav_mode(f(msg))
-}
-
 
   implicit object HilControlsType extends Meta[HilControls] {
     def wrapped(x: Exp[HilControls]) = HilControls(x)
@@ -84,6 +33,57 @@ case class HilControls_nav_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8
     @api def =!=(that: HilControls) = ???
     @api def toText: Text = ???
   }
+
+  
+case class HilControls_roll_ailerons(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_roll_ailerons(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_pitch_elevator(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_pitch_elevator(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_yaw_rudder(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_yaw_rudder(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_throttle(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_throttle(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_aux1(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_aux1(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_aux2(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_aux2(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_aux3(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_aux3(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_aux4(msg: Exp[HilControls]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(HilControls_aux4(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(HilControls_mode(f(msg)))(EmptyContext)
+}
+
+  
+case class HilControls_nav_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(HilControls_nav_mode(f(msg)))(EmptyContext)
+}
+
   
   object HilControls {
 

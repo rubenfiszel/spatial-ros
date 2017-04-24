@@ -12,20 +12,6 @@ trait ParamGetApi extends ParamGetExp {
 trait ParamGetExp {
   self: RosExp =>
   
-  
-case class ParamGet_param_id(srv: Exp[ParamGet]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(ParamGet_param_id(f(srv)): Exp[Text])
-}
-
-  
-case class ParamGetRep_param_id(srv: Exp[ParamGetRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//ParamGetRep_param_id(f(srv))
-}
-
-  case class ParamGetReply(srv: Exp[ParamGet]) extends Op[ParamGetRep]{
-    def mirror(f: Tx) = ???//ParamGetReply(f(srv))
-  }
-
   implicit object ParamGetType extends Meta[ParamGet] {
     def wrapped(x: Exp[ParamGet]) = ParamGet(x)
     def stagedClass = classOf[ParamGet]
@@ -53,6 +39,21 @@ case class ParamGetRep_param_id(srv: Exp[ParamGetRep]) extends Op[Text] {
     @api def =!=(that: ParamGetRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class ParamGet_param_id(srv: Exp[ParamGet]) extends Op[Text] {
+  def mirror(f: Tx) = stage(ParamGet_param_id(f(srv)))(EmptyContext)
+}
+
+  
+case class ParamGetRep_param_id(srv: Exp[ParamGetRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(ParamGetRep_param_id(f(srv)))(EmptyContext)
+}
+
+  case class ParamGetReply(srv: Exp[ParamGet]) extends Op[ParamGetRep]{
+    def mirror(f: Tx) = stage(ParamGetReply(f(srv)))(EmptyContext)
+  }
+
   
   object ParamGet {
 

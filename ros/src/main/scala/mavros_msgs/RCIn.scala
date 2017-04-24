@@ -11,17 +11,6 @@ trait RCInApi extends RCInExp {
 
 trait RCInExp {
   self: RosExp =>
-  
-  
-case class RCIn_rssi(msg: Exp[RCIn]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RCIn_rssi(f(msg))
-}
-
-  
-case class RCIn_channels(msg: Exp[RCIn]) extends Op[MetaArray[FixPt[FALSE,_16,_0]]] {
-  def mirror(f: Tx) = ???//RCIn_channels(f(msg))
-}
-
 
   implicit object RCInType extends Meta[RCIn] {
     def wrapped(x: Exp[RCIn]) = RCIn(x)
@@ -36,6 +25,17 @@ case class RCIn_channels(msg: Exp[RCIn]) extends Op[MetaArray[FixPt[FALSE,_16,_0
     @api def =!=(that: RCIn) = ???
     @api def toText: Text = ???
   }
+
+  
+case class RCIn_rssi(msg: Exp[RCIn]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RCIn_rssi(f(msg)))(EmptyContext)
+}
+
+  
+case class RCIn_channels(msg: Exp[RCIn]) extends Op[MetaArray[FixPt[FALSE,_16,_0]]] {
+  def mirror(f: Tx) = stage(RCIn_channels(f(msg)))(EmptyContext)
+}
+
   
   object RCIn {
 

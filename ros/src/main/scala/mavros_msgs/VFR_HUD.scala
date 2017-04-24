@@ -11,8 +11,6 @@ trait VFR_HUDApi extends VFR_HUDExp {
 
 trait VFR_HUDExp {
   self: RosExp =>
-  
-
 
   implicit object VFR_HUDType extends Meta[VFR_HUD] {
     def wrapped(x: Exp[VFR_HUD]) = VFR_HUD(x)
@@ -26,6 +24,8 @@ trait VFR_HUDExp {
     @api def =!=(that: VFR_HUD) = ???
     @api def toText: Text = ???
   }
+
+
   
   object VFR_HUD {
 

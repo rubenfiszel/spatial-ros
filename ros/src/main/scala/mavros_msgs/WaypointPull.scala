@@ -12,12 +12,6 @@ trait WaypointPullApi extends WaypointPullExp {
 trait WaypointPullExp {
   self: RosExp =>
   
-
-
-  case class WaypointPullReply(srv: Exp[WaypointPull]) extends Op[WaypointPullRep]{
-    def mirror(f: Tx) = ???//WaypointPullReply(f(srv))
-  }
-
   implicit object WaypointPullType extends Meta[WaypointPull] {
     def wrapped(x: Exp[WaypointPull]) = WaypointPull(x)
     def stagedClass = classOf[WaypointPull]
@@ -45,6 +39,13 @@ trait WaypointPullExp {
     @api def =!=(that: WaypointPullRep): Bool = ???
     @api def toText: Text = ???
   }
+
+
+
+  case class WaypointPullReply(srv: Exp[WaypointPull]) extends Op[WaypointPullRep]{
+    def mirror(f: Tx) = stage(WaypointPullReply(f(srv)))(EmptyContext)
+  }
+
   
   object WaypointPull {
 

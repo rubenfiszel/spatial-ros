@@ -11,17 +11,6 @@ trait ParamValueApi extends ParamValueExp {
 
 trait ParamValueExp {
   self: RosExp =>
-  
-  
-case class ParamValue_integer(msg: Exp[ParamValue]) extends Op[FixPt[TRUE,_64,_0]] {
-  def mirror(f: Tx) = ???//ParamValue_integer(f(msg))
-}
-
-  
-case class ParamValue_real(msg: Exp[ParamValue]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//ParamValue_real(f(msg))
-}
-
 
   implicit object ParamValueType extends Meta[ParamValue] {
     def wrapped(x: Exp[ParamValue]) = ParamValue(x)
@@ -36,6 +25,17 @@ case class ParamValue_real(msg: Exp[ParamValue]) extends Op[FltPt[_53,_11]] {
     @api def =!=(that: ParamValue) = ???
     @api def toText: Text = ???
   }
+
+  
+case class ParamValue_integer(msg: Exp[ParamValue]) extends Op[FixPt[TRUE,_64,_0]] {
+  def mirror(f: Tx) = stage(ParamValue_integer(f(msg)))(EmptyContext)
+}
+
+  
+case class ParamValue_real(msg: Exp[ParamValue]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(ParamValue_real(f(msg)))(EmptyContext)
+}
+
   
   object ParamValue {
 

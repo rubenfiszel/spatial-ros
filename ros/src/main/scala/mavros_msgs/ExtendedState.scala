@@ -11,17 +11,6 @@ trait ExtendedStateApi extends ExtendedStateExp {
 
 trait ExtendedStateExp {
   self: RosExp =>
-  
-  
-case class ExtendedState_vtol_state(msg: Exp[ExtendedState]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//ExtendedState_vtol_state(f(msg))
-}
-
-  
-case class ExtendedState_landed_state(msg: Exp[ExtendedState]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//ExtendedState_landed_state(f(msg))
-}
-
 
   implicit object ExtendedStateType extends Meta[ExtendedState] {
     def wrapped(x: Exp[ExtendedState]) = ExtendedState(x)
@@ -36,6 +25,17 @@ case class ExtendedState_landed_state(msg: Exp[ExtendedState]) extends Op[FixPt[
     @api def =!=(that: ExtendedState) = ???
     @api def toText: Text = ???
   }
+
+  
+case class ExtendedState_vtol_state(msg: Exp[ExtendedState]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(ExtendedState_vtol_state(f(msg)))(EmptyContext)
+}
+
+  
+case class ExtendedState_landed_state(msg: Exp[ExtendedState]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(ExtendedState_landed_state(f(msg)))(EmptyContext)
+}
+
   
   object ExtendedState {
 

@@ -11,37 +11,6 @@ trait AltitudeApi extends AltitudeExp {
 
 trait AltitudeExp {
   self: RosExp =>
-  
-  
-case class Altitude_monotonic(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_monotonic(f(msg))
-}
-
-  
-case class Altitude_amsl(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_amsl(f(msg))
-}
-
-  
-case class Altitude_local(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_local(f(msg))
-}
-
-  
-case class Altitude_relative(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_relative(f(msg))
-}
-
-  
-case class Altitude_terrain(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_terrain(f(msg))
-}
-
-  
-case class Altitude_bottom_clearance(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Altitude_bottom_clearance(f(msg))
-}
-
 
   implicit object AltitudeType extends Meta[Altitude] {
     def wrapped(x: Exp[Altitude]) = Altitude(x)
@@ -60,6 +29,37 @@ case class Altitude_bottom_clearance(msg: Exp[Altitude]) extends Op[FltPt[_24,_8
     @api def =!=(that: Altitude) = ???
     @api def toText: Text = ???
   }
+
+  
+case class Altitude_monotonic(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_monotonic(f(msg)))(EmptyContext)
+}
+
+  
+case class Altitude_amsl(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_amsl(f(msg)))(EmptyContext)
+}
+
+  
+case class Altitude_local(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_local(f(msg)))(EmptyContext)
+}
+
+  
+case class Altitude_relative(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_relative(f(msg)))(EmptyContext)
+}
+
+  
+case class Altitude_terrain(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_terrain(f(msg)))(EmptyContext)
+}
+
+  
+case class Altitude_bottom_clearance(msg: Exp[Altitude]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Altitude_bottom_clearance(f(msg)))(EmptyContext)
+}
+
   
   object Altitude {
 

@@ -11,22 +11,6 @@ trait Vec3Api extends Vec3Exp {
 
 trait Vec3Exp {
   self: RosExp =>
-  
-  
-case class Vec3_x(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Vec3_x(f(msg))
-}
-
-  
-case class Vec3_y(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Vec3_y(f(msg))
-}
-
-  
-case class Vec3_z(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Vec3_z(f(msg))
-}
-
 
   implicit object Vec3Type extends Meta[Vec3] {
     def wrapped(x: Exp[Vec3]) = Vec3(x)
@@ -42,6 +26,22 @@ case class Vec3_z(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
     @api def =!=(that: Vec3) = ???
     @api def toText: Text = ???
   }
+
+  
+case class Vec3_x(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Vec3_x(f(msg)))(EmptyContext)
+}
+
+  
+case class Vec3_y(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Vec3_y(f(msg)))(EmptyContext)
+}
+
+  
+case class Vec3_z(msg: Exp[Vec3]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Vec3_z(f(msg)))(EmptyContext)
+}
+
   
   object Vec3 {
 

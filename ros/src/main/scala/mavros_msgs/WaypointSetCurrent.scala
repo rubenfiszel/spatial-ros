@@ -12,20 +12,6 @@ trait WaypointSetCurrentApi extends WaypointSetCurrentExp {
 trait WaypointSetCurrentExp {
   self: RosExp =>
   
-  
-case class WaypointSetCurrent_wp_seq(srv: Exp[WaypointSetCurrent]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//(WaypointSetCurrent_wp_seq(f(srv)): Exp[FixPt[FALSE,_16,_0]])
-}
-
-  
-case class WaypointSetCurrentRep_wp_seq(srv: Exp[WaypointSetCurrentRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//WaypointSetCurrentRep_wp_seq(f(srv))
-}
-
-  case class WaypointSetCurrentReply(srv: Exp[WaypointSetCurrent]) extends Op[WaypointSetCurrentRep]{
-    def mirror(f: Tx) = ???//WaypointSetCurrentReply(f(srv))
-  }
-
   implicit object WaypointSetCurrentType extends Meta[WaypointSetCurrent] {
     def wrapped(x: Exp[WaypointSetCurrent]) = WaypointSetCurrent(x)
     def stagedClass = classOf[WaypointSetCurrent]
@@ -52,6 +38,21 @@ case class WaypointSetCurrentRep_wp_seq(srv: Exp[WaypointSetCurrentRep]) extends
     @api def =!=(that: WaypointSetCurrentRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class WaypointSetCurrent_wp_seq(srv: Exp[WaypointSetCurrent]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(WaypointSetCurrent_wp_seq(f(srv)))(EmptyContext)
+}
+
+  
+case class WaypointSetCurrentRep_wp_seq(srv: Exp[WaypointSetCurrentRep]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(WaypointSetCurrentRep_wp_seq(f(srv)))(EmptyContext)
+}
+
+  case class WaypointSetCurrentReply(srv: Exp[WaypointSetCurrent]) extends Op[WaypointSetCurrentRep]{
+    def mirror(f: Tx) = stage(WaypointSetCurrentReply(f(srv)))(EmptyContext)
+  }
+
   
   object WaypointSetCurrent {
 

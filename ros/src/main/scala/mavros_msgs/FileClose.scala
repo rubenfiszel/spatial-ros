@@ -12,20 +12,6 @@ trait FileCloseApi extends FileCloseExp {
 trait FileCloseExp {
   self: RosExp =>
   
-  
-case class FileClose_file_path(srv: Exp[FileClose]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileClose_file_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileCloseRep_file_path(srv: Exp[FileCloseRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileCloseRep_file_path(f(srv))
-}
-
-  case class FileCloseReply(srv: Exp[FileClose]) extends Op[FileCloseRep]{
-    def mirror(f: Tx) = ???//FileCloseReply(f(srv))
-  }
-
   implicit object FileCloseType extends Meta[FileClose] {
     def wrapped(x: Exp[FileClose]) = FileClose(x)
     def stagedClass = classOf[FileClose]
@@ -53,6 +39,21 @@ case class FileCloseRep_file_path(srv: Exp[FileCloseRep]) extends Op[Text] {
     @api def =!=(that: FileCloseRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileClose_file_path(srv: Exp[FileClose]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileClose_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileCloseRep_file_path(srv: Exp[FileCloseRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileCloseRep_file_path(f(srv)))(EmptyContext)
+}
+
+  case class FileCloseReply(srv: Exp[FileClose]) extends Op[FileCloseRep]{
+    def mirror(f: Tx) = stage(FileCloseReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileClose {
 

@@ -11,12 +11,6 @@ trait WaypointListApi extends WaypointListExp {
 
 trait WaypointListExp {
   self: RosExp =>
-  
-  
-case class WaypointList_waypoints(msg: Exp[WaypointList]) extends Op[MetaArray[Waypoint]] {
-  def mirror(f: Tx) = ???//WaypointList_waypoints(f(msg))
-}
-
 
   implicit object WaypointListType extends Meta[WaypointList] {
     def wrapped(x: Exp[WaypointList]) = WaypointList(x)
@@ -30,6 +24,12 @@ case class WaypointList_waypoints(msg: Exp[WaypointList]) extends Op[MetaArray[W
     @api def =!=(that: WaypointList) = ???
     @api def toText: Text = ???
   }
+
+  
+case class WaypointList_waypoints(msg: Exp[WaypointList]) extends Op[MetaArray[Waypoint]] {
+  def mirror(f: Tx) = stage(WaypointList_waypoints(f(msg)))(EmptyContext)
+}
+
   
   object WaypointList {
 

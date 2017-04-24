@@ -12,12 +12,6 @@ trait ParamPushApi extends ParamPushExp {
 trait ParamPushExp {
   self: RosExp =>
   
-
-
-  case class ParamPushReply(srv: Exp[ParamPush]) extends Op[ParamPushRep]{
-    def mirror(f: Tx) = ???//ParamPushReply(f(srv))
-  }
-
   implicit object ParamPushType extends Meta[ParamPush] {
     def wrapped(x: Exp[ParamPush]) = ParamPush(x)
     def stagedClass = classOf[ParamPush]
@@ -45,6 +39,13 @@ trait ParamPushExp {
     @api def =!=(that: ParamPushRep): Bool = ???
     @api def toText: Text = ???
   }
+
+
+
+  case class ParamPushReply(srv: Exp[ParamPush]) extends Op[ParamPushRep]{
+    def mirror(f: Tx) = stage(ParamPushReply(f(srv)))(EmptyContext)
+  }
+
   
   object ParamPush {
 

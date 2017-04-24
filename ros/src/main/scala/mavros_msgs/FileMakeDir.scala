@@ -12,20 +12,6 @@ trait FileMakeDirApi extends FileMakeDirExp {
 trait FileMakeDirExp {
   self: RosExp =>
   
-  
-case class FileMakeDir_dir_path(srv: Exp[FileMakeDir]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileMakeDir_dir_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileMakeDirRep_dir_path(srv: Exp[FileMakeDirRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileMakeDirRep_dir_path(f(srv))
-}
-
-  case class FileMakeDirReply(srv: Exp[FileMakeDir]) extends Op[FileMakeDirRep]{
-    def mirror(f: Tx) = ???//FileMakeDirReply(f(srv))
-  }
-
   implicit object FileMakeDirType extends Meta[FileMakeDir] {
     def wrapped(x: Exp[FileMakeDir]) = FileMakeDir(x)
     def stagedClass = classOf[FileMakeDir]
@@ -53,6 +39,21 @@ case class FileMakeDirRep_dir_path(srv: Exp[FileMakeDirRep]) extends Op[Text] {
     @api def =!=(that: FileMakeDirRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileMakeDir_dir_path(srv: Exp[FileMakeDir]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileMakeDir_dir_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileMakeDirRep_dir_path(srv: Exp[FileMakeDirRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileMakeDirRep_dir_path(f(srv)))(EmptyContext)
+}
+
+  case class FileMakeDirReply(srv: Exp[FileMakeDir]) extends Op[FileMakeDirRep]{
+    def mirror(f: Tx) = stage(FileMakeDirReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileMakeDir {
 

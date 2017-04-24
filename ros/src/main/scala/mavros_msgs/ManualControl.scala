@@ -11,32 +11,6 @@ trait ManualControlApi extends ManualControlExp {
 
 trait ManualControlExp {
   self: RosExp =>
-  
-  
-case class ManualControl_x(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//ManualControl_x(f(msg))
-}
-
-  
-case class ManualControl_y(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//ManualControl_y(f(msg))
-}
-
-  
-case class ManualControl_z(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//ManualControl_z(f(msg))
-}
-
-  
-case class ManualControl_r(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//ManualControl_r(f(msg))
-}
-
-  
-case class ManualControl_buttons(msg: Exp[ManualControl]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//ManualControl_buttons(f(msg))
-}
-
 
   implicit object ManualControlType extends Meta[ManualControl] {
     def wrapped(x: Exp[ManualControl]) = ManualControl(x)
@@ -54,6 +28,32 @@ case class ManualControl_buttons(msg: Exp[ManualControl]) extends Op[FixPt[FALSE
     @api def =!=(that: ManualControl) = ???
     @api def toText: Text = ???
   }
+
+  
+case class ManualControl_x(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(ManualControl_x(f(msg)))(EmptyContext)
+}
+
+  
+case class ManualControl_y(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(ManualControl_y(f(msg)))(EmptyContext)
+}
+
+  
+case class ManualControl_z(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(ManualControl_z(f(msg)))(EmptyContext)
+}
+
+  
+case class ManualControl_r(msg: Exp[ManualControl]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(ManualControl_r(f(msg)))(EmptyContext)
+}
+
+  
+case class ManualControl_buttons(msg: Exp[ManualControl]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(ManualControl_buttons(f(msg)))(EmptyContext)
+}
+
   
   object ManualControl {
 

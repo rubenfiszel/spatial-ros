@@ -11,8 +11,6 @@ trait BatteryStatusApi extends BatteryStatusExp {
 
 trait BatteryStatusExp {
   self: RosExp =>
-  
-
 
   implicit object BatteryStatusType extends Meta[BatteryStatus] {
     def wrapped(x: Exp[BatteryStatus]) = BatteryStatus(x)
@@ -26,6 +24,8 @@ trait BatteryStatusExp {
     @api def =!=(that: BatteryStatus) = ???
     @api def toText: Text = ???
   }
+
+
   
   object BatteryStatus {
 

@@ -11,57 +11,6 @@ trait OpticalFlowRadApi extends OpticalFlowRadExp {
 
 trait OpticalFlowRadExp {
   self: RosExp =>
-  
-  
-case class OpticalFlowRad_integration_time_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integration_time_us(f(msg))
-}
-
-  
-case class OpticalFlowRad_integrated_x(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_x(f(msg))
-}
-
-  
-case class OpticalFlowRad_integrated_y(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_y(f(msg))
-}
-
-  
-case class OpticalFlowRad_integrated_xgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_xgyro(f(msg))
-}
-
-  
-case class OpticalFlowRad_integrated_ygyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_ygyro(f(msg))
-}
-
-  
-case class OpticalFlowRad_integrated_zgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_integrated_zgyro(f(msg))
-}
-
-  
-case class OpticalFlowRad_temperature(msg: Exp[OpticalFlowRad]) extends Op[FixPt[TRUE,_16,_0]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_temperature(f(msg))
-}
-
-  
-case class OpticalFlowRad_quality(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_quality(f(msg))
-}
-
-  
-case class OpticalFlowRad_time_delta_distance_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_time_delta_distance_us(f(msg))
-}
-
-  
-case class OpticalFlowRad_distance(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//OpticalFlowRad_distance(f(msg))
-}
-
 
   implicit object OpticalFlowRadType extends Meta[OpticalFlowRad] {
     def wrapped(x: Exp[OpticalFlowRad]) = OpticalFlowRad(x)
@@ -84,6 +33,57 @@ case class OpticalFlowRad_distance(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_2
     @api def =!=(that: OpticalFlowRad) = ???
     @api def toText: Text = ???
   }
+
+  
+case class OpticalFlowRad_integration_time_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integration_time_us(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_integrated_x(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integrated_x(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_integrated_y(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integrated_y(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_integrated_xgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integrated_xgyro(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_integrated_ygyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integrated_ygyro(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_integrated_zgyro(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_integrated_zgyro(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_temperature(msg: Exp[OpticalFlowRad]) extends Op[FixPt[TRUE,_16,_0]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_temperature(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_quality(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_quality(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_time_delta_distance_us(msg: Exp[OpticalFlowRad]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_time_delta_distance_us(f(msg)))(EmptyContext)
+}
+
+  
+case class OpticalFlowRad_distance(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(OpticalFlowRad_distance(f(msg)))(EmptyContext)
+}
+
   
   object OpticalFlowRad {
 

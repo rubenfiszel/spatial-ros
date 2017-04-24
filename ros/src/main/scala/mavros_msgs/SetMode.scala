@@ -12,12 +12,6 @@ trait SetModeApi extends SetModeExp {
 trait SetModeExp {
   self: RosExp =>
   
-
-
-  case class SetModeReply(srv: Exp[SetMode]) extends Op[SetModeRep]{
-    def mirror(f: Tx) = ???//SetModeReply(f(srv))
-  }
-
   implicit object SetModeType extends Meta[SetMode] {
     def wrapped(x: Exp[SetMode]) = SetMode(x)
     def stagedClass = classOf[SetMode]
@@ -44,6 +38,13 @@ trait SetModeExp {
     @api def =!=(that: SetModeRep): Bool = ???
     @api def toText: Text = ???
   }
+
+
+
+  case class SetModeReply(srv: Exp[SetMode]) extends Op[SetModeRep]{
+    def mirror(f: Tx) = stage(SetModeReply(f(srv)))(EmptyContext)
+  }
+
   
   object SetMode {
 

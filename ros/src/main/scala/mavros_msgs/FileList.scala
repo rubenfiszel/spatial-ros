@@ -12,20 +12,6 @@ trait FileListApi extends FileListExp {
 trait FileListExp {
   self: RosExp =>
   
-  
-case class FileList_dir_path(srv: Exp[FileList]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileList_dir_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileListRep_dir_path(srv: Exp[FileListRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileListRep_dir_path(f(srv))
-}
-
-  case class FileListReply(srv: Exp[FileList]) extends Op[FileListRep]{
-    def mirror(f: Tx) = ???//FileListReply(f(srv))
-  }
-
   implicit object FileListType extends Meta[FileList] {
     def wrapped(x: Exp[FileList]) = FileList(x)
     def stagedClass = classOf[FileList]
@@ -54,6 +40,21 @@ case class FileListRep_dir_path(srv: Exp[FileListRep]) extends Op[Text] {
     @api def =!=(that: FileListRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileList_dir_path(srv: Exp[FileList]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileList_dir_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileListRep_dir_path(srv: Exp[FileListRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileListRep_dir_path(f(srv)))(EmptyContext)
+}
+
+  case class FileListReply(srv: Exp[FileList]) extends Op[FileListRep]{
+    def mirror(f: Tx) = stage(FileListReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileList {
 

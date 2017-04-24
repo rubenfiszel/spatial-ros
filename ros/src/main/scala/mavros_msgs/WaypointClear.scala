@@ -12,12 +12,6 @@ trait WaypointClearApi extends WaypointClearExp {
 trait WaypointClearExp {
   self: RosExp =>
   
-
-
-  case class WaypointClearReply(srv: Exp[WaypointClear]) extends Op[WaypointClearRep]{
-    def mirror(f: Tx) = ???//WaypointClearReply(f(srv))
-  }
-
   implicit object WaypointClearType extends Meta[WaypointClear] {
     def wrapped(x: Exp[WaypointClear]) = WaypointClear(x)
     def stagedClass = classOf[WaypointClear]
@@ -44,6 +38,13 @@ trait WaypointClearExp {
     @api def =!=(that: WaypointClearRep): Bool = ???
     @api def toText: Text = ???
   }
+
+
+
+  case class WaypointClearReply(srv: Exp[WaypointClear]) extends Op[WaypointClearRep]{
+    def mirror(f: Tx) = stage(WaypointClearReply(f(srv)))(EmptyContext)
+  }
+
   
   object WaypointClear {
 

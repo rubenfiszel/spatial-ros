@@ -11,12 +11,6 @@ trait OverrideRCInApi extends OverrideRCInExp {
 
 trait OverrideRCInExp {
   self: RosExp =>
-  
-  
-case class OverrideRCIn_channels(msg: Exp[OverrideRCIn]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//OverrideRCIn_channels(f(msg))
-}
-
 
   implicit object OverrideRCInType extends Meta[OverrideRCIn] {
     def wrapped(x: Exp[OverrideRCIn]) = OverrideRCIn(x)
@@ -30,6 +24,12 @@ case class OverrideRCIn_channels(msg: Exp[OverrideRCIn]) extends Op[FixPt[FALSE,
     @api def =!=(that: OverrideRCIn) = ???
     @api def toText: Text = ???
   }
+
+  
+case class OverrideRCIn_channels(msg: Exp[OverrideRCIn]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(OverrideRCIn_channels(f(msg)))(EmptyContext)
+}
+
   
   object OverrideRCIn {
     val CHAN_RELEASE: FixPt[FALSE,_16,_0] = 0

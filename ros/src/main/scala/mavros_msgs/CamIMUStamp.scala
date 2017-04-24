@@ -11,8 +11,6 @@ trait CamIMUStampApi extends CamIMUStampExp {
 
 trait CamIMUStampExp {
   self: RosExp =>
-  
-
 
   implicit object CamIMUStampType extends Meta[CamIMUStamp] {
     def wrapped(x: Exp[CamIMUStamp]) = CamIMUStamp(x)
@@ -26,6 +24,8 @@ trait CamIMUStampExp {
     @api def =!=(that: CamIMUStamp) = ???
     @api def toText: Text = ???
   }
+
+
   
   object CamIMUStamp {
 

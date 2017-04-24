@@ -12,20 +12,6 @@ trait WaypointPushApi extends WaypointPushExp {
 trait WaypointPushExp {
   self: RosExp =>
   
-  
-case class WaypointPush_waypoints(srv: Exp[WaypointPush]) extends Op[MetaArray[Waypoint]] {
-  def mirror(f: Tx) = ???//(WaypointPush_waypoints(f(srv)): Exp[MetaArray[Waypoint]])
-}
-
-  
-case class WaypointPushRep_waypoints(srv: Exp[WaypointPushRep]) extends Op[MetaArray[Waypoint]] {
-  def mirror(f: Tx) = ???//WaypointPushRep_waypoints(f(srv))
-}
-
-  case class WaypointPushReply(srv: Exp[WaypointPush]) extends Op[WaypointPushRep]{
-    def mirror(f: Tx) = ???//WaypointPushReply(f(srv))
-  }
-
   implicit object WaypointPushType extends Meta[WaypointPush] {
     def wrapped(x: Exp[WaypointPush]) = WaypointPush(x)
     def stagedClass = classOf[WaypointPush]
@@ -53,6 +39,21 @@ case class WaypointPushRep_waypoints(srv: Exp[WaypointPushRep]) extends Op[MetaA
     @api def =!=(that: WaypointPushRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class WaypointPush_waypoints(srv: Exp[WaypointPush]) extends Op[MetaArray[Waypoint]] {
+  def mirror(f: Tx) = stage(WaypointPush_waypoints(f(srv)))(EmptyContext)
+}
+
+  
+case class WaypointPushRep_waypoints(srv: Exp[WaypointPushRep]) extends Op[MetaArray[Waypoint]] {
+  def mirror(f: Tx) = stage(WaypointPushRep_waypoints(f(srv)))(EmptyContext)
+}
+
+  case class WaypointPushReply(srv: Exp[WaypointPush]) extends Op[WaypointPushRep]{
+    def mirror(f: Tx) = stage(WaypointPushReply(f(srv)))(EmptyContext)
+  }
+
   
   object WaypointPush {
 

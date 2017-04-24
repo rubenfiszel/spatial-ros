@@ -12,40 +12,6 @@ trait FileWriteApi extends FileWriteExp {
 trait FileWriteExp {
   self: RosExp =>
   
-  
-case class FileWrite_file_path(srv: Exp[FileWrite]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileWrite_file_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileWrite_offset(srv: Exp[FileWrite]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = ???//(FileWrite_offset(f(srv)): Exp[FixPt[FALSE,_64,_0]])
-}
-
-  
-case class FileWrite_data(srv: Exp[FileWrite]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
-  def mirror(f: Tx) = ???//(FileWrite_data(f(srv)): Exp[MetaArray[FixPt[FALSE,_8,_0]]])
-}
-
-  
-case class FileWriteRep_file_path(srv: Exp[FileWriteRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileWriteRep_file_path(f(srv))
-}
-
-  
-case class FileWriteRep_offset(srv: Exp[FileWriteRep]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = ???//FileWriteRep_offset(f(srv))
-}
-
-  
-case class FileWriteRep_data(srv: Exp[FileWriteRep]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
-  def mirror(f: Tx) = ???//FileWriteRep_data(f(srv))
-}
-
-  case class FileWriteReply(srv: Exp[FileWrite]) extends Op[FileWriteRep]{
-    def mirror(f: Tx) = ???//FileWriteReply(f(srv))
-  }
-
   implicit object FileWriteType extends Meta[FileWrite] {
     def wrapped(x: Exp[FileWrite]) = FileWrite(x)
     def stagedClass = classOf[FileWrite]
@@ -75,6 +41,41 @@ case class FileWriteRep_data(srv: Exp[FileWriteRep]) extends Op[MetaArray[FixPt[
     @api def =!=(that: FileWriteRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileWrite_file_path(srv: Exp[FileWrite]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileWrite_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileWrite_offset(srv: Exp[FileWrite]) extends Op[FixPt[FALSE,_64,_0]] {
+  def mirror(f: Tx) = stage(FileWrite_offset(f(srv)))(EmptyContext)
+}
+
+  
+case class FileWrite_data(srv: Exp[FileWrite]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
+  def mirror(f: Tx) = stage(FileWrite_data(f(srv)))(EmptyContext)
+}
+
+  
+case class FileWriteRep_file_path(srv: Exp[FileWriteRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileWriteRep_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileWriteRep_offset(srv: Exp[FileWriteRep]) extends Op[FixPt[FALSE,_64,_0]] {
+  def mirror(f: Tx) = stage(FileWriteRep_offset(f(srv)))(EmptyContext)
+}
+
+  
+case class FileWriteRep_data(srv: Exp[FileWriteRep]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
+  def mirror(f: Tx) = stage(FileWriteRep_data(f(srv)))(EmptyContext)
+}
+
+  case class FileWriteReply(srv: Exp[FileWrite]) extends Op[FileWriteRep]{
+    def mirror(f: Tx) = stage(FileWriteReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileWrite {
 

@@ -12,20 +12,6 @@ trait FileRemoveDirApi extends FileRemoveDirExp {
 trait FileRemoveDirExp {
   self: RosExp =>
   
-  
-case class FileRemoveDir_dir_path(srv: Exp[FileRemoveDir]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileRemoveDir_dir_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileRemoveDirRep_dir_path(srv: Exp[FileRemoveDirRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileRemoveDirRep_dir_path(f(srv))
-}
-
-  case class FileRemoveDirReply(srv: Exp[FileRemoveDir]) extends Op[FileRemoveDirRep]{
-    def mirror(f: Tx) = ???//FileRemoveDirReply(f(srv))
-  }
-
   implicit object FileRemoveDirType extends Meta[FileRemoveDir] {
     def wrapped(x: Exp[FileRemoveDir]) = FileRemoveDir(x)
     def stagedClass = classOf[FileRemoveDir]
@@ -53,6 +39,21 @@ case class FileRemoveDirRep_dir_path(srv: Exp[FileRemoveDirRep]) extends Op[Text
     @api def =!=(that: FileRemoveDirRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileRemoveDir_dir_path(srv: Exp[FileRemoveDir]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRemoveDir_dir_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileRemoveDirRep_dir_path(srv: Exp[FileRemoveDirRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRemoveDirRep_dir_path(f(srv)))(EmptyContext)
+}
+
+  case class FileRemoveDirReply(srv: Exp[FileRemoveDir]) extends Op[FileRemoveDirRep]{
+    def mirror(f: Tx) = stage(FileRemoveDirReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileRemoveDir {
 

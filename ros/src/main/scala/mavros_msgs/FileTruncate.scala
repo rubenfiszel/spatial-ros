@@ -12,30 +12,6 @@ trait FileTruncateApi extends FileTruncateExp {
 trait FileTruncateExp {
   self: RosExp =>
   
-  
-case class FileTruncate_file_path(srv: Exp[FileTruncate]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileTruncate_file_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileTruncate_length(srv: Exp[FileTruncate]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = ???//(FileTruncate_length(f(srv)): Exp[FixPt[FALSE,_64,_0]])
-}
-
-  
-case class FileTruncateRep_file_path(srv: Exp[FileTruncateRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileTruncateRep_file_path(f(srv))
-}
-
-  
-case class FileTruncateRep_length(srv: Exp[FileTruncateRep]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = ???//FileTruncateRep_length(f(srv))
-}
-
-  case class FileTruncateReply(srv: Exp[FileTruncate]) extends Op[FileTruncateRep]{
-    def mirror(f: Tx) = ???//FileTruncateReply(f(srv))
-  }
-
   implicit object FileTruncateType extends Meta[FileTruncate] {
     def wrapped(x: Exp[FileTruncate]) = FileTruncate(x)
     def stagedClass = classOf[FileTruncate]
@@ -64,6 +40,31 @@ case class FileTruncateRep_length(srv: Exp[FileTruncateRep]) extends Op[FixPt[FA
     @api def =!=(that: FileTruncateRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileTruncate_file_path(srv: Exp[FileTruncate]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileTruncate_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileTruncate_length(srv: Exp[FileTruncate]) extends Op[FixPt[FALSE,_64,_0]] {
+  def mirror(f: Tx) = stage(FileTruncate_length(f(srv)))(EmptyContext)
+}
+
+  
+case class FileTruncateRep_file_path(srv: Exp[FileTruncateRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileTruncateRep_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileTruncateRep_length(srv: Exp[FileTruncateRep]) extends Op[FixPt[FALSE,_64,_0]] {
+  def mirror(f: Tx) = stage(FileTruncateRep_length(f(srv)))(EmptyContext)
+}
+
+  case class FileTruncateReply(srv: Exp[FileTruncate]) extends Op[FileTruncateRep]{
+    def mirror(f: Tx) = stage(FileTruncateReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileTruncate {
 

@@ -11,22 +11,6 @@ trait PointApi extends PointExp {
 
 trait PointExp {
   self: RosExp =>
-  
-  
-case class Point_x(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Point_x(f(msg))
-}
-
-  
-case class Point_y(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Point_y(f(msg))
-}
-
-  
-case class Point_z(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Point_z(f(msg))
-}
-
 
   implicit object PointType extends Meta[Point] {
     def wrapped(x: Exp[Point]) = Point(x)
@@ -42,6 +26,22 @@ case class Point_z(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
     @api def =!=(that: Point) = ???
     @api def toText: Text = ???
   }
+
+  
+case class Point_x(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Point_x(f(msg)))(EmptyContext)
+}
+
+  
+case class Point_y(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Point_y(f(msg)))(EmptyContext)
+}
+
+  
+case class Point_z(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Point_z(f(msg)))(EmptyContext)
+}
+
   
   object Point {
 

@@ -12,20 +12,6 @@ trait FileChecksumApi extends FileChecksumExp {
 trait FileChecksumExp {
   self: RosExp =>
   
-  
-case class FileChecksum_file_path(srv: Exp[FileChecksum]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileChecksum_file_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileChecksumRep_file_path(srv: Exp[FileChecksumRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileChecksumRep_file_path(f(srv))
-}
-
-  case class FileChecksumReply(srv: Exp[FileChecksum]) extends Op[FileChecksumRep]{
-    def mirror(f: Tx) = ???//FileChecksumReply(f(srv))
-  }
-
   implicit object FileChecksumType extends Meta[FileChecksum] {
     def wrapped(x: Exp[FileChecksum]) = FileChecksum(x)
     def stagedClass = classOf[FileChecksum]
@@ -54,6 +40,21 @@ case class FileChecksumRep_file_path(srv: Exp[FileChecksumRep]) extends Op[Text]
     @api def =!=(that: FileChecksumRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileChecksum_file_path(srv: Exp[FileChecksum]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileChecksum_file_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileChecksumRep_file_path(srv: Exp[FileChecksumRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileChecksumRep_file_path(f(srv)))(EmptyContext)
+}
+
+  case class FileChecksumReply(srv: Exp[FileChecksum]) extends Op[FileChecksumRep]{
+    def mirror(f: Tx) = stage(FileChecksumReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileChecksum {
 

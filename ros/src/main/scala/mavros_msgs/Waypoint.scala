@@ -11,62 +11,6 @@ trait WaypointApi extends WaypointExp {
 
 trait WaypointExp {
   self: RosExp =>
-  
-  
-case class Waypoint_frame(msg: Exp[Waypoint]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//Waypoint_frame(f(msg))
-}
-
-  
-case class Waypoint_command(msg: Exp[Waypoint]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//Waypoint_command(f(msg))
-}
-
-  
-case class Waypoint_is_current(msg: Exp[Waypoint]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//Waypoint_is_current(f(msg))
-}
-
-  
-case class Waypoint_autocontinue(msg: Exp[Waypoint]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//Waypoint_autocontinue(f(msg))
-}
-
-  
-case class Waypoint_param1(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Waypoint_param1(f(msg))
-}
-
-  
-case class Waypoint_param2(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Waypoint_param2(f(msg))
-}
-
-  
-case class Waypoint_param3(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Waypoint_param3(f(msg))
-}
-
-  
-case class Waypoint_param4(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//Waypoint_param4(f(msg))
-}
-
-  
-case class Waypoint_x_lat(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Waypoint_x_lat(f(msg))
-}
-
-  
-case class Waypoint_y_long(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Waypoint_y_long(f(msg))
-}
-
-  
-case class Waypoint_z_alt(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//Waypoint_z_alt(f(msg))
-}
-
 
   implicit object WaypointType extends Meta[Waypoint] {
     def wrapped(x: Exp[Waypoint]) = Waypoint(x)
@@ -90,6 +34,62 @@ case class Waypoint_z_alt(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
     @api def =!=(that: Waypoint) = ???
     @api def toText: Text = ???
   }
+
+  
+case class Waypoint_frame(msg: Exp[Waypoint]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(Waypoint_frame(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_command(msg: Exp[Waypoint]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(Waypoint_command(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_is_current(msg: Exp[Waypoint]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(Waypoint_is_current(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_autocontinue(msg: Exp[Waypoint]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(Waypoint_autocontinue(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_param1(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Waypoint_param1(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_param2(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Waypoint_param2(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_param3(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Waypoint_param3(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_param4(msg: Exp[Waypoint]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(Waypoint_param4(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_x_lat(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Waypoint_x_lat(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_y_long(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Waypoint_y_long(f(msg)))(EmptyContext)
+}
+
+  
+case class Waypoint_z_alt(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(Waypoint_z_alt(f(msg)))(EmptyContext)
+}
+
   
   object Waypoint {
 

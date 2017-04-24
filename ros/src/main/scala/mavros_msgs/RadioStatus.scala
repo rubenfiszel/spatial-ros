@@ -11,52 +11,6 @@ trait RadioStatusApi extends RadioStatusExp {
 
 trait RadioStatusExp {
   self: RosExp =>
-  
-  
-case class RadioStatus_rssi(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_rssi(f(msg))
-}
-
-  
-case class RadioStatus_remrssi(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_remrssi(f(msg))
-}
-
-  
-case class RadioStatus_txbuf(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_txbuf(f(msg))
-}
-
-  
-case class RadioStatus_noise(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_noise(f(msg))
-}
-
-  
-case class RadioStatus_remnoise(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_remnoise(f(msg))
-}
-
-  
-case class RadioStatus_rxerrors(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_rxerrors(f(msg))
-}
-
-  
-case class RadioStatus_fixed(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//RadioStatus_fixed(f(msg))
-}
-
-  
-case class RadioStatus_rssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//RadioStatus_rssi_dbm(f(msg))
-}
-
-  
-case class RadioStatus_remrssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//RadioStatus_remrssi_dbm(f(msg))
-}
-
 
   implicit object RadioStatusType extends Meta[RadioStatus] {
     def wrapped(x: Exp[RadioStatus]) = RadioStatus(x)
@@ -78,6 +32,52 @@ case class RadioStatus_remrssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_
     @api def =!=(that: RadioStatus) = ???
     @api def toText: Text = ???
   }
+
+  
+case class RadioStatus_rssi(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_rssi(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_remrssi(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_remrssi(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_txbuf(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_txbuf(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_noise(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_noise(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_remnoise(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_remnoise(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_rxerrors(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_rxerrors(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_fixed(msg: Exp[RadioStatus]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(RadioStatus_fixed(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_rssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(RadioStatus_rssi_dbm(f(msg)))(EmptyContext)
+}
+
+  
+case class RadioStatus_remrssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(RadioStatus_remrssi_dbm(f(msg)))(EmptyContext)
+}
+
   
   object RadioStatus {
 

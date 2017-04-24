@@ -91,7 +91,7 @@ def msgToScala(f: File) = {
   val nodes = datas map { case (t, n) =>
     s"""
 case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = ???//${name}_${n}(f(msg))
+  def mirror(f: Tx) = stage(${name}_${n}(f(msg)))(EmptyContext)
 }
 """
   }
@@ -113,8 +113,6 @@ trait ${name}Api extends ${name}Exp {
 
 trait ${name}Exp {
   self: RosExp =>
-  
-${ident(nodes, 1)}
 
   implicit object ${name}Type extends Meta[$name] {
     def wrapped(x: Exp[$name]) = $name(x)
@@ -128,6 +126,8 @@ ${ident(apis, 2)}
     @api def =!=(that: $name) = ???
     @api def toText: Text = ???
   }
+
+${ident(nodes, 1)}
   
   object $name {
 ${ident(cs, 2)}
@@ -169,14 +169,14 @@ def srvToScala(f: File) = {
   val nodes = datas map { case (t, n) =>
     s"""
 case class ${name}_${n}(srv: Exp[$name]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = ???//(${name}_${n}(f(srv)): Exp[${remap(t)}])
+  def mirror(f: Tx) = stage(${name}_${n}(f(srv)))(EmptyContext)
 }
 """
   }
   val nodesRep = datas map { case (t, n) =>
     s"""
 case class ${nameRep}_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = ???//${nameRep}_${n}(f(srv))
+  def mirror(f: Tx) = stage(${nameRep}_${n}(f(srv)))(EmptyContext)
 }
 """
   }
@@ -202,12 +202,6 @@ trait ${name}Api extends ${name}Exp {
 trait ${name}Exp {
   self: RosExp =>
   
-${ident(nodes, 1)}
-${ident(nodesRep, 1)}
-  case class ${name}Reply(srv: Exp[$name]) extends Op[$nameRep]{
-    def mirror(f: Tx) = ???//${name}Reply(f(srv))
-  }
-
   implicit object ${name}Type extends Meta[$name] {
     def wrapped(x: Exp[$name]) = $name(x)
     def stagedClass = classOf[$name]
@@ -234,6 +228,13 @@ ${ident(apisRep, 2)}
     @api def =!=(that: $nameRep): Bool = ???
     @api def toText: Text = ???
   }
+
+${ident(nodes, 1)}
+${ident(nodesRep, 1)}
+  case class ${name}Reply(srv: Exp[$name]) extends Op[$nameRep]{
+    def mirror(f: Tx) = stage(${name}Reply(f(srv)))(EmptyContext)
+  }
+
   
   object $name {
 ${ident(cs, 2)}

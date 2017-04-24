@@ -11,12 +11,6 @@ trait HomePositionApi extends HomePositionExp {
 
 trait HomePositionExp {
   self: RosExp =>
-  
-  
-case class HomePosition_longitude(msg: Exp[HomePosition]) extends Op[FltPt[_53,_11]] {
-  def mirror(f: Tx) = ???//HomePosition_longitude(f(msg))
-}
-
 
   implicit object HomePositionType extends Meta[HomePosition] {
     def wrapped(x: Exp[HomePosition]) = HomePosition(x)
@@ -30,6 +24,12 @@ case class HomePosition_longitude(msg: Exp[HomePosition]) extends Op[FltPt[_53,_
     @api def =!=(that: HomePosition) = ???
     @api def toText: Text = ???
   }
+
+  
+case class HomePosition_longitude(msg: Exp[HomePosition]) extends Op[FltPt[_53,_11]] {
+  def mirror(f: Tx) = stage(HomePosition_longitude(f(msg)))(EmptyContext)
+}
+
   
   object HomePosition {
 

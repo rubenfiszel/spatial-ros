@@ -11,22 +11,6 @@ trait FileEntryApi extends FileEntryExp {
 
 trait FileEntryExp {
   self: RosExp =>
-  
-  
-case class FileEntry_name(msg: Exp[FileEntry]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileEntry_name(f(msg))
-}
-
-  
-case class FileEntry_type(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//FileEntry_type(f(msg))
-}
-
-  
-case class FileEntry_size(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = ???//FileEntry_size(f(msg))
-}
-
 
   implicit object FileEntryType extends Meta[FileEntry] {
     def wrapped(x: Exp[FileEntry]) = FileEntry(x)
@@ -42,6 +26,22 @@ case class FileEntry_size(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_64,_0]] {
     @api def =!=(that: FileEntry) = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileEntry_name(msg: Exp[FileEntry]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileEntry_name(f(msg)))(EmptyContext)
+}
+
+  
+case class FileEntry_type(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(FileEntry_type(f(msg)))(EmptyContext)
+}
+
+  
+case class FileEntry_size(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_64,_0]] {
+  def mirror(f: Tx) = stage(FileEntry_size(f(msg)))(EmptyContext)
+}
+
   
   object FileEntry {
 

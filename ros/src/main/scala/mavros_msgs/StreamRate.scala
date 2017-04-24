@@ -12,40 +12,6 @@ trait StreamRateApi extends StreamRateExp {
 trait StreamRateExp {
   self: RosExp =>
   
-  
-case class StreamRate_stream_id(srv: Exp[StreamRate]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//(StreamRate_stream_id(f(srv)): Exp[FixPt[FALSE,_8,_0]])
-}
-
-  
-case class StreamRate_message_rate(srv: Exp[StreamRate]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//(StreamRate_message_rate(f(srv)): Exp[FixPt[FALSE,_16,_0]])
-}
-
-  
-case class StreamRate_on_off(srv: Exp[StreamRate]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//(StreamRate_on_off(f(srv)): Exp[Bool])
-}
-
-  
-case class StreamRateRep_stream_id(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//StreamRateRep_stream_id(f(srv))
-}
-
-  
-case class StreamRateRep_message_rate(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = ???//StreamRateRep_message_rate(f(srv))
-}
-
-  
-case class StreamRateRep_on_off(srv: Exp[StreamRateRep]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//StreamRateRep_on_off(f(srv))
-}
-
-  case class StreamRateReply(srv: Exp[StreamRate]) extends Op[StreamRateRep]{
-    def mirror(f: Tx) = ???//StreamRateReply(f(srv))
-  }
-
   implicit object StreamRateType extends Meta[StreamRate] {
     def wrapped(x: Exp[StreamRate]) = StreamRate(x)
     def stagedClass = classOf[StreamRate]
@@ -74,6 +40,41 @@ case class StreamRateRep_on_off(srv: Exp[StreamRateRep]) extends Op[Bool] {
     @api def =!=(that: StreamRateRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class StreamRate_stream_id(srv: Exp[StreamRate]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(StreamRate_stream_id(f(srv)))(EmptyContext)
+}
+
+  
+case class StreamRate_message_rate(srv: Exp[StreamRate]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(StreamRate_message_rate(f(srv)))(EmptyContext)
+}
+
+  
+case class StreamRate_on_off(srv: Exp[StreamRate]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(StreamRate_on_off(f(srv)))(EmptyContext)
+}
+
+  
+case class StreamRateRep_stream_id(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(StreamRateRep_stream_id(f(srv)))(EmptyContext)
+}
+
+  
+case class StreamRateRep_message_rate(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_16,_0]] {
+  def mirror(f: Tx) = stage(StreamRateRep_message_rate(f(srv)))(EmptyContext)
+}
+
+  
+case class StreamRateRep_on_off(srv: Exp[StreamRateRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(StreamRateRep_on_off(f(srv)))(EmptyContext)
+}
+
+  case class StreamRateReply(srv: Exp[StreamRate]) extends Op[StreamRateRep]{
+    def mirror(f: Tx) = stage(StreamRateReply(f(srv)))(EmptyContext)
+  }
+
   
   object StreamRate {
 

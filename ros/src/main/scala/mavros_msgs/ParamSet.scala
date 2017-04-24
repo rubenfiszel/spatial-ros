@@ -12,30 +12,6 @@ trait ParamSetApi extends ParamSetExp {
 trait ParamSetExp {
   self: RosExp =>
   
-  
-case class ParamSet_param_id(srv: Exp[ParamSet]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(ParamSet_param_id(f(srv)): Exp[Text])
-}
-
-  
-case class ParamSet_value(srv: Exp[ParamSet]) extends Op[ParamValue] {
-  def mirror(f: Tx) = ???//(ParamSet_value(f(srv)): Exp[ParamValue])
-}
-
-  
-case class ParamSetRep_param_id(srv: Exp[ParamSetRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//ParamSetRep_param_id(f(srv))
-}
-
-  
-case class ParamSetRep_value(srv: Exp[ParamSetRep]) extends Op[ParamValue] {
-  def mirror(f: Tx) = ???//ParamSetRep_value(f(srv))
-}
-
-  case class ParamSetReply(srv: Exp[ParamSet]) extends Op[ParamSetRep]{
-    def mirror(f: Tx) = ???//ParamSetReply(f(srv))
-  }
-
   implicit object ParamSetType extends Meta[ParamSet] {
     def wrapped(x: Exp[ParamSet]) = ParamSet(x)
     def stagedClass = classOf[ParamSet]
@@ -64,6 +40,31 @@ case class ParamSetRep_value(srv: Exp[ParamSetRep]) extends Op[ParamValue] {
     @api def =!=(that: ParamSetRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class ParamSet_param_id(srv: Exp[ParamSet]) extends Op[Text] {
+  def mirror(f: Tx) = stage(ParamSet_param_id(f(srv)))(EmptyContext)
+}
+
+  
+case class ParamSet_value(srv: Exp[ParamSet]) extends Op[ParamValue] {
+  def mirror(f: Tx) = stage(ParamSet_value(f(srv)))(EmptyContext)
+}
+
+  
+case class ParamSetRep_param_id(srv: Exp[ParamSetRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(ParamSetRep_param_id(f(srv)))(EmptyContext)
+}
+
+  
+case class ParamSetRep_value(srv: Exp[ParamSetRep]) extends Op[ParamValue] {
+  def mirror(f: Tx) = stage(ParamSetRep_value(f(srv)))(EmptyContext)
+}
+
+  case class ParamSetReply(srv: Exp[ParamSet]) extends Op[ParamSetRep]{
+    def mirror(f: Tx) = stage(ParamSetReply(f(srv)))(EmptyContext)
+  }
+
   
   object ParamSet {
 

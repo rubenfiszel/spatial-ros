@@ -12,30 +12,6 @@ trait FileRenameApi extends FileRenameExp {
 trait FileRenameExp {
   self: RosExp =>
   
-  
-case class FileRename_old_path(srv: Exp[FileRename]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileRename_old_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileRename_new_path(srv: Exp[FileRename]) extends Op[Text] {
-  def mirror(f: Tx) = ???//(FileRename_new_path(f(srv)): Exp[Text])
-}
-
-  
-case class FileRenameRep_old_path(srv: Exp[FileRenameRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileRenameRep_old_path(f(srv))
-}
-
-  
-case class FileRenameRep_new_path(srv: Exp[FileRenameRep]) extends Op[Text] {
-  def mirror(f: Tx) = ???//FileRenameRep_new_path(f(srv))
-}
-
-  case class FileRenameReply(srv: Exp[FileRename]) extends Op[FileRenameRep]{
-    def mirror(f: Tx) = ???//FileRenameReply(f(srv))
-  }
-
   implicit object FileRenameType extends Meta[FileRename] {
     def wrapped(x: Exp[FileRename]) = FileRename(x)
     def stagedClass = classOf[FileRename]
@@ -64,6 +40,31 @@ case class FileRenameRep_new_path(srv: Exp[FileRenameRep]) extends Op[Text] {
     @api def =!=(that: FileRenameRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class FileRename_old_path(srv: Exp[FileRename]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRename_old_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileRename_new_path(srv: Exp[FileRename]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRename_new_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileRenameRep_old_path(srv: Exp[FileRenameRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRenameRep_old_path(f(srv)))(EmptyContext)
+}
+
+  
+case class FileRenameRep_new_path(srv: Exp[FileRenameRep]) extends Op[Text] {
+  def mirror(f: Tx) = stage(FileRenameRep_new_path(f(srv)))(EmptyContext)
+}
+
+  case class FileRenameReply(srv: Exp[FileRename]) extends Op[FileRenameRep]{
+    def mirror(f: Tx) = stage(FileRenameReply(f(srv)))(EmptyContext)
+  }
+
   
   object FileRename {
 

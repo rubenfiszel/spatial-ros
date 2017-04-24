@@ -11,17 +11,6 @@ trait ActuatorControlApi extends ActuatorControlExp {
 
 trait ActuatorControlExp {
   self: RosExp =>
-  
-  
-case class ActuatorControl_group_mix(msg: Exp[ActuatorControl]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = ???//ActuatorControl_group_mix(f(msg))
-}
-
-  
-case class ActuatorControl_controls(msg: Exp[ActuatorControl]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = ???//ActuatorControl_controls(f(msg))
-}
-
 
   implicit object ActuatorControlType extends Meta[ActuatorControl] {
     def wrapped(x: Exp[ActuatorControl]) = ActuatorControl(x)
@@ -36,6 +25,17 @@ case class ActuatorControl_controls(msg: Exp[ActuatorControl]) extends Op[FltPt[
     @api def =!=(that: ActuatorControl) = ???
     @api def toText: Text = ???
   }
+
+  
+case class ActuatorControl_group_mix(msg: Exp[ActuatorControl]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(ActuatorControl_group_mix(f(msg)))(EmptyContext)
+}
+
+  
+case class ActuatorControl_controls(msg: Exp[ActuatorControl]) extends Op[FltPt[_24,_8]] {
+  def mirror(f: Tx) = stage(ActuatorControl_controls(f(msg)))(EmptyContext)
+}
+
   
   object ActuatorControl {
 

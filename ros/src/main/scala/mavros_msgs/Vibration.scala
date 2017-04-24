@@ -11,8 +11,6 @@ trait VibrationApi extends VibrationExp {
 
 trait VibrationExp {
   self: RosExp =>
-  
-
 
   implicit object VibrationType extends Meta[Vibration] {
     def wrapped(x: Exp[Vibration]) = Vibration(x)
@@ -26,6 +24,8 @@ trait VibrationExp {
     @api def =!=(that: Vibration) = ???
     @api def toText: Text = ???
   }
+
+
   
   object Vibration {
 

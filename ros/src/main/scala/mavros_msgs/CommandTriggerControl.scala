@@ -12,12 +12,6 @@ trait CommandTriggerControlApi extends CommandTriggerControlExp {
 trait CommandTriggerControlExp {
   self: RosExp =>
   
-
-
-  case class CommandTriggerControlReply(srv: Exp[CommandTriggerControl]) extends Op[CommandTriggerControlRep]{
-    def mirror(f: Tx) = ???//CommandTriggerControlReply(f(srv))
-  }
-
   implicit object CommandTriggerControlType extends Meta[CommandTriggerControl] {
     def wrapped(x: Exp[CommandTriggerControl]) = CommandTriggerControl(x)
     def stagedClass = classOf[CommandTriggerControl]
@@ -45,6 +39,13 @@ trait CommandTriggerControlExp {
     @api def =!=(that: CommandTriggerControlRep): Bool = ???
     @api def toText: Text = ???
   }
+
+
+
+  case class CommandTriggerControlReply(srv: Exp[CommandTriggerControl]) extends Op[CommandTriggerControlRep]{
+    def mirror(f: Tx) = stage(CommandTriggerControlReply(f(srv)))(EmptyContext)
+  }
+
   
   object CommandTriggerControl {
 

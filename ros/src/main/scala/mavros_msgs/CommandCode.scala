@@ -11,8 +11,6 @@ trait CommandCodeApi extends CommandCodeExp {
 
 trait CommandCodeExp {
   self: RosExp =>
-  
-
 
   implicit object CommandCodeType extends Meta[CommandCode] {
     def wrapped(x: Exp[CommandCode]) = CommandCode(x)
@@ -26,6 +24,8 @@ trait CommandCodeExp {
     @api def =!=(that: CommandCode) = ???
     @api def toText: Text = ???
   }
+
+
   
   object CommandCode {
 

@@ -11,12 +11,6 @@ trait RCOutApi extends RCOutExp {
 
 trait RCOutExp {
   self: RosExp =>
-  
-  
-case class RCOut_channels(msg: Exp[RCOut]) extends Op[MetaArray[FixPt[FALSE,_16,_0]]] {
-  def mirror(f: Tx) = ???//RCOut_channels(f(msg))
-}
-
 
   implicit object RCOutType extends Meta[RCOut] {
     def wrapped(x: Exp[RCOut]) = RCOut(x)
@@ -30,6 +24,12 @@ case class RCOut_channels(msg: Exp[RCOut]) extends Op[MetaArray[FixPt[FALSE,_16,
     @api def =!=(that: RCOut) = ???
     @api def toText: Text = ???
   }
+
+  
+case class RCOut_channels(msg: Exp[RCOut]) extends Op[MetaArray[FixPt[FALSE,_16,_0]]] {
+  def mirror(f: Tx) = stage(RCOut_channels(f(msg)))(EmptyContext)
+}
+
   
   object RCOut {
 

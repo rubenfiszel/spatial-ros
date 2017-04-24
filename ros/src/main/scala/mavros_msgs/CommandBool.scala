@@ -12,20 +12,6 @@ trait CommandBoolApi extends CommandBoolExp {
 trait CommandBoolExp {
   self: RosExp =>
   
-  
-case class CommandBool_value(srv: Exp[CommandBool]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//(CommandBool_value(f(srv)): Exp[Bool])
-}
-
-  
-case class CommandBoolRep_value(srv: Exp[CommandBoolRep]) extends Op[Bool] {
-  def mirror(f: Tx) = ???//CommandBoolRep_value(f(srv))
-}
-
-  case class CommandBoolReply(srv: Exp[CommandBool]) extends Op[CommandBoolRep]{
-    def mirror(f: Tx) = ???//CommandBoolReply(f(srv))
-  }
-
   implicit object CommandBoolType extends Meta[CommandBool] {
     def wrapped(x: Exp[CommandBool]) = CommandBool(x)
     def stagedClass = classOf[CommandBool]
@@ -53,6 +39,21 @@ case class CommandBoolRep_value(srv: Exp[CommandBoolRep]) extends Op[Bool] {
     @api def =!=(that: CommandBoolRep): Bool = ???
     @api def toText: Text = ???
   }
+
+  
+case class CommandBool_value(srv: Exp[CommandBool]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandBool_value(f(srv)))(EmptyContext)
+}
+
+  
+case class CommandBoolRep_value(srv: Exp[CommandBoolRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandBoolRep_value(f(srv)))(EmptyContext)
+}
+
+  case class CommandBoolReply(srv: Exp[CommandBool]) extends Op[CommandBoolRep]{
+    def mirror(f: Tx) = stage(CommandBoolReply(f(srv)))(EmptyContext)
+  }
+
   
   object CommandBool {
 
