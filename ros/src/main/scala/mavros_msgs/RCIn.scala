@@ -19,11 +19,11 @@ trait RCInExp {
   }
 
   case class RCIn(s: Exp[RCIn]) extends MetaAny[RCIn] {
-    @api def rssi: FixPt[FALSE,_8,_0] = ???
-    @api def channels: MetaArray[FixPt[FALSE,_16,_0]] = ???
+    @api def rssi: FixPt[FALSE,_8,_0] = FixPt(stage(RCIn_rssi(s))(ctx))
+    @api def channels: MetaArray[FixPt[FALSE,_16,_0]] = MetaArray(stage(RCIn_channels(s))(ctx))
     @api def ===(that: RCIn) = ???
     @api def =!=(that: RCIn) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

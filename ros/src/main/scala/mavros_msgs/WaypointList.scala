@@ -19,10 +19,10 @@ trait WaypointListExp {
   }
 
   case class WaypointList(s: Exp[WaypointList]) extends MetaAny[WaypointList] {
-    @api def waypoints: MetaArray[Waypoint] = ???
+    @api def waypoints: MetaArray[Waypoint] = MetaArray(stage(WaypointList_waypoints(s))(ctx))
     @api def ===(that: WaypointList) = ???
     @api def =!=(that: WaypointList) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

@@ -25,20 +25,20 @@ trait StreamRateExp {
   }
 
   case class StreamRate(s: Exp[StreamRate]) extends MetaAny[StreamRate] {
-    @api def stream_id: FixPt[FALSE,_8,_0] = ???
-    @api def message_rate: FixPt[FALSE,_16,_0] = ???
-    @api def on_off: Bool = ???
+    @api def stream_id: FixPt[FALSE,_8,_0] = FixPt(stage(StreamRate_stream_id(s))(ctx))
+    @api def message_rate: FixPt[FALSE,_16,_0] = FixPt(stage(StreamRate_message_rate(s))(ctx))
+    @api def on_off: Bool = Bool(stage(StreamRate_on_off(s))(ctx))
     @api def response: StreamRateRep = ???//StreamRateRep(StreamRateReply(s))
     @api def ===(that: StreamRate): Bool = ???
     @api def =!=(that: StreamRate): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class StreamRateRep(s: Exp[StreamRateRep]) extends MetaAny[StreamRateRep] {
 
     @api def ===(that: StreamRateRep): Bool = ???
     @api def =!=(that: StreamRateRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -56,20 +56,6 @@ case class StreamRate_on_off(srv: Exp[StreamRate]) extends Op[Bool] {
   def mirror(f: Tx) = stage(StreamRate_on_off(f(srv)))(EmptyContext)
 }
 
-  
-case class StreamRateRep_stream_id(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = stage(StreamRateRep_stream_id(f(srv)))(EmptyContext)
-}
-
-  
-case class StreamRateRep_message_rate(srv: Exp[StreamRateRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = stage(StreamRateRep_message_rate(f(srv)))(EmptyContext)
-}
-
-  
-case class StreamRateRep_on_off(srv: Exp[StreamRateRep]) extends Op[Bool] {
-  def mirror(f: Tx) = stage(StreamRateRep_on_off(f(srv)))(EmptyContext)
-}
 
   case class StreamRateReply(srv: Exp[StreamRate]) extends Op[StreamRateRep]{
     def mirror(f: Tx) = stage(StreamRateReply(f(srv)))(EmptyContext)

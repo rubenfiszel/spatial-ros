@@ -22,7 +22,7 @@ trait BatteryStatusExp {
 
     @api def ===(that: BatteryStatus) = ???
     @api def =!=(that: BatteryStatus) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 

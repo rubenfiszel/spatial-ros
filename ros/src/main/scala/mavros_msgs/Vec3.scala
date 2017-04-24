@@ -19,12 +19,12 @@ trait Vec3Exp {
   }
 
   case class Vec3(s: Exp[Vec3]) extends MetaAny[Vec3] {
-    @api def x: FltPt[_53,_11] = ???
-    @api def y: FltPt[_53,_11] = ???
-    @api def z: FltPt[_53,_11] = ???
+    @api def x: FltPt[_53,_11] = FltPt(stage(Vec3_x(s))(ctx))
+    @api def y: FltPt[_53,_11] = FltPt(stage(Vec3_y(s))(ctx))
+    @api def z: FltPt[_53,_11] = FltPt(stage(Vec3_z(s))(ctx))
     @api def ===(that: Vec3) = ???
     @api def =!=(that: Vec3) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

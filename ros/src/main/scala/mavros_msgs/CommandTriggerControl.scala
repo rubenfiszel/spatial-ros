@@ -29,18 +29,27 @@ trait CommandTriggerControlExp {
     @api def response: CommandTriggerControlRep = ???//CommandTriggerControlRep(CommandTriggerControlReply(s))
     @api def ===(that: CommandTriggerControl): Bool = ???
     @api def =!=(that: CommandTriggerControl): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class CommandTriggerControlRep(s: Exp[CommandTriggerControlRep]) extends MetaAny[CommandTriggerControlRep] {
-    @api def success: Bool = ???
-    @api def result: FixPt[FALSE,_8,_0] = ???
+    @api def success: Bool = Bool(stage(CommandTriggerControlRep_reply_success(s))(ctx))
+    @api def result: FixPt[FALSE,_8,_0] = FixPt(stage(CommandTriggerControlRep_reply_result(s))(ctx))
     @api def ===(that: CommandTriggerControlRep): Bool = ???
     @api def =!=(that: CommandTriggerControlRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 
+  
+case class CommandTriggerControlRep_reply_success(srv: Exp[CommandTriggerControlRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandTriggerControlRep_reply_success(f(srv)))(EmptyContext)
+}
+
+  
+case class CommandTriggerControlRep_reply_result(srv: Exp[CommandTriggerControlRep]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(CommandTriggerControlRep_reply_result(f(srv)))(EmptyContext)
+}
 
   case class CommandTriggerControlReply(srv: Exp[CommandTriggerControl]) extends Op[CommandTriggerControlRep]{
     def mirror(f: Tx) = stage(CommandTriggerControlReply(f(srv)))(EmptyContext)

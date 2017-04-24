@@ -19,10 +19,10 @@ trait RCOutExp {
   }
 
   case class RCOut(s: Exp[RCOut]) extends MetaAny[RCOut] {
-    @api def channels: MetaArray[FixPt[FALSE,_16,_0]] = ???
+    @api def channels: MetaArray[FixPt[FALSE,_16,_0]] = MetaArray(stage(RCOut_channels(s))(ctx))
     @api def ===(that: RCOut) = ???
     @api def =!=(that: RCOut) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

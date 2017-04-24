@@ -25,19 +25,19 @@ trait WaypointPushExp {
   }
 
   case class WaypointPush(s: Exp[WaypointPush]) extends MetaAny[WaypointPush] {
-    @api def waypoints: MetaArray[Waypoint] = ???
+    @api def waypoints: MetaArray[Waypoint] = MetaArray(stage(WaypointPush_waypoints(s))(ctx))
     @api def response: WaypointPushRep = ???//WaypointPushRep(WaypointPushReply(s))
     @api def ===(that: WaypointPush): Bool = ???
     @api def =!=(that: WaypointPush): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class WaypointPushRep(s: Exp[WaypointPushRep]) extends MetaAny[WaypointPushRep] {
-    @api def success: Bool = ???
-    @api def wp_transfered: FixPt[FALSE,_32,_0] = ???
+    @api def success: Bool = Bool(stage(WaypointPushRep_reply_success(s))(ctx))
+    @api def wp_transfered: FixPt[FALSE,_32,_0] = FixPt(stage(WaypointPushRep_reply_wp_transfered(s))(ctx))
     @api def ===(that: WaypointPushRep): Bool = ???
     @api def =!=(that: WaypointPushRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -46,8 +46,13 @@ case class WaypointPush_waypoints(srv: Exp[WaypointPush]) extends Op[MetaArray[W
 }
 
   
-case class WaypointPushRep_waypoints(srv: Exp[WaypointPushRep]) extends Op[MetaArray[Waypoint]] {
-  def mirror(f: Tx) = stage(WaypointPushRep_waypoints(f(srv)))(EmptyContext)
+case class WaypointPushRep_reply_success(srv: Exp[WaypointPushRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(WaypointPushRep_reply_success(f(srv)))(EmptyContext)
+}
+
+  
+case class WaypointPushRep_reply_wp_transfered(srv: Exp[WaypointPushRep]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = stage(WaypointPushRep_reply_wp_transfered(f(srv)))(EmptyContext)
 }
 
   case class WaypointPushReply(srv: Exp[WaypointPush]) extends Op[WaypointPushRep]{

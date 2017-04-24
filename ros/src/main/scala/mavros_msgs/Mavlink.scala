@@ -19,17 +19,17 @@ trait MavlinkExp {
   }
 
   case class Mavlink(s: Exp[Mavlink]) extends MetaAny[Mavlink] {
-    @api def is_valid: Bool = ???
-    @api def len: FixPt[FALSE,_8,_0] = ???
-    @api def seq: FixPt[FALSE,_8,_0] = ???
-    @api def sysid: FixPt[FALSE,_8,_0] = ???
-    @api def compid: FixPt[FALSE,_8,_0] = ???
-    @api def msgid: FixPt[FALSE,_8,_0] = ???
-    @api def checksum: FixPt[FALSE,_16,_0] = ???
-    @api def payload64: MetaArray[FixPt[FALSE,_64,_0]] = ???
+    @api def is_valid: Bool = Bool(stage(Mavlink_is_valid(s))(ctx))
+    @api def len: FixPt[FALSE,_8,_0] = FixPt(stage(Mavlink_len(s))(ctx))
+    @api def seq: FixPt[FALSE,_8,_0] = FixPt(stage(Mavlink_seq(s))(ctx))
+    @api def sysid: FixPt[FALSE,_8,_0] = FixPt(stage(Mavlink_sysid(s))(ctx))
+    @api def compid: FixPt[FALSE,_8,_0] = FixPt(stage(Mavlink_compid(s))(ctx))
+    @api def msgid: FixPt[FALSE,_8,_0] = FixPt(stage(Mavlink_msgid(s))(ctx))
+    @api def checksum: FixPt[FALSE,_16,_0] = FixPt(stage(Mavlink_checksum(s))(ctx))
+    @api def payload64: MetaArray[FixPt[FALSE,_64,_0]] = MetaArray(stage(Mavlink_payload64(s))(ctx))
     @api def ===(that: Mavlink) = ???
     @api def =!=(that: Mavlink) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

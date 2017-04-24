@@ -25,21 +25,21 @@ trait FileWriteExp {
   }
 
   case class FileWrite(s: Exp[FileWrite]) extends MetaAny[FileWrite] {
-    @api def file_path: Text = ???
-    @api def offset: FixPt[FALSE,_64,_0] = ???
-    @api def data: MetaArray[FixPt[FALSE,_8,_0]] = ???
+    @api def file_path: Text = Text(stage(FileWrite_file_path(s))(ctx))
+    @api def offset: FixPt[FALSE,_64,_0] = FixPt(stage(FileWrite_offset(s))(ctx))
+    @api def data: MetaArray[FixPt[FALSE,_8,_0]] = MetaArray(stage(FileWrite_data(s))(ctx))
     @api def response: FileWriteRep = ???//FileWriteRep(FileWriteReply(s))
     @api def ===(that: FileWrite): Bool = ???
     @api def =!=(that: FileWrite): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class FileWriteRep(s: Exp[FileWriteRep]) extends MetaAny[FileWriteRep] {
-    @api def success: Bool = ???
-    @api def r_errno: FixPt[TRUE,_32,_0] = ???
+    @api def success: Bool = Bool(stage(FileWriteRep_reply_success(s))(ctx))
+    @api def r_errno: FixPt[TRUE,_32,_0] = FixPt(stage(FileWriteRep_reply_r_errno(s))(ctx))
     @api def ===(that: FileWriteRep): Bool = ???
     @api def =!=(that: FileWriteRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -58,18 +58,13 @@ case class FileWrite_data(srv: Exp[FileWrite]) extends Op[MetaArray[FixPt[FALSE,
 }
 
   
-case class FileWriteRep_file_path(srv: Exp[FileWriteRep]) extends Op[Text] {
-  def mirror(f: Tx) = stage(FileWriteRep_file_path(f(srv)))(EmptyContext)
+case class FileWriteRep_reply_success(srv: Exp[FileWriteRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(FileWriteRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class FileWriteRep_offset(srv: Exp[FileWriteRep]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = stage(FileWriteRep_offset(f(srv)))(EmptyContext)
-}
-
-  
-case class FileWriteRep_data(srv: Exp[FileWriteRep]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
-  def mirror(f: Tx) = stage(FileWriteRep_data(f(srv)))(EmptyContext)
+case class FileWriteRep_reply_r_errno(srv: Exp[FileWriteRep]) extends Op[FixPt[TRUE,_32,_0]] {
+  def mirror(f: Tx) = stage(FileWriteRep_reply_r_errno(f(srv)))(EmptyContext)
 }
 
   case class FileWriteReply(srv: Exp[FileWrite]) extends Op[FileWriteRep]{

@@ -19,11 +19,11 @@ trait ActuatorControlExp {
   }
 
   case class ActuatorControl(s: Exp[ActuatorControl]) extends MetaAny[ActuatorControl] {
-    @api def group_mix: FixPt[FALSE,_8,_0] = ???
-    @api def controls: FltPt[_24,_8] = ???
+    @api def group_mix: FixPt[FALSE,_8,_0] = FixPt(stage(ActuatorControl_group_mix(s))(ctx))
+    @api def controls: FltPt[_24,_8] = FltPt(stage(ActuatorControl_controls(s))(ctx))
     @api def ===(that: ActuatorControl) = ???
     @api def =!=(that: ActuatorControl) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

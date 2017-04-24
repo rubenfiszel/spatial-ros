@@ -19,13 +19,13 @@ trait StateExp {
   }
 
   case class State(s: Exp[State]) extends MetaAny[State] {
-    @api def connected: Bool = ???
-    @api def armed: Bool = ???
-    @api def guided: Bool = ???
-    @api def mode: Text = ???
+    @api def connected: Bool = Bool(stage(State_connected(s))(ctx))
+    @api def armed: Bool = Bool(stage(State_armed(s))(ctx))
+    @api def guided: Bool = Bool(stage(State_guided(s))(ctx))
+    @api def mode: Text = Text(stage(State_mode(s))(ctx))
     @api def ===(that: State) = ???
     @api def =!=(that: State) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

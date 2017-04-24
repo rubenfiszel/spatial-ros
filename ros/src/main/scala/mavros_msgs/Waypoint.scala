@@ -19,20 +19,20 @@ trait WaypointExp {
   }
 
   case class Waypoint(s: Exp[Waypoint]) extends MetaAny[Waypoint] {
-    @api def frame: FixPt[FALSE,_8,_0] = ???
-    @api def command: FixPt[FALSE,_16,_0] = ???
-    @api def is_current: Bool = ???
-    @api def autocontinue: Bool = ???
-    @api def param1: FltPt[_24,_8] = ???
-    @api def param2: FltPt[_24,_8] = ???
-    @api def param3: FltPt[_24,_8] = ???
-    @api def param4: FltPt[_24,_8] = ???
-    @api def x_lat: FltPt[_53,_11] = ???
-    @api def y_long: FltPt[_53,_11] = ???
-    @api def z_alt: FltPt[_53,_11] = ???
+    @api def frame: FixPt[FALSE,_8,_0] = FixPt(stage(Waypoint_frame(s))(ctx))
+    @api def command: FixPt[FALSE,_16,_0] = FixPt(stage(Waypoint_command(s))(ctx))
+    @api def is_current: Bool = Bool(stage(Waypoint_is_current(s))(ctx))
+    @api def autocontinue: Bool = Bool(stage(Waypoint_autocontinue(s))(ctx))
+    @api def param1: FltPt[_24,_8] = FltPt(stage(Waypoint_param1(s))(ctx))
+    @api def param2: FltPt[_24,_8] = FltPt(stage(Waypoint_param2(s))(ctx))
+    @api def param3: FltPt[_24,_8] = FltPt(stage(Waypoint_param3(s))(ctx))
+    @api def param4: FltPt[_24,_8] = FltPt(stage(Waypoint_param4(s))(ctx))
+    @api def x_lat: FltPt[_53,_11] = FltPt(stage(Waypoint_x_lat(s))(ctx))
+    @api def y_long: FltPt[_53,_11] = FltPt(stage(Waypoint_y_long(s))(ctx))
+    @api def z_alt: FltPt[_53,_11] = FltPt(stage(Waypoint_z_alt(s))(ctx))
     @api def ===(that: Waypoint) = ???
     @api def =!=(that: Waypoint) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

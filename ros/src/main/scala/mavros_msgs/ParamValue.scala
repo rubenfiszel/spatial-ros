@@ -19,11 +19,11 @@ trait ParamValueExp {
   }
 
   case class ParamValue(s: Exp[ParamValue]) extends MetaAny[ParamValue] {
-    @api def integer: FixPt[TRUE,_64,_0] = ???
-    @api def real: FltPt[_53,_11] = ???
+    @api def integer: FixPt[TRUE,_64,_0] = FixPt(stage(ParamValue_integer(s))(ctx))
+    @api def real: FltPt[_53,_11] = FltPt(stage(ParamValue_real(s))(ctx))
     @api def ===(that: ParamValue) = ???
     @api def =!=(that: ParamValue) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

@@ -19,13 +19,13 @@ trait AttitudeTargetExp {
   }
 
   case class AttitudeTarget(s: Exp[AttitudeTarget]) extends MetaAny[AttitudeTarget] {
-    @api def type_mask: FixPt[FALSE,_8,_0] = ???
-    @api def orientation: Quaternion = ???
-    @api def body_rate: Vec3 = ???
-    @api def thrust: FltPt[_24,_8] = ???
+    @api def type_mask: FixPt[FALSE,_8,_0] = FixPt(stage(AttitudeTarget_type_mask(s))(ctx))
+    @api def orientation: Quaternion = Quaternion(stage(AttitudeTarget_orientation(s))(ctx))
+    @api def body_rate: Vec3 = Vec3(stage(AttitudeTarget_body_rate(s))(ctx))
+    @api def thrust: FltPt[_24,_8] = FltPt(stage(AttitudeTarget_thrust(s))(ctx))
     @api def ===(that: AttitudeTarget) = ???
     @api def =!=(that: AttitudeTarget) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

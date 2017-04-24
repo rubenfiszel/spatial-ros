@@ -19,14 +19,14 @@ trait ManualControlExp {
   }
 
   case class ManualControl(s: Exp[ManualControl]) extends MetaAny[ManualControl] {
-    @api def x: FltPt[_24,_8] = ???
-    @api def y: FltPt[_24,_8] = ???
-    @api def z: FltPt[_24,_8] = ???
-    @api def r: FltPt[_24,_8] = ???
-    @api def buttons: FixPt[FALSE,_16,_0] = ???
+    @api def x: FltPt[_24,_8] = FltPt(stage(ManualControl_x(s))(ctx))
+    @api def y: FltPt[_24,_8] = FltPt(stage(ManualControl_y(s))(ctx))
+    @api def z: FltPt[_24,_8] = FltPt(stage(ManualControl_z(s))(ctx))
+    @api def r: FltPt[_24,_8] = FltPt(stage(ManualControl_r(s))(ctx))
+    @api def buttons: FixPt[FALSE,_16,_0] = FixPt(stage(ManualControl_buttons(s))(ctx))
     @api def ===(that: ManualControl) = ???
     @api def =!=(that: ManualControl) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

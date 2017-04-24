@@ -25,20 +25,20 @@ trait ParamSetExp {
   }
 
   case class ParamSet(s: Exp[ParamSet]) extends MetaAny[ParamSet] {
-    @api def param_id: Text = ???
-    @api def value: ParamValue = ???
+    @api def param_id: Text = Text(stage(ParamSet_param_id(s))(ctx))
+    @api def value: ParamValue = ParamValue(stage(ParamSet_value(s))(ctx))
     @api def response: ParamSetRep = ???//ParamSetRep(ParamSetReply(s))
     @api def ===(that: ParamSet): Bool = ???
     @api def =!=(that: ParamSet): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class ParamSetRep(s: Exp[ParamSetRep]) extends MetaAny[ParamSetRep] {
-    @api def success: Bool = ???
-    @api def value: ParamValue = ???
+    @api def success: Bool = Bool(stage(ParamSetRep_reply_success(s))(ctx))
+    @api def value: ParamValue = ParamValue(stage(ParamSetRep_reply_value(s))(ctx))
     @api def ===(that: ParamSetRep): Bool = ???
     @api def =!=(that: ParamSetRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -52,13 +52,13 @@ case class ParamSet_value(srv: Exp[ParamSet]) extends Op[ParamValue] {
 }
 
   
-case class ParamSetRep_param_id(srv: Exp[ParamSetRep]) extends Op[Text] {
-  def mirror(f: Tx) = stage(ParamSetRep_param_id(f(srv)))(EmptyContext)
+case class ParamSetRep_reply_success(srv: Exp[ParamSetRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(ParamSetRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class ParamSetRep_value(srv: Exp[ParamSetRep]) extends Op[ParamValue] {
-  def mirror(f: Tx) = stage(ParamSetRep_value(f(srv)))(EmptyContext)
+case class ParamSetRep_reply_value(srv: Exp[ParamSetRep]) extends Op[ParamValue] {
+  def mirror(f: Tx) = stage(ParamSetRep_reply_value(f(srv)))(EmptyContext)
 }
 
   case class ParamSetReply(srv: Exp[ParamSet]) extends Op[ParamSetRep]{

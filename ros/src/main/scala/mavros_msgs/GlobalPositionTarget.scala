@@ -19,17 +19,17 @@ trait GlobalPositionTargetExp {
   }
 
   case class GlobalPositionTarget(s: Exp[GlobalPositionTarget]) extends MetaAny[GlobalPositionTarget] {
-    @api def coordinate_frame: FixPt[FALSE,_8,_0] = ???
-    @api def type_mask: FixPt[FALSE,_16,_0] = ???
-    @api def latitude: FltPt[_53,_11] = ???
-    @api def longitude: FltPt[_53,_11] = ???
-    @api def velocity: Vec3 = ???
-    @api def acceleration_or_force: Vec3 = ???
-    @api def yaw: FltPt[_24,_8] = ???
-    @api def yaw_rate: FltPt[_24,_8] = ???
+    @api def coordinate_frame: FixPt[FALSE,_8,_0] = FixPt(stage(GlobalPositionTarget_coordinate_frame(s))(ctx))
+    @api def type_mask: FixPt[FALSE,_16,_0] = FixPt(stage(GlobalPositionTarget_type_mask(s))(ctx))
+    @api def latitude: FltPt[_53,_11] = FltPt(stage(GlobalPositionTarget_latitude(s))(ctx))
+    @api def longitude: FltPt[_53,_11] = FltPt(stage(GlobalPositionTarget_longitude(s))(ctx))
+    @api def velocity: Vec3 = Vec3(stage(GlobalPositionTarget_velocity(s))(ctx))
+    @api def acceleration_or_force: Vec3 = Vec3(stage(GlobalPositionTarget_acceleration_or_force(s))(ctx))
+    @api def yaw: FltPt[_24,_8] = FltPt(stage(GlobalPositionTarget_yaw(s))(ctx))
+    @api def yaw_rate: FltPt[_24,_8] = FltPt(stage(GlobalPositionTarget_yaw_rate(s))(ctx))
     @api def ===(that: GlobalPositionTarget) = ???
     @api def =!=(that: GlobalPositionTarget) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

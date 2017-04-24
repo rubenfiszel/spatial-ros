@@ -19,12 +19,12 @@ trait PointExp {
   }
 
   case class Point(s: Exp[Point]) extends MetaAny[Point] {
-    @api def x: FltPt[_53,_11] = ???
-    @api def y: FltPt[_53,_11] = ???
-    @api def z: FltPt[_53,_11] = ???
+    @api def x: FltPt[_53,_11] = FltPt(stage(Point_x(s))(ctx))
+    @api def y: FltPt[_53,_11] = FltPt(stage(Point_y(s))(ctx))
+    @api def z: FltPt[_53,_11] = FltPt(stage(Point_z(s))(ctx))
     @api def ===(that: Point) = ???
     @api def =!=(that: Point) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

@@ -25,22 +25,22 @@ trait CommandTOLExp {
   }
 
   case class CommandTOL(s: Exp[CommandTOL]) extends MetaAny[CommandTOL] {
-    @api def yaw: FltPt[_24,_8] = ???
-    @api def latitude: FltPt[_24,_8] = ???
-    @api def longitude: FltPt[_24,_8] = ???
-    @api def altitude: FltPt[_24,_8] = ???
+    @api def yaw: FltPt[_24,_8] = FltPt(stage(CommandTOL_yaw(s))(ctx))
+    @api def latitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_latitude(s))(ctx))
+    @api def longitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_longitude(s))(ctx))
+    @api def altitude: FltPt[_24,_8] = FltPt(stage(CommandTOL_altitude(s))(ctx))
     @api def response: CommandTOLRep = ???//CommandTOLRep(CommandTOLReply(s))
     @api def ===(that: CommandTOL): Bool = ???
     @api def =!=(that: CommandTOL): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class CommandTOLRep(s: Exp[CommandTOLRep]) extends MetaAny[CommandTOLRep] {
-    @api def success: Bool = ???
-    @api def result: FixPt[FALSE,_8,_0] = ???
+    @api def success: Bool = Bool(stage(CommandTOLRep_reply_success(s))(ctx))
+    @api def result: FixPt[FALSE,_8,_0] = FixPt(stage(CommandTOLRep_reply_result(s))(ctx))
     @api def ===(that: CommandTOLRep): Bool = ???
     @api def =!=(that: CommandTOLRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -64,23 +64,13 @@ case class CommandTOL_altitude(srv: Exp[CommandTOL]) extends Op[FltPt[_24,_8]] {
 }
 
   
-case class CommandTOLRep_yaw(srv: Exp[CommandTOLRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandTOLRep_yaw(f(srv)))(EmptyContext)
+case class CommandTOLRep_reply_success(srv: Exp[CommandTOLRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandTOLRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class CommandTOLRep_latitude(srv: Exp[CommandTOLRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandTOLRep_latitude(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandTOLRep_longitude(srv: Exp[CommandTOLRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandTOLRep_longitude(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandTOLRep_altitude(srv: Exp[CommandTOLRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandTOLRep_altitude(f(srv)))(EmptyContext)
+case class CommandTOLRep_reply_result(srv: Exp[CommandTOLRep]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(CommandTOLRep_reply_result(f(srv)))(EmptyContext)
 }
 
   case class CommandTOLReply(srv: Exp[CommandTOL]) extends Op[CommandTOLRep]{

@@ -25,22 +25,22 @@ trait CommandHomeExp {
   }
 
   case class CommandHome(s: Exp[CommandHome]) extends MetaAny[CommandHome] {
-    @api def current_gps: Bool = ???
-    @api def latitude: FltPt[_24,_8] = ???
-    @api def longitude: FltPt[_24,_8] = ???
-    @api def altitude: FltPt[_24,_8] = ???
+    @api def current_gps: Bool = Bool(stage(CommandHome_current_gps(s))(ctx))
+    @api def latitude: FltPt[_24,_8] = FltPt(stage(CommandHome_latitude(s))(ctx))
+    @api def longitude: FltPt[_24,_8] = FltPt(stage(CommandHome_longitude(s))(ctx))
+    @api def altitude: FltPt[_24,_8] = FltPt(stage(CommandHome_altitude(s))(ctx))
     @api def response: CommandHomeRep = ???//CommandHomeRep(CommandHomeReply(s))
     @api def ===(that: CommandHome): Bool = ???
     @api def =!=(that: CommandHome): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class CommandHomeRep(s: Exp[CommandHomeRep]) extends MetaAny[CommandHomeRep] {
-    @api def success: Bool = ???
-    @api def result: FixPt[FALSE,_8,_0] = ???
+    @api def success: Bool = Bool(stage(CommandHomeRep_reply_success(s))(ctx))
+    @api def result: FixPt[FALSE,_8,_0] = FixPt(stage(CommandHomeRep_reply_result(s))(ctx))
     @api def ===(that: CommandHomeRep): Bool = ???
     @api def =!=(that: CommandHomeRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -64,23 +64,13 @@ case class CommandHome_altitude(srv: Exp[CommandHome]) extends Op[FltPt[_24,_8]]
 }
 
   
-case class CommandHomeRep_current_gps(srv: Exp[CommandHomeRep]) extends Op[Bool] {
-  def mirror(f: Tx) = stage(CommandHomeRep_current_gps(f(srv)))(EmptyContext)
+case class CommandHomeRep_reply_success(srv: Exp[CommandHomeRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandHomeRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class CommandHomeRep_latitude(srv: Exp[CommandHomeRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandHomeRep_latitude(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandHomeRep_longitude(srv: Exp[CommandHomeRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandHomeRep_longitude(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandHomeRep_altitude(srv: Exp[CommandHomeRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandHomeRep_altitude(f(srv)))(EmptyContext)
+case class CommandHomeRep_reply_result(srv: Exp[CommandHomeRep]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(CommandHomeRep_reply_result(f(srv)))(EmptyContext)
 }
 
   case class CommandHomeReply(srv: Exp[CommandHome]) extends Op[CommandHomeRep]{

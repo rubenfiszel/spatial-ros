@@ -22,7 +22,7 @@ trait CommandCodeExp {
 
     @api def ===(that: CommandCode) = ???
     @api def =!=(that: CommandCode) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 

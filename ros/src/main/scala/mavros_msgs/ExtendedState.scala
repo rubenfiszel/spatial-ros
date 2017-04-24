@@ -19,11 +19,11 @@ trait ExtendedStateExp {
   }
 
   case class ExtendedState(s: Exp[ExtendedState]) extends MetaAny[ExtendedState] {
-    @api def vtol_state: FixPt[FALSE,_8,_0] = ???
-    @api def landed_state: FixPt[FALSE,_8,_0] = ???
+    @api def vtol_state: FixPt[FALSE,_8,_0] = FixPt(stage(ExtendedState_vtol_state(s))(ctx))
+    @api def landed_state: FixPt[FALSE,_8,_0] = FixPt(stage(ExtendedState_landed_state(s))(ctx))
     @api def ===(that: ExtendedState) = ???
     @api def =!=(that: ExtendedState) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

@@ -22,7 +22,7 @@ trait VibrationExp {
 
     @api def ===(that: Vibration) = ???
     @api def =!=(that: Vibration) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 

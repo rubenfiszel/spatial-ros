@@ -25,22 +25,22 @@ trait FileReadExp {
   }
 
   case class FileRead(s: Exp[FileRead]) extends MetaAny[FileRead] {
-    @api def file_path: Text = ???
-    @api def offset: FixPt[FALSE,_64,_0] = ???
-    @api def size: FixPt[FALSE,_64,_0] = ???
+    @api def file_path: Text = Text(stage(FileRead_file_path(s))(ctx))
+    @api def offset: FixPt[FALSE,_64,_0] = FixPt(stage(FileRead_offset(s))(ctx))
+    @api def size: FixPt[FALSE,_64,_0] = FixPt(stage(FileRead_size(s))(ctx))
     @api def response: FileReadRep = ???//FileReadRep(FileReadReply(s))
     @api def ===(that: FileRead): Bool = ???
     @api def =!=(that: FileRead): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class FileReadRep(s: Exp[FileReadRep]) extends MetaAny[FileReadRep] {
-    @api def data: MetaArray[FixPt[FALSE,_8,_0]] = ???
-    @api def success: Bool = ???
-    @api def r_errno: FixPt[TRUE,_32,_0] = ???
+    @api def data: MetaArray[FixPt[FALSE,_8,_0]] = MetaArray(stage(FileReadRep_reply_data(s))(ctx))
+    @api def success: Bool = Bool(stage(FileReadRep_reply_success(s))(ctx))
+    @api def r_errno: FixPt[TRUE,_32,_0] = FixPt(stage(FileReadRep_reply_r_errno(s))(ctx))
     @api def ===(that: FileReadRep): Bool = ???
     @api def =!=(that: FileReadRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -59,18 +59,18 @@ case class FileRead_size(srv: Exp[FileRead]) extends Op[FixPt[FALSE,_64,_0]] {
 }
 
   
-case class FileReadRep_file_path(srv: Exp[FileReadRep]) extends Op[Text] {
-  def mirror(f: Tx) = stage(FileReadRep_file_path(f(srv)))(EmptyContext)
+case class FileReadRep_reply_data(srv: Exp[FileReadRep]) extends Op[MetaArray[FixPt[FALSE,_8,_0]]] {
+  def mirror(f: Tx) = stage(FileReadRep_reply_data(f(srv)))(EmptyContext)
 }
 
   
-case class FileReadRep_offset(srv: Exp[FileReadRep]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = stage(FileReadRep_offset(f(srv)))(EmptyContext)
+case class FileReadRep_reply_success(srv: Exp[FileReadRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(FileReadRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class FileReadRep_size(srv: Exp[FileReadRep]) extends Op[FixPt[FALSE,_64,_0]] {
-  def mirror(f: Tx) = stage(FileReadRep_size(f(srv)))(EmptyContext)
+case class FileReadRep_reply_r_errno(srv: Exp[FileReadRep]) extends Op[FixPt[TRUE,_32,_0]] {
+  def mirror(f: Tx) = stage(FileReadRep_reply_r_errno(f(srv)))(EmptyContext)
 }
 
   case class FileReadReply(srv: Exp[FileRead]) extends Op[FileReadRep]{

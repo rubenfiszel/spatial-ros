@@ -19,19 +19,19 @@ trait HilControlsExp {
   }
 
   case class HilControls(s: Exp[HilControls]) extends MetaAny[HilControls] {
-    @api def roll_ailerons: FltPt[_24,_8] = ???
-    @api def pitch_elevator: FltPt[_24,_8] = ???
-    @api def yaw_rudder: FltPt[_24,_8] = ???
-    @api def throttle: FltPt[_24,_8] = ???
-    @api def aux1: FltPt[_24,_8] = ???
-    @api def aux2: FltPt[_24,_8] = ???
-    @api def aux3: FltPt[_24,_8] = ???
-    @api def aux4: FltPt[_24,_8] = ???
-    @api def mode: FixPt[FALSE,_8,_0] = ???
-    @api def nav_mode: FixPt[FALSE,_8,_0] = ???
+    @api def roll_ailerons: FltPt[_24,_8] = FltPt(stage(HilControls_roll_ailerons(s))(ctx))
+    @api def pitch_elevator: FltPt[_24,_8] = FltPt(stage(HilControls_pitch_elevator(s))(ctx))
+    @api def yaw_rudder: FltPt[_24,_8] = FltPt(stage(HilControls_yaw_rudder(s))(ctx))
+    @api def throttle: FltPt[_24,_8] = FltPt(stage(HilControls_throttle(s))(ctx))
+    @api def aux1: FltPt[_24,_8] = FltPt(stage(HilControls_aux1(s))(ctx))
+    @api def aux2: FltPt[_24,_8] = FltPt(stage(HilControls_aux2(s))(ctx))
+    @api def aux3: FltPt[_24,_8] = FltPt(stage(HilControls_aux3(s))(ctx))
+    @api def aux4: FltPt[_24,_8] = FltPt(stage(HilControls_aux4(s))(ctx))
+    @api def mode: FixPt[FALSE,_8,_0] = FixPt(stage(HilControls_mode(s))(ctx))
+    @api def nav_mode: FixPt[FALSE,_8,_0] = FixPt(stage(HilControls_nav_mode(s))(ctx))
     @api def ===(that: HilControls) = ???
     @api def =!=(that: HilControls) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

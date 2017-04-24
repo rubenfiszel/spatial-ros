@@ -25,24 +25,24 @@ trait CommandLongExp {
   }
 
   case class CommandLong(s: Exp[CommandLong]) extends MetaAny[CommandLong] {
-    @api def command: FixPt[FALSE,_16,_0] = ???
-    @api def confirmation: FixPt[FALSE,_8,_0] = ???
-    @api def param1: FltPt[_24,_8] = ???
-    @api def param2: FltPt[_24,_8] = ???
-    @api def param3: FltPt[_24,_8] = ???
-    @api def param4: FltPt[_24,_8] = ???
+    @api def command: FixPt[FALSE,_16,_0] = FixPt(stage(CommandLong_command(s))(ctx))
+    @api def confirmation: FixPt[FALSE,_8,_0] = FixPt(stage(CommandLong_confirmation(s))(ctx))
+    @api def param1: FltPt[_24,_8] = FltPt(stage(CommandLong_param1(s))(ctx))
+    @api def param2: FltPt[_24,_8] = FltPt(stage(CommandLong_param2(s))(ctx))
+    @api def param3: FltPt[_24,_8] = FltPt(stage(CommandLong_param3(s))(ctx))
+    @api def param4: FltPt[_24,_8] = FltPt(stage(CommandLong_param4(s))(ctx))
     @api def response: CommandLongRep = ???//CommandLongRep(CommandLongReply(s))
     @api def ===(that: CommandLong): Bool = ???
     @api def =!=(that: CommandLong): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class CommandLongRep(s: Exp[CommandLongRep]) extends MetaAny[CommandLongRep] {
-    @api def success: Bool = ???
-    @api def result: FixPt[FALSE,_8,_0] = ???
+    @api def success: Bool = Bool(stage(CommandLongRep_reply_success(s))(ctx))
+    @api def result: FixPt[FALSE,_8,_0] = FixPt(stage(CommandLongRep_reply_result(s))(ctx))
     @api def ===(that: CommandLongRep): Bool = ???
     @api def =!=(that: CommandLongRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -76,33 +76,13 @@ case class CommandLong_param4(srv: Exp[CommandLong]) extends Op[FltPt[_24,_8]] {
 }
 
   
-case class CommandLongRep_command(srv: Exp[CommandLongRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = stage(CommandLongRep_command(f(srv)))(EmptyContext)
+case class CommandLongRep_reply_success(srv: Exp[CommandLongRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandLongRep_reply_success(f(srv)))(EmptyContext)
 }
 
   
-case class CommandLongRep_confirmation(srv: Exp[CommandLongRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = stage(CommandLongRep_confirmation(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandLongRep_param1(srv: Exp[CommandLongRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandLongRep_param1(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandLongRep_param2(srv: Exp[CommandLongRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandLongRep_param2(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandLongRep_param3(srv: Exp[CommandLongRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandLongRep_param3(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandLongRep_param4(srv: Exp[CommandLongRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandLongRep_param4(f(srv)))(EmptyContext)
+case class CommandLongRep_reply_result(srv: Exp[CommandLongRep]) extends Op[FixPt[FALSE,_8,_0]] {
+  def mirror(f: Tx) = stage(CommandLongRep_reply_result(f(srv)))(EmptyContext)
 }
 
   case class CommandLongReply(srv: Exp[CommandLong]) extends Op[CommandLongRep]{

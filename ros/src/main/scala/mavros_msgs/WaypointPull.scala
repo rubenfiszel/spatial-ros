@@ -29,18 +29,27 @@ trait WaypointPullExp {
     @api def response: WaypointPullRep = ???//WaypointPullRep(WaypointPullReply(s))
     @api def ===(that: WaypointPull): Bool = ???
     @api def =!=(that: WaypointPull): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class WaypointPullRep(s: Exp[WaypointPullRep]) extends MetaAny[WaypointPullRep] {
-    @api def success: Bool = ???
-    @api def wp_received: FixPt[FALSE,_32,_0] = ???
+    @api def success: Bool = Bool(stage(WaypointPullRep_reply_success(s))(ctx))
+    @api def wp_received: FixPt[FALSE,_32,_0] = FixPt(stage(WaypointPullRep_reply_wp_received(s))(ctx))
     @api def ===(that: WaypointPullRep): Bool = ???
     @api def =!=(that: WaypointPullRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 
+  
+case class WaypointPullRep_reply_success(srv: Exp[WaypointPullRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(WaypointPullRep_reply_success(f(srv)))(EmptyContext)
+}
+
+  
+case class WaypointPullRep_reply_wp_received(srv: Exp[WaypointPullRep]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = stage(WaypointPullRep_reply_wp_received(f(srv)))(EmptyContext)
+}
 
   case class WaypointPullReply(srv: Exp[WaypointPull]) extends Op[WaypointPullRep]{
     def mirror(f: Tx) = stage(WaypointPullReply(f(srv)))(EmptyContext)

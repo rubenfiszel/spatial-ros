@@ -19,10 +19,10 @@ trait HomePositionExp {
   }
 
   case class HomePosition(s: Exp[HomePosition]) extends MetaAny[HomePosition] {
-    @api def longitude: FltPt[_53,_11] = ???
+    @api def longitude: FltPt[_53,_11] = FltPt(stage(HomePosition_longitude(s))(ctx))
     @api def ===(that: HomePosition) = ???
     @api def =!=(that: HomePosition) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

@@ -19,13 +19,13 @@ trait QuaternionExp {
   }
 
   case class Quaternion(s: Exp[Quaternion]) extends MetaAny[Quaternion] {
-    @api def x: FltPt[_53,_11] = ???
-    @api def y: FltPt[_53,_11] = ???
-    @api def z: FltPt[_53,_11] = ???
-    @api def w: FltPt[_53,_11] = ???
+    @api def x: FltPt[_53,_11] = FltPt(stage(Quaternion_x(s))(ctx))
+    @api def y: FltPt[_53,_11] = FltPt(stage(Quaternion_y(s))(ctx))
+    @api def z: FltPt[_53,_11] = FltPt(stage(Quaternion_z(s))(ctx))
+    @api def w: FltPt[_53,_11] = FltPt(stage(Quaternion_w(s))(ctx))
     @api def ===(that: Quaternion) = ???
     @api def =!=(that: Quaternion) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

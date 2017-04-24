@@ -22,7 +22,7 @@ trait CamIMUStampExp {
 
     @api def ===(that: CamIMUStamp) = ???
     @api def =!=(that: CamIMUStamp) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 

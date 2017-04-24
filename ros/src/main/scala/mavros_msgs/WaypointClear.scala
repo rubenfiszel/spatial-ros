@@ -29,17 +29,21 @@ trait WaypointClearExp {
     @api def response: WaypointClearRep = ???//WaypointClearRep(WaypointClearReply(s))
     @api def ===(that: WaypointClear): Bool = ???
     @api def =!=(that: WaypointClear): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class WaypointClearRep(s: Exp[WaypointClearRep]) extends MetaAny[WaypointClearRep] {
-    @api def success: Bool = ???
+    @api def success: Bool = Bool(stage(WaypointClearRep_reply_success(s))(ctx))
     @api def ===(that: WaypointClearRep): Bool = ???
     @api def =!=(that: WaypointClearRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 
+  
+case class WaypointClearRep_reply_success(srv: Exp[WaypointClearRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(WaypointClearRep_reply_success(f(srv)))(EmptyContext)
+}
 
   case class WaypointClearReply(srv: Exp[WaypointClear]) extends Op[WaypointClearRep]{
     def mirror(f: Tx) = stage(WaypointClearReply(f(srv)))(EmptyContext)

@@ -22,7 +22,7 @@ trait VFR_HUDExp {
 
     @api def ===(that: VFR_HUD) = ???
     @api def =!=(that: VFR_HUD) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 

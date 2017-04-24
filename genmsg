@@ -69,6 +69,9 @@ def remap(tp: String) = {
   r
 }
 
+def remap_s(tp: String) =
+  remap(tp).split('[')(0)
+
 def ident(x: Seq[Any], tab: Int) =
   x.map(" "*(2*tab) + _).mkString("\n")
 
@@ -86,7 +89,7 @@ def msgToScala(f: File) = {
   }
 
   val apis = datas.map { case (t, n) =>
-    s"@api def ${quote(n)}: ${remap(t)} = ???"
+    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${name}_${n}(s))(ctx))"
   }
   val nodes = datas map { case (t, n) =>
     s"""
@@ -124,7 +127,7 @@ trait ${name}Exp {
 ${ident(apis, 2)}
     @api def ===(that: $name) = ???
     @api def =!=(that: $name) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 ${ident(nodes, 1)}
@@ -161,10 +164,10 @@ def srvToScala(f: File) = {
   }
 
   val apis = datas map { case (t, n) =>
-    s"@api def ${quote(n)}: ${remap(t)} = ???"
+    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${name}_${n}(s))(ctx))"
   }
   val apisRep = datasRep map { case (t, n) =>
-    s"@api def ${quote(n)}: ${remap(t)} = ???"
+    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${nameRep}_reply_${n}(s))(ctx))"
   }
   val nodes = datas map { case (t, n) =>
     s"""
@@ -173,10 +176,10 @@ case class ${name}_${n}(srv: Exp[$name]) extends Op[${remap(t)}] {
 }
 """
   }
-  val nodesRep = datas map { case (t, n) =>
+  val nodesRep = datasRep map { case (t, n) =>
     s"""
-case class ${nameRep}_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = stage(${nameRep}_${n}(f(srv)))(EmptyContext)
+case class ${nameRep}_reply_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
+  def mirror(f: Tx) = stage(${nameRep}_reply_${n}(f(srv)))(EmptyContext)
 }
 """
   }
@@ -219,14 +222,14 @@ ${ident(apis, 2)}
     @api def response: $nameRep = ???//$nameRep(${name}Reply(s))
     @api def ===(that: $name): Bool = ???
     @api def =!=(that: $name): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class $nameRep(s: Exp[$nameRep]) extends MetaAny[$nameRep] {
 ${ident(apisRep, 2)}
     @api def ===(that: $nameRep): Bool = ???
     @api def =!=(that: $nameRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 ${ident(nodes, 1)}

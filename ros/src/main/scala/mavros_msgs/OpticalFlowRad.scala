@@ -19,19 +19,19 @@ trait OpticalFlowRadExp {
   }
 
   case class OpticalFlowRad(s: Exp[OpticalFlowRad]) extends MetaAny[OpticalFlowRad] {
-    @api def integration_time_us: FixPt[FALSE,_32,_0] = ???
-    @api def integrated_x: FltPt[_24,_8] = ???
-    @api def integrated_y: FltPt[_24,_8] = ???
-    @api def integrated_xgyro: FltPt[_24,_8] = ???
-    @api def integrated_ygyro: FltPt[_24,_8] = ???
-    @api def integrated_zgyro: FltPt[_24,_8] = ???
-    @api def temperature: FixPt[TRUE,_16,_0] = ???
-    @api def quality: FixPt[FALSE,_8,_0] = ???
-    @api def time_delta_distance_us: FixPt[FALSE,_32,_0] = ???
-    @api def distance: FltPt[_24,_8] = ???
+    @api def integration_time_us: FixPt[FALSE,_32,_0] = FixPt(stage(OpticalFlowRad_integration_time_us(s))(ctx))
+    @api def integrated_x: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_integrated_x(s))(ctx))
+    @api def integrated_y: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_integrated_y(s))(ctx))
+    @api def integrated_xgyro: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_integrated_xgyro(s))(ctx))
+    @api def integrated_ygyro: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_integrated_ygyro(s))(ctx))
+    @api def integrated_zgyro: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_integrated_zgyro(s))(ctx))
+    @api def temperature: FixPt[TRUE,_16,_0] = FixPt(stage(OpticalFlowRad_temperature(s))(ctx))
+    @api def quality: FixPt[FALSE,_8,_0] = FixPt(stage(OpticalFlowRad_quality(s))(ctx))
+    @api def time_delta_distance_us: FixPt[FALSE,_32,_0] = FixPt(stage(OpticalFlowRad_time_delta_distance_us(s))(ctx))
+    @api def distance: FltPt[_24,_8] = FltPt(stage(OpticalFlowRad_distance(s))(ctx))
     @api def ===(that: OpticalFlowRad) = ???
     @api def =!=(that: OpticalFlowRad) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

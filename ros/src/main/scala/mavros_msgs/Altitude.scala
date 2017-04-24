@@ -19,15 +19,15 @@ trait AltitudeExp {
   }
 
   case class Altitude(s: Exp[Altitude]) extends MetaAny[Altitude] {
-    @api def monotonic: FltPt[_24,_8] = ???
-    @api def amsl: FltPt[_24,_8] = ???
-    @api def local: FltPt[_24,_8] = ???
-    @api def relative: FltPt[_24,_8] = ???
-    @api def terrain: FltPt[_24,_8] = ???
-    @api def bottom_clearance: FltPt[_24,_8] = ???
+    @api def monotonic: FltPt[_24,_8] = FltPt(stage(Altitude_monotonic(s))(ctx))
+    @api def amsl: FltPt[_24,_8] = FltPt(stage(Altitude_amsl(s))(ctx))
+    @api def local: FltPt[_24,_8] = FltPt(stage(Altitude_local(s))(ctx))
+    @api def relative: FltPt[_24,_8] = FltPt(stage(Altitude_relative(s))(ctx))
+    @api def terrain: FltPt[_24,_8] = FltPt(stage(Altitude_terrain(s))(ctx))
+    @api def bottom_clearance: FltPt[_24,_8] = FltPt(stage(Altitude_bottom_clearance(s))(ctx))
     @api def ===(that: Altitude) = ???
     @api def =!=(that: Altitude) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

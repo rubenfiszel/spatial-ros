@@ -19,18 +19,18 @@ trait RadioStatusExp {
   }
 
   case class RadioStatus(s: Exp[RadioStatus]) extends MetaAny[RadioStatus] {
-    @api def rssi: FixPt[FALSE,_8,_0] = ???
-    @api def remrssi: FixPt[FALSE,_8,_0] = ???
-    @api def txbuf: FixPt[FALSE,_8,_0] = ???
-    @api def noise: FixPt[FALSE,_8,_0] = ???
-    @api def remnoise: FixPt[FALSE,_8,_0] = ???
-    @api def rxerrors: FixPt[FALSE,_16,_0] = ???
-    @api def fixed: FixPt[FALSE,_16,_0] = ???
-    @api def rssi_dbm: FltPt[_24,_8] = ???
-    @api def remrssi_dbm: FltPt[_24,_8] = ???
+    @api def rssi: FixPt[FALSE,_8,_0] = FixPt(stage(RadioStatus_rssi(s))(ctx))
+    @api def remrssi: FixPt[FALSE,_8,_0] = FixPt(stage(RadioStatus_remrssi(s))(ctx))
+    @api def txbuf: FixPt[FALSE,_8,_0] = FixPt(stage(RadioStatus_txbuf(s))(ctx))
+    @api def noise: FixPt[FALSE,_8,_0] = FixPt(stage(RadioStatus_noise(s))(ctx))
+    @api def remnoise: FixPt[FALSE,_8,_0] = FixPt(stage(RadioStatus_remnoise(s))(ctx))
+    @api def rxerrors: FixPt[FALSE,_16,_0] = FixPt(stage(RadioStatus_rxerrors(s))(ctx))
+    @api def fixed: FixPt[FALSE,_16,_0] = FixPt(stage(RadioStatus_fixed(s))(ctx))
+    @api def rssi_dbm: FltPt[_24,_8] = FltPt(stage(RadioStatus_rssi_dbm(s))(ctx))
+    @api def remrssi_dbm: FltPt[_24,_8] = FltPt(stage(RadioStatus_remrssi_dbm(s))(ctx))
     @api def ===(that: RadioStatus) = ???
     @api def =!=(that: RadioStatus) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

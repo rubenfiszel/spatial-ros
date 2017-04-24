@@ -25,19 +25,19 @@ trait ParamPullExp {
   }
 
   case class ParamPull(s: Exp[ParamPull]) extends MetaAny[ParamPull] {
-    @api def force_pull: Bool = ???
+    @api def force_pull: Bool = Bool(stage(ParamPull_force_pull(s))(ctx))
     @api def response: ParamPullRep = ???//ParamPullRep(ParamPullReply(s))
     @api def ===(that: ParamPull): Bool = ???
     @api def =!=(that: ParamPull): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class ParamPullRep(s: Exp[ParamPullRep]) extends MetaAny[ParamPullRep] {
-    @api def success: Bool = ???
-    @api def param_received: FixPt[FALSE,_32,_0] = ???
+    @api def success: Bool = Bool(stage(ParamPullRep_reply_success(s))(ctx))
+    @api def param_received: FixPt[FALSE,_32,_0] = FixPt(stage(ParamPullRep_reply_param_received(s))(ctx))
     @api def ===(that: ParamPullRep): Bool = ???
     @api def =!=(that: ParamPullRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -46,8 +46,13 @@ case class ParamPull_force_pull(srv: Exp[ParamPull]) extends Op[Bool] {
 }
 
   
-case class ParamPullRep_force_pull(srv: Exp[ParamPullRep]) extends Op[Bool] {
-  def mirror(f: Tx) = stage(ParamPullRep_force_pull(f(srv)))(EmptyContext)
+case class ParamPullRep_reply_success(srv: Exp[ParamPullRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(ParamPullRep_reply_success(f(srv)))(EmptyContext)
+}
+
+  
+case class ParamPullRep_reply_param_received(srv: Exp[ParamPullRep]) extends Op[FixPt[FALSE,_32,_0]] {
+  def mirror(f: Tx) = stage(ParamPullRep_reply_param_received(f(srv)))(EmptyContext)
 }
 
   case class ParamPullReply(srv: Exp[ParamPull]) extends Op[ParamPullRep]{

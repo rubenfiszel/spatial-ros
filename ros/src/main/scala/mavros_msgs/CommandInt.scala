@@ -25,25 +25,25 @@ trait CommandIntExp {
   }
 
   case class CommandInt(s: Exp[CommandInt]) extends MetaAny[CommandInt] {
-    @api def frame: FixPt[FALSE,_8,_0] = ???
-    @api def command: FixPt[FALSE,_16,_0] = ???
-    @api def current: FixPt[FALSE,_8,_0] = ???
-    @api def autocontinue: FixPt[FALSE,_8,_0] = ???
-    @api def param1: FltPt[_24,_8] = ???
-    @api def param2: FltPt[_24,_8] = ???
-    @api def param3: FltPt[_24,_8] = ???
-    @api def param4: FltPt[_24,_8] = ???
+    @api def frame: FixPt[FALSE,_8,_0] = FixPt(stage(CommandInt_frame(s))(ctx))
+    @api def command: FixPt[FALSE,_16,_0] = FixPt(stage(CommandInt_command(s))(ctx))
+    @api def current: FixPt[FALSE,_8,_0] = FixPt(stage(CommandInt_current(s))(ctx))
+    @api def autocontinue: FixPt[FALSE,_8,_0] = FixPt(stage(CommandInt_autocontinue(s))(ctx))
+    @api def param1: FltPt[_24,_8] = FltPt(stage(CommandInt_param1(s))(ctx))
+    @api def param2: FltPt[_24,_8] = FltPt(stage(CommandInt_param2(s))(ctx))
+    @api def param3: FltPt[_24,_8] = FltPt(stage(CommandInt_param3(s))(ctx))
+    @api def param4: FltPt[_24,_8] = FltPt(stage(CommandInt_param4(s))(ctx))
     @api def response: CommandIntRep = ???//CommandIntRep(CommandIntReply(s))
     @api def ===(that: CommandInt): Bool = ???
     @api def =!=(that: CommandInt): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class CommandIntRep(s: Exp[CommandIntRep]) extends MetaAny[CommandIntRep] {
-    @api def success: Bool = ???
+    @api def success: Bool = Bool(stage(CommandIntRep_reply_success(s))(ctx))
     @api def ===(that: CommandIntRep): Bool = ???
     @api def =!=(that: CommandIntRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -87,43 +87,8 @@ case class CommandInt_param4(srv: Exp[CommandInt]) extends Op[FltPt[_24,_8]] {
 }
 
   
-case class CommandIntRep_frame(srv: Exp[CommandIntRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = stage(CommandIntRep_frame(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_command(srv: Exp[CommandIntRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = stage(CommandIntRep_command(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_current(srv: Exp[CommandIntRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = stage(CommandIntRep_current(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_autocontinue(srv: Exp[CommandIntRep]) extends Op[FixPt[FALSE,_8,_0]] {
-  def mirror(f: Tx) = stage(CommandIntRep_autocontinue(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_param1(srv: Exp[CommandIntRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandIntRep_param1(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_param2(srv: Exp[CommandIntRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandIntRep_param2(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_param3(srv: Exp[CommandIntRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandIntRep_param3(f(srv)))(EmptyContext)
-}
-
-  
-case class CommandIntRep_param4(srv: Exp[CommandIntRep]) extends Op[FltPt[_24,_8]] {
-  def mirror(f: Tx) = stage(CommandIntRep_param4(f(srv)))(EmptyContext)
+case class CommandIntRep_reply_success(srv: Exp[CommandIntRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(CommandIntRep_reply_success(f(srv)))(EmptyContext)
 }
 
   case class CommandIntReply(srv: Exp[CommandInt]) extends Op[CommandIntRep]{

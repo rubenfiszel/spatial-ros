@@ -29,17 +29,21 @@ trait SetModeExp {
     @api def response: SetModeRep = ???//SetModeRep(SetModeReply(s))
     @api def ===(that: SetMode): Bool = ???
     @api def =!=(that: SetMode): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class SetModeRep(s: Exp[SetModeRep]) extends MetaAny[SetModeRep] {
-    @api def success: Bool = ???
+    @api def success: Bool = Bool(stage(SetModeRep_reply_success(s))(ctx))
     @api def ===(that: SetModeRep): Bool = ???
     @api def =!=(that: SetModeRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
 
+  
+case class SetModeRep_reply_success(srv: Exp[SetModeRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(SetModeRep_reply_success(f(srv)))(EmptyContext)
+}
 
   case class SetModeReply(srv: Exp[SetMode]) extends Op[SetModeRep]{
     def mirror(f: Tx) = stage(SetModeReply(f(srv)))(EmptyContext)

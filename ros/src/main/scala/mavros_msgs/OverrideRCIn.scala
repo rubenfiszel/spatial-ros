@@ -19,10 +19,10 @@ trait OverrideRCInExp {
   }
 
   case class OverrideRCIn(s: Exp[OverrideRCIn]) extends MetaAny[OverrideRCIn] {
-    @api def channels: FixPt[FALSE,_16,_0] = ???
+    @api def channels: FixPt[FALSE,_16,_0] = FixPt(stage(OverrideRCIn_channels(s))(ctx))
     @api def ===(that: OverrideRCIn) = ???
     @api def =!=(that: OverrideRCIn) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   

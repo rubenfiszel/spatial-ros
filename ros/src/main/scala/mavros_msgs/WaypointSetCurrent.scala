@@ -25,18 +25,18 @@ trait WaypointSetCurrentExp {
   }
 
   case class WaypointSetCurrent(s: Exp[WaypointSetCurrent]) extends MetaAny[WaypointSetCurrent] {
-    @api def wp_seq: FixPt[FALSE,_16,_0] = ???
+    @api def wp_seq: FixPt[FALSE,_16,_0] = FixPt(stage(WaypointSetCurrent_wp_seq(s))(ctx))
     @api def response: WaypointSetCurrentRep = ???//WaypointSetCurrentRep(WaypointSetCurrentReply(s))
     @api def ===(that: WaypointSetCurrent): Bool = ???
     @api def =!=(that: WaypointSetCurrent): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   case class WaypointSetCurrentRep(s: Exp[WaypointSetCurrentRep]) extends MetaAny[WaypointSetCurrentRep] {
-    @api def success: Bool = ???
+    @api def success: Bool = Bool(stage(WaypointSetCurrentRep_reply_success(s))(ctx))
     @api def ===(that: WaypointSetCurrentRep): Bool = ???
     @api def =!=(that: WaypointSetCurrentRep): Bool = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
@@ -45,8 +45,8 @@ case class WaypointSetCurrent_wp_seq(srv: Exp[WaypointSetCurrent]) extends Op[Fi
 }
 
   
-case class WaypointSetCurrentRep_wp_seq(srv: Exp[WaypointSetCurrentRep]) extends Op[FixPt[FALSE,_16,_0]] {
-  def mirror(f: Tx) = stage(WaypointSetCurrentRep_wp_seq(f(srv)))(EmptyContext)
+case class WaypointSetCurrentRep_reply_success(srv: Exp[WaypointSetCurrentRep]) extends Op[Bool] {
+  def mirror(f: Tx) = stage(WaypointSetCurrentRep_reply_success(f(srv)))(EmptyContext)
 }
 
   case class WaypointSetCurrentReply(srv: Exp[WaypointSetCurrent]) extends Op[WaypointSetCurrentRep]{

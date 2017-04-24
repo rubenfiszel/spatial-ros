@@ -19,12 +19,12 @@ trait FileEntryExp {
   }
 
   case class FileEntry(s: Exp[FileEntry]) extends MetaAny[FileEntry] {
-    @api def name: Text = ???
-    @api def `type`: FixPt[FALSE,_8,_0] = ???
-    @api def size: FixPt[FALSE,_64,_0] = ???
+    @api def name: Text = Text(stage(FileEntry_name(s))(ctx))
+    @api def `type`: FixPt[FALSE,_8,_0] = FixPt(stage(FileEntry_type(s))(ctx))
+    @api def size: FixPt[FALSE,_64,_0] = FixPt(stage(FileEntry_size(s))(ctx))
     @api def ===(that: FileEntry) = ???
     @api def =!=(that: FileEntry) = ???
-    @api def toText: Text = ???
+    @api def toText: Text = textify(this)
   }
 
   
