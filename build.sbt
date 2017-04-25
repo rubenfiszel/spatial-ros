@@ -13,11 +13,10 @@ val paradiseVersion = "2.1.0"
 publishArtifact := false
 
 val commonSettings = Seq(
-
-resolvers += Resolver.sonatypeRepo("snapshots"),
-resolvers += Resolver.sonatypeRepo("releases"),
-  addCompilerPlugin("org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full)
-
+  resolvers += Resolver.sonatypeRepo("snapshots"),
+  resolvers += Resolver.sonatypeRepo("releases"),
+  addCompilerPlugin(
+    "org.scalamacros" % "paradise" % paradiseVersion cross CrossVersion.full)
 )
 
 lazy val ros = project
@@ -25,5 +24,5 @@ lazy val ros = project
 
 lazy val apps = project
   .settings(commonSettings,
-    assemblyJarName in assembly := "spatial.ros-apps.jar")
+            assemblyJarName in assembly := "spatial.ros-apps.jar")
   .dependsOn(ros)

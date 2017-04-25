@@ -1,13 +1,11 @@
 package spatial.ros
 
-import argon.AppCore
 import spatial.{SpatialApp, SpatialConfig, SpatialIR}
 
 trait RosIR extends RosCompiler with SpatialIR
-trait RosApp extends SpatialApp{
+trait RosApp extends SpatialApp {
 
-
-  override val IR = new RosIR { def target = RosApp.this.target  }
+  override val IR = new RosIR { def target = RosApp.this.target }
 
   override def parseArguments(args: Seq[String]): Unit = {
     val parser = new RosArgParser

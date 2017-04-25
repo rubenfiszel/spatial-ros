@@ -1,27 +1,22 @@
 package spatial.ros.api
 
 import argon.core.Staging
+import forge._
 import spatial._
 import spatial.ros._
-import forge._
 
-
-trait RosStaticApi extends RosStaticExp {
-  this: RosExp =>
+trait RosStaticApi extends RosStaticExp { this: RosExp =>
 
   object Ros {
     @api def init(t: Text) = Void(ros_init(t.s))
   }
 }
 
-
-trait RosStaticExp extends Staging {
-  this: SpatialExp =>
-
+trait RosStaticExp extends Staging { this: SpatialExp =>
 
   /** IR Nodes **/
   case class Init(name: Exp[Text]) extends Op[Void] {
-    def mirror(f:Tx) = ros_init(f(name))
+    def mirror(f: Tx) = ros_init(f(name))
   }
 
   /** Constructors **/
@@ -30,4 +25,3 @@ trait RosStaticExp extends Staging {
   }
 
 }
-

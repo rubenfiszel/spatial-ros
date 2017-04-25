@@ -1,13 +1,8 @@
 package spatial.ros.codegen.scalagen
 
-import argon.codegen
-import argon.codegen.scalagen.ScalaCodegen
-import spatial.ros.api.RosStaticExp
 import spatial.ros.RosExp
-import spatial.SpatialExp
 
-
-trait RosGenScalaRosStatic extends RosScalaCodegen{
+trait RosGenScalaRosStatic extends RosScalaCodegen {
   val IR: RosExp
   import IR._
 

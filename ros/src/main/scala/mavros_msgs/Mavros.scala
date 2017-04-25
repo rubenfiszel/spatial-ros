@@ -1,9 +1,176 @@
 package spatial.ros
 
-import spatial.ros.api._
+trait MavrosExp
+    extends CommandIntExp
+    with SetModeExp
+    with FileCloseExp
+    with FileChecksumExp
+    with FileRenameExp
+    with CommandHomeExp
+    with ParamSetExp
+    with FileWriteExp
+    with WaypointClearExp
+    with CommandTOLExp
+    with FileListExp
+    with FileRemoveExp
+    with WaypointPushExp
+    with WaypointSetCurrentExp
+    with ParamGetExp
+    with CommandBoolExp
+    with FileTruncateExp
+    with FileMakeDirExp
+    with FileOpenExp
+    with CommandLongExp
+    with ParamPullExp
+    with FileReadExp
+    with FileRemoveDirExp
+    with ParamPushExp
+    with StreamRateExp
+    with CommandTriggerControlExp
+    with WaypointPullExp
+    with VFR_HUDExp
+    with BatteryStatusExp
+    with WaypointExp
+    with GlobalPositionTargetExp
+    with HomePositionExp
+    with AttitudeTargetExp
+    with OverrideRCInExp
+    with RadioStatusExp
+    with StateExp
+    with HilControlsExp
+    with ManualControlExp
+    with QuaternionExp
+    with OpticalFlowRadExp
+    with AltitudeExp
+    with ExtendedStateExp
+    with PointExp
+    with MavlinkExp
+    with VibrationExp
+    with CommandCodeExp
+    with RCInExp
+    with WaypointListExp
+    with CamIMUStampExp
+    with PositionTargetExp
+    with Vec3Exp
+    with RCOutExp
+    with ParamValueExp
+    with FileEntryExp
+    with ActuatorControlExp { self: RosExp =>
+}
 
-trait MavrosExp extends CommandIntExp with SetModeExp with FileCloseExp with FileChecksumExp with FileRenameExp with CommandHomeExp with ParamSetExp with FileWriteExp with WaypointClearExp with CommandTOLExp with FileListExp with FileRemoveExp with WaypointPushExp with WaypointSetCurrentExp with ParamGetExp with CommandBoolExp with FileTruncateExp with FileMakeDirExp with FileOpenExp with CommandLongExp with ParamPullExp with FileReadExp with FileRemoveDirExp with ParamPushExp with StreamRateExp with CommandTriggerControlExp with WaypointPullExp with VFR_HUDExp with BatteryStatusExp with WaypointExp with GlobalPositionTargetExp with HomePositionExp with AttitudeTargetExp with OverrideRCInExp with RadioStatusExp with StateExp with HilControlsExp with ManualControlExp with QuaternionExp with OpticalFlowRadExp with AltitudeExp with ExtendedStateExp with PointExp with MavlinkExp with VibrationExp with CommandCodeExp with RCInExp with WaypointListExp with CamIMUStampExp with PositionTargetExp with Vec3Exp with RCOutExp with ParamValueExp with FileEntryExp with ActuatorControlExp{ self: RosExp => }
+trait MavrosApi
+    extends CommandIntApi
+    with SetModeApi
+    with FileCloseApi
+    with FileChecksumApi
+    with FileRenameApi
+    with CommandHomeApi
+    with ParamSetApi
+    with FileWriteApi
+    with WaypointClearApi
+    with CommandTOLApi
+    with FileListApi
+    with FileRemoveApi
+    with WaypointPushApi
+    with WaypointSetCurrentApi
+    with ParamGetApi
+    with CommandBoolApi
+    with FileTruncateApi
+    with FileMakeDirApi
+    with FileOpenApi
+    with CommandLongApi
+    with ParamPullApi
+    with FileReadApi
+    with FileRemoveDirApi
+    with ParamPushApi
+    with StreamRateApi
+    with CommandTriggerControlApi
+    with WaypointPullApi
+    with VFR_HUDApi
+    with BatteryStatusApi
+    with WaypointApi
+    with GlobalPositionTargetApi
+    with HomePositionApi
+    with AttitudeTargetApi
+    with OverrideRCInApi
+    with RadioStatusApi
+    with StateApi
+    with HilControlsApi
+    with ManualControlApi
+    with QuaternionApi
+    with OpticalFlowRadApi
+    with AltitudeApi
+    with ExtendedStateApi
+    with PointApi
+    with MavlinkApi
+    with VibrationApi
+    with CommandCodeApi
+    with RCInApi
+    with WaypointListApi
+    with CamIMUStampApi
+    with PositionTargetApi
+    with Vec3Api
+    with RCOutApi
+    with ParamValueApi
+    with FileEntryApi
+    with ActuatorControlApi { self: RosApi =>
+}
 
-trait MavrosApi extends CommandIntApi with SetModeApi with FileCloseApi with FileChecksumApi with FileRenameApi with CommandHomeApi with ParamSetApi with FileWriteApi with WaypointClearApi with CommandTOLApi with FileListApi with FileRemoveApi with WaypointPushApi with WaypointSetCurrentApi with ParamGetApi with CommandBoolApi with FileTruncateApi with FileMakeDirApi with FileOpenApi with CommandLongApi with ParamPullApi with FileReadApi with FileRemoveDirApi with ParamPushApi with StreamRateApi with CommandTriggerControlApi with WaypointPullApi with VFR_HUDApi with BatteryStatusApi with WaypointApi with GlobalPositionTargetApi with HomePositionApi with AttitudeTargetApi with OverrideRCInApi with RadioStatusApi with StateApi with HilControlsApi with ManualControlApi with QuaternionApi with OpticalFlowRadApi with AltitudeApi with ExtendedStateApi with PointApi with MavlinkApi with VibrationApi with CommandCodeApi with RCInApi with WaypointListApi with CamIMUStampApi with PositionTargetApi with Vec3Api with RCOutApi with ParamValueApi with FileEntryApi with ActuatorControlApi{ self: RosApi => }
-
-trait ScalaGenMavros extends ScalaGenCommandInt with ScalaGenSetMode with ScalaGenFileClose with ScalaGenFileChecksum with ScalaGenFileRename with ScalaGenCommandHome with ScalaGenParamSet with ScalaGenFileWrite with ScalaGenWaypointClear with ScalaGenCommandTOL with ScalaGenFileList with ScalaGenFileRemove with ScalaGenWaypointPush with ScalaGenWaypointSetCurrent with ScalaGenParamGet with ScalaGenCommandBool with ScalaGenFileTruncate with ScalaGenFileMakeDir with ScalaGenFileOpen with ScalaGenCommandLong with ScalaGenParamPull with ScalaGenFileRead with ScalaGenFileRemoveDir with ScalaGenParamPush with ScalaGenStreamRate with ScalaGenCommandTriggerControl with ScalaGenWaypointPull with ScalaGenVFR_HUD with ScalaGenBatteryStatus with ScalaGenWaypoint with ScalaGenGlobalPositionTarget with ScalaGenHomePosition with ScalaGenAttitudeTarget with ScalaGenOverrideRCIn with ScalaGenRadioStatus with ScalaGenState with ScalaGenHilControls with ScalaGenManualControl with ScalaGenQuaternion with ScalaGenOpticalFlowRad with ScalaGenAltitude with ScalaGenExtendedState with ScalaGenPoint with ScalaGenMavlink with ScalaGenVibration with ScalaGenCommandCode with ScalaGenRCIn with ScalaGenWaypointList with ScalaGenCamIMUStamp with ScalaGenPositionTarget with ScalaGenVec3 with ScalaGenRCOut with ScalaGenParamValue with ScalaGenFileEntry with ScalaGenActuatorControl{ val IR: RosCompiler }
+trait ScalaGenMavros
+    extends ScalaGenCommandInt
+    with ScalaGenSetMode
+    with ScalaGenFileClose
+    with ScalaGenFileChecksum
+    with ScalaGenFileRename
+    with ScalaGenCommandHome
+    with ScalaGenParamSet
+    with ScalaGenFileWrite
+    with ScalaGenWaypointClear
+    with ScalaGenCommandTOL
+    with ScalaGenFileList
+    with ScalaGenFileRemove
+    with ScalaGenWaypointPush
+    with ScalaGenWaypointSetCurrent
+    with ScalaGenParamGet
+    with ScalaGenCommandBool
+    with ScalaGenFileTruncate
+    with ScalaGenFileMakeDir
+    with ScalaGenFileOpen
+    with ScalaGenCommandLong
+    with ScalaGenParamPull
+    with ScalaGenFileRead
+    with ScalaGenFileRemoveDir
+    with ScalaGenParamPush
+    with ScalaGenStreamRate
+    with ScalaGenCommandTriggerControl
+    with ScalaGenWaypointPull
+    with ScalaGenVFR_HUD
+    with ScalaGenBatteryStatus
+    with ScalaGenWaypoint
+    with ScalaGenGlobalPositionTarget
+    with ScalaGenHomePosition
+    with ScalaGenAttitudeTarget
+    with ScalaGenOverrideRCIn
+    with ScalaGenRadioStatus
+    with ScalaGenState
+    with ScalaGenHilControls
+    with ScalaGenManualControl
+    with ScalaGenQuaternion
+    with ScalaGenOpticalFlowRad
+    with ScalaGenAltitude
+    with ScalaGenExtendedState
+    with ScalaGenPoint
+    with ScalaGenMavlink
+    with ScalaGenVibration
+    with ScalaGenCommandCode
+    with ScalaGenRCIn
+    with ScalaGenWaypointList
+    with ScalaGenCamIMUStamp
+    with ScalaGenPositionTarget
+    with ScalaGenVec3
+    with ScalaGenRCOut
+    with ScalaGenParamValue
+    with ScalaGenFileEntry
+    with ScalaGenActuatorControl {
+  val IR: RosCompiler
+}
