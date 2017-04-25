@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandIntApi extends CommandIntExp {
   self: RosApi =>
@@ -94,15 +95,22 @@ case class CommandIntRep_reply_success(srv: Exp[CommandIntRep]) extends Op[Bool]
   case class CommandIntReply(srv: Exp[CommandInt]) extends Op[CommandIntRep]{
     def mirror(f: Tx) = stage(CommandIntReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandInt(frame: Exp[FixPt[FALSE,_8,_0]], command: Exp[FixPt[FALSE,_16,_0]], current: Exp[FixPt[FALSE,_8,_0]], autocontinue: Exp[FixPt[FALSE,_8,_0]], param1: Exp[FltPt[_24,_8]], param2: Exp[FltPt[_24,_8]], param3: Exp[FltPt[_24,_8]], param4: Exp[FltPt[_24,_8]]) extends Op[CommandInt] {
+    def mirror(f: Tx) = stage(NewCommandInt(f(frame), f(command), f(current), f(autocontinue), f(param1), f(param2), f(param3), f(param4)))(EmptyContext)
+  }
 
   
   object CommandInt {
 
+  @api def apply(frame: FixPt[FALSE,_8,_0], command: FixPt[FALSE,_16,_0], current: FixPt[FALSE,_8,_0], autocontinue: FixPt[FALSE,_8,_0], param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8]): CommandInt = CommandInt(stage(NewCommandInt(frame.s, command.s, current.s, autocontinue.s, param1.s, param2.s, param3.s, param4.s))(ctx))
   }
 
   object CommandIntRep {
 
   }
 
+}
+
+trait ScalaGenCommandInt extends ScalaCodegen{
 }
 

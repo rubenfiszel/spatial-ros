@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait VFR_HUDApi extends VFR_HUDExp {
   self: RosApi =>
@@ -26,10 +27,23 @@ trait VFR_HUDExp {
   }
 
 
-  
+  case class NewVFR_HUD() extends Op[VFR_HUD] {
+    def mirror(f: Tx) = stage(NewVFR_HUD())(EmptyContext)
+  }
+
   object VFR_HUD {
+
+  @api def apply(): VFR_HUD = VFR_HUD(stage(NewVFR_HUD())(ctx))
+
 
   }
 
+}
+
+trait ScalaGenVFR_HUD extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

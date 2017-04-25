@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ManualControlApi extends ManualControlExp {
   self: RosApi =>
@@ -54,10 +55,23 @@ case class ManualControl_buttons(msg: Exp[ManualControl]) extends Op[FixPt[FALSE
   def mirror(f: Tx) = stage(ManualControl_buttons(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewManualControl(x: Exp[FltPt[_24,_8]], y: Exp[FltPt[_24,_8]], z: Exp[FltPt[_24,_8]], r: Exp[FltPt[_24,_8]], buttons: Exp[FixPt[FALSE,_16,_0]]) extends Op[ManualControl] {
+    def mirror(f: Tx) = stage(NewManualControl(f(x), f(y), f(z), f(r), f(buttons)))(EmptyContext)
+  }
+
   object ManualControl {
+
+  @api def apply(x: FltPt[_24,_8], y: FltPt[_24,_8], z: FltPt[_24,_8], r: FltPt[_24,_8], buttons: FixPt[FALSE,_16,_0]): ManualControl = ManualControl(stage(NewManualControl(x.s, y.s, z.s, r.s, buttons.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenManualControl extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

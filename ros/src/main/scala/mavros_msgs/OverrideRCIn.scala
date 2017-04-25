@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait OverrideRCInApi extends OverrideRCInExp {
   self: RosApi =>
@@ -30,11 +31,24 @@ case class OverrideRCIn_channels(msg: Exp[OverrideRCIn]) extends Op[FixPt[FALSE,
   def mirror(f: Tx) = stage(OverrideRCIn_channels(f(msg)))(EmptyContext)
 }
 
-  
-  object OverrideRCIn {
-    val CHAN_RELEASE: FixPt[FALSE,_16,_0] = 0
-    val CHAN_NOCHANGE: FixPt[FALSE,_16,_0] = 65535
+  case class NewOverrideRCIn(channels: Exp[FixPt[FALSE,_16,_0]]) extends Op[OverrideRCIn] {
+    def mirror(f: Tx) = stage(NewOverrideRCIn(f(channels)))(EmptyContext)
   }
 
+  object OverrideRCIn {
+
+  @api def apply(channels: FixPt[FALSE,_16,_0]): OverrideRCIn = OverrideRCIn(stage(NewOverrideRCIn(channels.s))(ctx))
+    val CHAN_RELEASE: FixPt[FALSE,_16,_0] = 0
+    val CHAN_NOCHANGE: FixPt[FALSE,_16,_0] = 65535
+
+  }
+
+}
+
+trait ScalaGenOverrideRCIn extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileReadApi extends FileReadExp {
   self: RosApi =>
@@ -76,15 +77,22 @@ case class FileReadRep_reply_r_errno(srv: Exp[FileReadRep]) extends Op[FixPt[TRU
   case class FileReadReply(srv: Exp[FileRead]) extends Op[FileReadRep]{
     def mirror(f: Tx) = stage(FileReadReply(f(srv)))(EmptyContext)
   }
+  case class NewFileRead(file_path: Exp[Text], offset: Exp[FixPt[FALSE,_64,_0]], size: Exp[FixPt[FALSE,_64,_0]]) extends Op[FileRead] {
+    def mirror(f: Tx) = stage(NewFileRead(f(file_path), f(offset), f(size)))(EmptyContext)
+  }
 
   
   object FileRead {
 
+  @api def apply(file_path: Text, offset: FixPt[FALSE,_64,_0], size: FixPt[FALSE,_64,_0]): FileRead = FileRead(stage(NewFileRead(file_path.s, offset.s, size.s))(ctx))
   }
 
   object FileReadRep {
 
   }
 
+}
+
+trait ScalaGenFileRead extends ScalaCodegen{
 }
 

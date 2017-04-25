@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileCloseApi extends FileCloseExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class FileCloseRep_reply_r_errno(srv: Exp[FileCloseRep]) extends Op[FixPt[T
   case class FileCloseReply(srv: Exp[FileClose]) extends Op[FileCloseRep]{
     def mirror(f: Tx) = stage(FileCloseReply(f(srv)))(EmptyContext)
   }
+  case class NewFileClose(file_path: Exp[Text]) extends Op[FileClose] {
+    def mirror(f: Tx) = stage(NewFileClose(f(file_path)))(EmptyContext)
+  }
 
   
   object FileClose {
 
+  @api def apply(file_path: Text): FileClose = FileClose(stage(NewFileClose(file_path.s))(ctx))
   }
 
   object FileCloseRep {
 
   }
 
+}
+
+trait ScalaGenFileClose extends ScalaCodegen{
 }
 

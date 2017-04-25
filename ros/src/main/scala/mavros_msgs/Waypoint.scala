@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait WaypointApi extends WaypointExp {
   self: RosApi =>
@@ -90,10 +91,23 @@ case class Waypoint_z_alt(msg: Exp[Waypoint]) extends Op[FltPt[_53,_11]] {
   def mirror(f: Tx) = stage(Waypoint_z_alt(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewWaypoint(frame: Exp[FixPt[FALSE,_8,_0]], command: Exp[FixPt[FALSE,_16,_0]], is_current: Exp[Bool], autocontinue: Exp[Bool], param1: Exp[FltPt[_24,_8]], param2: Exp[FltPt[_24,_8]], param3: Exp[FltPt[_24,_8]], param4: Exp[FltPt[_24,_8]], x_lat: Exp[FltPt[_53,_11]], y_long: Exp[FltPt[_53,_11]], z_alt: Exp[FltPt[_53,_11]]) extends Op[Waypoint] {
+    def mirror(f: Tx) = stage(NewWaypoint(f(frame), f(command), f(is_current), f(autocontinue), f(param1), f(param2), f(param3), f(param4), f(x_lat), f(y_long), f(z_alt)))(EmptyContext)
+  }
+
   object Waypoint {
+
+  @api def apply(frame: FixPt[FALSE,_8,_0], command: FixPt[FALSE,_16,_0], is_current: Bool, autocontinue: Bool, param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8], x_lat: FltPt[_53,_11], y_long: FltPt[_53,_11], z_alt: FltPt[_53,_11]): Waypoint = Waypoint(stage(NewWaypoint(frame.s, command.s, is_current.s, autocontinue.s, param1.s, param2.s, param3.s, param4.s, x_lat.s, y_long.s, z_alt.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenWaypoint extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait WaypointSetCurrentApi extends WaypointSetCurrentExp {
   self: RosApi =>
@@ -52,15 +53,22 @@ case class WaypointSetCurrentRep_reply_success(srv: Exp[WaypointSetCurrentRep]) 
   case class WaypointSetCurrentReply(srv: Exp[WaypointSetCurrent]) extends Op[WaypointSetCurrentRep]{
     def mirror(f: Tx) = stage(WaypointSetCurrentReply(f(srv)))(EmptyContext)
   }
+  case class NewWaypointSetCurrent(wp_seq: Exp[FixPt[FALSE,_16,_0]]) extends Op[WaypointSetCurrent] {
+    def mirror(f: Tx) = stage(NewWaypointSetCurrent(f(wp_seq)))(EmptyContext)
+  }
 
   
   object WaypointSetCurrent {
 
+  @api def apply(wp_seq: FixPt[FALSE,_16,_0]): WaypointSetCurrent = WaypointSetCurrent(stage(NewWaypointSetCurrent(wp_seq.s))(ctx))
   }
 
   object WaypointSetCurrentRep {
 
   }
 
+}
+
+trait ScalaGenWaypointSetCurrent extends ScalaCodegen{
 }
 

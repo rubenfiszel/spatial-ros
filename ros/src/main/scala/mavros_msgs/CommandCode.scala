@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandCodeApi extends CommandCodeExp {
   self: RosApi =>
@@ -26,10 +27,23 @@ trait CommandCodeExp {
   }
 
 
-  
+  case class NewCommandCode() extends Op[CommandCode] {
+    def mirror(f: Tx) = stage(NewCommandCode())(EmptyContext)
+  }
+
   object CommandCode {
+
+  @api def apply(): CommandCode = CommandCode(stage(NewCommandCode())(ctx))
+
 
   }
 
+}
+
+trait ScalaGenCommandCode extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

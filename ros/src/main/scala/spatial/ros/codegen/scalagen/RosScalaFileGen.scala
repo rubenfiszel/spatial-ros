@@ -1,5 +1,5 @@
 package spatial.ros.codegen.scalagen
 
-class RosScalaFileGen {
+import argon.codegen.scalagen.ScalaFileGen
 
-}
+trait RosScalaFileGen extends ScalaFileGen

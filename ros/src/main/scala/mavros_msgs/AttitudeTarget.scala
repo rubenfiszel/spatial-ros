@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait AttitudeTargetApi extends AttitudeTargetExp {
   self: RosApi =>
@@ -48,10 +49,23 @@ case class AttitudeTarget_thrust(msg: Exp[AttitudeTarget]) extends Op[FltPt[_24,
   def mirror(f: Tx) = stage(AttitudeTarget_thrust(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewAttitudeTarget(type_mask: Exp[FixPt[FALSE,_8,_0]], orientation: Exp[Quaternion], body_rate: Exp[Vec3], thrust: Exp[FltPt[_24,_8]]) extends Op[AttitudeTarget] {
+    def mirror(f: Tx) = stage(NewAttitudeTarget(f(type_mask), f(orientation), f(body_rate), f(thrust)))(EmptyContext)
+  }
+
   object AttitudeTarget {
+
+  @api def apply(type_mask: FixPt[FALSE,_8,_0], orientation: Quaternion, body_rate: Vec3, thrust: FltPt[_24,_8]): AttitudeTarget = AttitudeTarget(stage(NewAttitudeTarget(type_mask.s, orientation.s, body_rate.s, thrust.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenAttitudeTarget extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

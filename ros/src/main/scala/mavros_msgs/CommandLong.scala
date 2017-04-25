@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandLongApi extends CommandLongExp {
   self: RosApi =>
@@ -88,15 +89,22 @@ case class CommandLongRep_reply_result(srv: Exp[CommandLongRep]) extends Op[FixP
   case class CommandLongReply(srv: Exp[CommandLong]) extends Op[CommandLongRep]{
     def mirror(f: Tx) = stage(CommandLongReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandLong(command: Exp[FixPt[FALSE,_16,_0]], confirmation: Exp[FixPt[FALSE,_8,_0]], param1: Exp[FltPt[_24,_8]], param2: Exp[FltPt[_24,_8]], param3: Exp[FltPt[_24,_8]], param4: Exp[FltPt[_24,_8]]) extends Op[CommandLong] {
+    def mirror(f: Tx) = stage(NewCommandLong(f(command), f(confirmation), f(param1), f(param2), f(param3), f(param4)))(EmptyContext)
+  }
 
   
   object CommandLong {
 
+  @api def apply(command: FixPt[FALSE,_16,_0], confirmation: FixPt[FALSE,_8,_0], param1: FltPt[_24,_8], param2: FltPt[_24,_8], param3: FltPt[_24,_8], param4: FltPt[_24,_8]): CommandLong = CommandLong(stage(NewCommandLong(command.s, confirmation.s, param1.s, param2.s, param3.s, param4.s))(ctx))
   }
 
   object CommandLongRep {
 
   }
 
+}
+
+trait ScalaGenCommandLong extends ScalaCodegen{
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait GlobalPositionTargetApi extends GlobalPositionTargetExp {
   self: RosApi =>
@@ -72,10 +73,23 @@ case class GlobalPositionTarget_yaw_rate(msg: Exp[GlobalPositionTarget]) extends
   def mirror(f: Tx) = stage(GlobalPositionTarget_yaw_rate(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewGlobalPositionTarget(coordinate_frame: Exp[FixPt[FALSE,_8,_0]], type_mask: Exp[FixPt[FALSE,_16,_0]], latitude: Exp[FltPt[_53,_11]], longitude: Exp[FltPt[_53,_11]], velocity: Exp[Vec3], acceleration_or_force: Exp[Vec3], yaw: Exp[FltPt[_24,_8]], yaw_rate: Exp[FltPt[_24,_8]]) extends Op[GlobalPositionTarget] {
+    def mirror(f: Tx) = stage(NewGlobalPositionTarget(f(coordinate_frame), f(type_mask), f(latitude), f(longitude), f(velocity), f(acceleration_or_force), f(yaw), f(yaw_rate)))(EmptyContext)
+  }
+
   object GlobalPositionTarget {
+
+  @api def apply(coordinate_frame: FixPt[FALSE,_8,_0], type_mask: FixPt[FALSE,_16,_0], latitude: FltPt[_53,_11], longitude: FltPt[_53,_11], velocity: Vec3, acceleration_or_force: Vec3, yaw: FltPt[_24,_8], yaw_rate: FltPt[_24,_8]): GlobalPositionTarget = GlobalPositionTarget(stage(NewGlobalPositionTarget(coordinate_frame.s, type_mask.s, latitude.s, longitude.s, velocity.s, acceleration_or_force.s, yaw.s, yaw_rate.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenGlobalPositionTarget extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

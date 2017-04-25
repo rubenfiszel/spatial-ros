@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileMakeDirApi extends FileMakeDirExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class FileMakeDirRep_reply_r_errno(srv: Exp[FileMakeDirRep]) extends Op[Fix
   case class FileMakeDirReply(srv: Exp[FileMakeDir]) extends Op[FileMakeDirRep]{
     def mirror(f: Tx) = stage(FileMakeDirReply(f(srv)))(EmptyContext)
   }
+  case class NewFileMakeDir(dir_path: Exp[Text]) extends Op[FileMakeDir] {
+    def mirror(f: Tx) = stage(NewFileMakeDir(f(dir_path)))(EmptyContext)
+  }
 
   
   object FileMakeDir {
 
+  @api def apply(dir_path: Text): FileMakeDir = FileMakeDir(stage(NewFileMakeDir(dir_path.s))(ctx))
   }
 
   object FileMakeDirRep {
 
   }
 
+}
+
+trait ScalaGenFileMakeDir extends ScalaCodegen{
 }
 

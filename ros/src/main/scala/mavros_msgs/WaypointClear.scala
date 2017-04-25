@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait WaypointClearApi extends WaypointClearExp {
   self: RosApi =>
@@ -48,15 +49,22 @@ case class WaypointClearRep_reply_success(srv: Exp[WaypointClearRep]) extends Op
   case class WaypointClearReply(srv: Exp[WaypointClear]) extends Op[WaypointClearRep]{
     def mirror(f: Tx) = stage(WaypointClearReply(f(srv)))(EmptyContext)
   }
+  case class NewWaypointClear() extends Op[WaypointClear] {
+    def mirror(f: Tx) = stage(NewWaypointClear())(EmptyContext)
+  }
 
   
   object WaypointClear {
 
+  @api def apply(): WaypointClear = WaypointClear(stage(NewWaypointClear())(ctx))
   }
 
   object WaypointClearRep {
 
   }
 
+}
+
+trait ScalaGenWaypointClear extends ScalaCodegen{
 }
 

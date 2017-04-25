@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait StreamRateApi extends StreamRateExp {
   self: RosApi =>
@@ -60,15 +61,22 @@ case class StreamRate_on_off(srv: Exp[StreamRate]) extends Op[Bool] {
   case class StreamRateReply(srv: Exp[StreamRate]) extends Op[StreamRateRep]{
     def mirror(f: Tx) = stage(StreamRateReply(f(srv)))(EmptyContext)
   }
+  case class NewStreamRate(stream_id: Exp[FixPt[FALSE,_8,_0]], message_rate: Exp[FixPt[FALSE,_16,_0]], on_off: Exp[Bool]) extends Op[StreamRate] {
+    def mirror(f: Tx) = stage(NewStreamRate(f(stream_id), f(message_rate), f(on_off)))(EmptyContext)
+  }
 
   
   object StreamRate {
 
+  @api def apply(stream_id: FixPt[FALSE,_8,_0], message_rate: FixPt[FALSE,_16,_0], on_off: Bool): StreamRate = StreamRate(stage(NewStreamRate(stream_id.s, message_rate.s, on_off.s))(ctx))
   }
 
   object StreamRateRep {
 
   }
 
+}
+
+trait ScalaGenStreamRate extends ScalaCodegen{
 }
 

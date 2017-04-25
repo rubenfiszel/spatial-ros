@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait OpticalFlowRadApi extends OpticalFlowRadExp {
   self: RosApi =>
@@ -84,10 +85,23 @@ case class OpticalFlowRad_distance(msg: Exp[OpticalFlowRad]) extends Op[FltPt[_2
   def mirror(f: Tx) = stage(OpticalFlowRad_distance(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewOpticalFlowRad(integration_time_us: Exp[FixPt[FALSE,_32,_0]], integrated_x: Exp[FltPt[_24,_8]], integrated_y: Exp[FltPt[_24,_8]], integrated_xgyro: Exp[FltPt[_24,_8]], integrated_ygyro: Exp[FltPt[_24,_8]], integrated_zgyro: Exp[FltPt[_24,_8]], temperature: Exp[FixPt[TRUE,_16,_0]], quality: Exp[FixPt[FALSE,_8,_0]], time_delta_distance_us: Exp[FixPt[FALSE,_32,_0]], distance: Exp[FltPt[_24,_8]]) extends Op[OpticalFlowRad] {
+    def mirror(f: Tx) = stage(NewOpticalFlowRad(f(integration_time_us), f(integrated_x), f(integrated_y), f(integrated_xgyro), f(integrated_ygyro), f(integrated_zgyro), f(temperature), f(quality), f(time_delta_distance_us), f(distance)))(EmptyContext)
+  }
+
   object OpticalFlowRad {
+
+  @api def apply(integration_time_us: FixPt[FALSE,_32,_0], integrated_x: FltPt[_24,_8], integrated_y: FltPt[_24,_8], integrated_xgyro: FltPt[_24,_8], integrated_ygyro: FltPt[_24,_8], integrated_zgyro: FltPt[_24,_8], temperature: FixPt[TRUE,_16,_0], quality: FixPt[FALSE,_8,_0], time_delta_distance_us: FixPt[FALSE,_32,_0], distance: FltPt[_24,_8]): OpticalFlowRad = OpticalFlowRad(stage(NewOpticalFlowRad(integration_time_us.s, integrated_x.s, integrated_y.s, integrated_xgyro.s, integrated_ygyro.s, integrated_zgyro.s, temperature.s, quality.s, time_delta_distance_us.s, distance.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenOpticalFlowRad extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

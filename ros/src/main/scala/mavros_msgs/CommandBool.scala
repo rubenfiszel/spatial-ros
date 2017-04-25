@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandBoolApi extends CommandBoolExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class CommandBoolRep_reply_result(srv: Exp[CommandBoolRep]) extends Op[FixP
   case class CommandBoolReply(srv: Exp[CommandBool]) extends Op[CommandBoolRep]{
     def mirror(f: Tx) = stage(CommandBoolReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandBool(value: Exp[Bool]) extends Op[CommandBool] {
+    def mirror(f: Tx) = stage(NewCommandBool(f(value)))(EmptyContext)
+  }
 
   
   object CommandBool {
 
+  @api def apply(value: Bool): CommandBool = CommandBool(stage(NewCommandBool(value.s))(ctx))
   }
 
   object CommandBoolRep {
 
   }
 
+}
+
+trait ScalaGenCommandBool extends ScalaCodegen{
 }
 

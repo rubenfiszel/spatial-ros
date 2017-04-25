@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait SetModeApi extends SetModeExp {
   self: RosApi =>
@@ -48,15 +49,22 @@ case class SetModeRep_reply_success(srv: Exp[SetModeRep]) extends Op[Bool] {
   case class SetModeReply(srv: Exp[SetMode]) extends Op[SetModeRep]{
     def mirror(f: Tx) = stage(SetModeReply(f(srv)))(EmptyContext)
   }
+  case class NewSetMode() extends Op[SetMode] {
+    def mirror(f: Tx) = stage(NewSetMode())(EmptyContext)
+  }
 
   
   object SetMode {
 
+  @api def apply(): SetMode = SetMode(stage(NewSetMode())(ctx))
   }
 
   object SetModeRep {
 
   }
 
+}
+
+trait ScalaGenSetMode extends ScalaCodegen{
 }
 

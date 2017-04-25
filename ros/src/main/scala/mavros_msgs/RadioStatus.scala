@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait RadioStatusApi extends RadioStatusExp {
   self: RosApi =>
@@ -78,10 +79,23 @@ case class RadioStatus_remrssi_dbm(msg: Exp[RadioStatus]) extends Op[FltPt[_24,_
   def mirror(f: Tx) = stage(RadioStatus_remrssi_dbm(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewRadioStatus(rssi: Exp[FixPt[FALSE,_8,_0]], remrssi: Exp[FixPt[FALSE,_8,_0]], txbuf: Exp[FixPt[FALSE,_8,_0]], noise: Exp[FixPt[FALSE,_8,_0]], remnoise: Exp[FixPt[FALSE,_8,_0]], rxerrors: Exp[FixPt[FALSE,_16,_0]], fixed: Exp[FixPt[FALSE,_16,_0]], rssi_dbm: Exp[FltPt[_24,_8]], remrssi_dbm: Exp[FltPt[_24,_8]]) extends Op[RadioStatus] {
+    def mirror(f: Tx) = stage(NewRadioStatus(f(rssi), f(remrssi), f(txbuf), f(noise), f(remnoise), f(rxerrors), f(fixed), f(rssi_dbm), f(remrssi_dbm)))(EmptyContext)
+  }
+
   object RadioStatus {
+
+  @api def apply(rssi: FixPt[FALSE,_8,_0], remrssi: FixPt[FALSE,_8,_0], txbuf: FixPt[FALSE,_8,_0], noise: FixPt[FALSE,_8,_0], remnoise: FixPt[FALSE,_8,_0], rxerrors: FixPt[FALSE,_16,_0], fixed: FixPt[FALSE,_16,_0], rssi_dbm: FltPt[_24,_8], remrssi_dbm: FltPt[_24,_8]): RadioStatus = RadioStatus(stage(NewRadioStatus(rssi.s, remrssi.s, txbuf.s, noise.s, remnoise.s, rxerrors.s, fixed.s, rssi_dbm.s, remrssi_dbm.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenRadioStatus extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

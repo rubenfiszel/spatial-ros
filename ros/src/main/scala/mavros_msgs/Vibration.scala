@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait VibrationApi extends VibrationExp {
   self: RosApi =>
@@ -26,10 +27,23 @@ trait VibrationExp {
   }
 
 
-  
+  case class NewVibration() extends Op[Vibration] {
+    def mirror(f: Tx) = stage(NewVibration())(EmptyContext)
+  }
+
   object Vibration {
+
+  @api def apply(): Vibration = Vibration(stage(NewVibration())(ctx))
+
 
   }
 
+}
+
+trait ScalaGenVibration extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

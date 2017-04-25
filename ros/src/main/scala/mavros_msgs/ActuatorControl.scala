@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ActuatorControlApi extends ActuatorControlExp {
   self: RosApi =>
@@ -36,10 +37,23 @@ case class ActuatorControl_controls(msg: Exp[ActuatorControl]) extends Op[FltPt[
   def mirror(f: Tx) = stage(ActuatorControl_controls(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewActuatorControl(group_mix: Exp[FixPt[FALSE,_8,_0]], controls: Exp[FltPt[_24,_8]]) extends Op[ActuatorControl] {
+    def mirror(f: Tx) = stage(NewActuatorControl(f(group_mix), f(controls)))(EmptyContext)
+  }
+
   object ActuatorControl {
+
+  @api def apply(group_mix: FixPt[FALSE,_8,_0], controls: FltPt[_24,_8]): ActuatorControl = ActuatorControl(stage(NewActuatorControl(group_mix.s, controls.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenActuatorControl extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

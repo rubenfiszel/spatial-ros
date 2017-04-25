@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileOpenApi extends FileOpenExp {
   self: RosApi =>
@@ -70,15 +71,22 @@ case class FileOpenRep_reply_r_errno(srv: Exp[FileOpenRep]) extends Op[FixPt[TRU
   case class FileOpenReply(srv: Exp[FileOpen]) extends Op[FileOpenRep]{
     def mirror(f: Tx) = stage(FileOpenReply(f(srv)))(EmptyContext)
   }
+  case class NewFileOpen(file_path: Exp[Text], mode: Exp[FixPt[FALSE,_8,_0]]) extends Op[FileOpen] {
+    def mirror(f: Tx) = stage(NewFileOpen(f(file_path), f(mode)))(EmptyContext)
+  }
 
   
   object FileOpen {
 
+  @api def apply(file_path: Text, mode: FixPt[FALSE,_8,_0]): FileOpen = FileOpen(stage(NewFileOpen(file_path.s, mode.s))(ctx))
   }
 
   object FileOpenRep {
 
   }
 
+}
+
+trait ScalaGenFileOpen extends ScalaCodegen{
 }
 

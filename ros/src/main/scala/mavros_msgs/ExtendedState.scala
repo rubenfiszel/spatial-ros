@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ExtendedStateApi extends ExtendedStateExp {
   self: RosApi =>
@@ -36,10 +37,23 @@ case class ExtendedState_landed_state(msg: Exp[ExtendedState]) extends Op[FixPt[
   def mirror(f: Tx) = stage(ExtendedState_landed_state(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewExtendedState(vtol_state: Exp[FixPt[FALSE,_8,_0]], landed_state: Exp[FixPt[FALSE,_8,_0]]) extends Op[ExtendedState] {
+    def mirror(f: Tx) = stage(NewExtendedState(f(vtol_state), f(landed_state)))(EmptyContext)
+  }
+
   object ExtendedState {
+
+  @api def apply(vtol_state: FixPt[FALSE,_8,_0], landed_state: FixPt[FALSE,_8,_0]): ExtendedState = ExtendedState(stage(NewExtendedState(vtol_state.s, landed_state.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenExtendedState extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait WaypointListApi extends WaypointListExp {
   self: RosApi =>
@@ -30,10 +31,23 @@ case class WaypointList_waypoints(msg: Exp[WaypointList]) extends Op[MetaArray[W
   def mirror(f: Tx) = stage(WaypointList_waypoints(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewWaypointList(waypoints: Exp[MetaArray[Waypoint]]) extends Op[WaypointList] {
+    def mirror(f: Tx) = stage(NewWaypointList(f(waypoints)))(EmptyContext)
+  }
+
   object WaypointList {
+
+  @api def apply(waypoints: MetaArray[Waypoint]): WaypointList = WaypointList(stage(NewWaypointList(waypoints.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenWaypointList extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

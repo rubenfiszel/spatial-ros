@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait MavlinkApi extends MavlinkExp {
   self: RosApi =>
@@ -72,10 +73,23 @@ case class Mavlink_payload64(msg: Exp[Mavlink]) extends Op[MetaArray[FixPt[FALSE
   def mirror(f: Tx) = stage(Mavlink_payload64(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewMavlink(is_valid: Exp[Bool], len: Exp[FixPt[FALSE,_8,_0]], seq: Exp[FixPt[FALSE,_8,_0]], sysid: Exp[FixPt[FALSE,_8,_0]], compid: Exp[FixPt[FALSE,_8,_0]], msgid: Exp[FixPt[FALSE,_8,_0]], checksum: Exp[FixPt[FALSE,_16,_0]], payload64: Exp[MetaArray[FixPt[FALSE,_64,_0]]]) extends Op[Mavlink] {
+    def mirror(f: Tx) = stage(NewMavlink(f(is_valid), f(len), f(seq), f(sysid), f(compid), f(msgid), f(checksum), f(payload64)))(EmptyContext)
+  }
+
   object Mavlink {
+
+  @api def apply(is_valid: Bool, len: FixPt[FALSE,_8,_0], seq: FixPt[FALSE,_8,_0], sysid: FixPt[FALSE,_8,_0], compid: FixPt[FALSE,_8,_0], msgid: FixPt[FALSE,_8,_0], checksum: FixPt[FALSE,_16,_0], payload64: MetaArray[FixPt[FALSE,_64,_0]]): Mavlink = Mavlink(stage(NewMavlink(is_valid.s, len.s, seq.s, sysid.s, compid.s, msgid.s, checksum.s, payload64.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenMavlink extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

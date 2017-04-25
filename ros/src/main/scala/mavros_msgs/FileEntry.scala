@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileEntryApi extends FileEntryExp {
   self: RosApi =>
@@ -42,10 +43,23 @@ case class FileEntry_size(msg: Exp[FileEntry]) extends Op[FixPt[FALSE,_64,_0]] {
   def mirror(f: Tx) = stage(FileEntry_size(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewFileEntry(name: Exp[Text], `type`: Exp[FixPt[FALSE,_8,_0]], size: Exp[FixPt[FALSE,_64,_0]]) extends Op[FileEntry] {
+    def mirror(f: Tx) = stage(NewFileEntry(f(name), f(`type`), f(size)))(EmptyContext)
+  }
+
   object FileEntry {
+
+  @api def apply(name: Text, `type`: FixPt[FALSE,_8,_0], size: FixPt[FALSE,_64,_0]): FileEntry = FileEntry(stage(NewFileEntry(name.s, `type`.s, size.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenFileEntry extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

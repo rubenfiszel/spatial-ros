@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileWriteApi extends FileWriteExp {
   self: RosApi =>
@@ -70,15 +71,22 @@ case class FileWriteRep_reply_r_errno(srv: Exp[FileWriteRep]) extends Op[FixPt[T
   case class FileWriteReply(srv: Exp[FileWrite]) extends Op[FileWriteRep]{
     def mirror(f: Tx) = stage(FileWriteReply(f(srv)))(EmptyContext)
   }
+  case class NewFileWrite(file_path: Exp[Text], offset: Exp[FixPt[FALSE,_64,_0]], data: Exp[MetaArray[FixPt[FALSE,_8,_0]]]) extends Op[FileWrite] {
+    def mirror(f: Tx) = stage(NewFileWrite(f(file_path), f(offset), f(data)))(EmptyContext)
+  }
 
   
   object FileWrite {
 
+  @api def apply(file_path: Text, offset: FixPt[FALSE,_64,_0], data: MetaArray[FixPt[FALSE,_8,_0]]): FileWrite = FileWrite(stage(NewFileWrite(file_path.s, offset.s, data.s))(ctx))
   }
 
   object FileWriteRep {
 
   }
 
+}
+
+trait ScalaGenFileWrite extends ScalaCodegen{
 }
 

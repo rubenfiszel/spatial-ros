@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileChecksumApi extends FileChecksumExp {
   self: RosApi =>
@@ -64,15 +65,22 @@ case class FileChecksumRep_reply_r_errno(srv: Exp[FileChecksumRep]) extends Op[F
   case class FileChecksumReply(srv: Exp[FileChecksum]) extends Op[FileChecksumRep]{
     def mirror(f: Tx) = stage(FileChecksumReply(f(srv)))(EmptyContext)
   }
+  case class NewFileChecksum(file_path: Exp[Text]) extends Op[FileChecksum] {
+    def mirror(f: Tx) = stage(NewFileChecksum(f(file_path)))(EmptyContext)
+  }
 
   
   object FileChecksum {
 
+  @api def apply(file_path: Text): FileChecksum = FileChecksum(stage(NewFileChecksum(file_path.s))(ctx))
   }
 
   object FileChecksumRep {
 
   }
 
+}
+
+trait ScalaGenFileChecksum extends ScalaCodegen{
 }
 

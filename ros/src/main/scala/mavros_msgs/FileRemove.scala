@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileRemoveApi extends FileRemoveExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class FileRemoveRep_reply_r_errno(srv: Exp[FileRemoveRep]) extends Op[FixPt
   case class FileRemoveReply(srv: Exp[FileRemove]) extends Op[FileRemoveRep]{
     def mirror(f: Tx) = stage(FileRemoveReply(f(srv)))(EmptyContext)
   }
+  case class NewFileRemove(file_path: Exp[Text]) extends Op[FileRemove] {
+    def mirror(f: Tx) = stage(NewFileRemove(f(file_path)))(EmptyContext)
+  }
 
   
   object FileRemove {
 
+  @api def apply(file_path: Text): FileRemove = FileRemove(stage(NewFileRemove(file_path.s))(ctx))
   }
 
   object FileRemoveRep {
 
   }
 
+}
+
+trait ScalaGenFileRemove extends ScalaCodegen{
 }
 

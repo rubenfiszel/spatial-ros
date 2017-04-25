@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait QuaternionApi extends QuaternionExp {
   self: RosApi =>
@@ -48,10 +49,23 @@ case class Quaternion_w(msg: Exp[Quaternion]) extends Op[FltPt[_53,_11]] {
   def mirror(f: Tx) = stage(Quaternion_w(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewQuaternion(x: Exp[FltPt[_53,_11]], y: Exp[FltPt[_53,_11]], z: Exp[FltPt[_53,_11]], w: Exp[FltPt[_53,_11]]) extends Op[Quaternion] {
+    def mirror(f: Tx) = stage(NewQuaternion(f(x), f(y), f(z), f(w)))(EmptyContext)
+  }
+
   object Quaternion {
+
+  @api def apply(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11], w: FltPt[_53,_11]): Quaternion = Quaternion(stage(NewQuaternion(x.s, y.s, z.s, w.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenQuaternion extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

@@ -7,7 +7,7 @@ trait RosIR extends RosCompiler with SpatialIR
 trait RosApp extends SpatialApp{
 
 
-  override val IR: SpatialIR = new RosIR { def target = RosApp.this.target  }
+  override val IR = new RosIR { def target = RosApp.this.target  }
 
   override def parseArguments(args: Seq[String]): Unit = {
     val parser = new RosArgParser
@@ -20,8 +20,8 @@ trait RosApp extends SpatialApp{
         println(SpatialConfig.spatialConf)
         println("Starting generation")
     }
-    SpatialConfig.enableSim = true
-    SpatialConfig.enableSynth = true
+    SpatialConfig.enableSim = false
+    SpatialConfig.enableSynth = false
   }
 
 }

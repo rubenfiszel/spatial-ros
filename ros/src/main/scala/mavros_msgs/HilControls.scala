@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait HilControlsApi extends HilControlsExp {
   self: RosApi =>
@@ -84,10 +85,23 @@ case class HilControls_nav_mode(msg: Exp[HilControls]) extends Op[FixPt[FALSE,_8
   def mirror(f: Tx) = stage(HilControls_nav_mode(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewHilControls(roll_ailerons: Exp[FltPt[_24,_8]], pitch_elevator: Exp[FltPt[_24,_8]], yaw_rudder: Exp[FltPt[_24,_8]], throttle: Exp[FltPt[_24,_8]], aux1: Exp[FltPt[_24,_8]], aux2: Exp[FltPt[_24,_8]], aux3: Exp[FltPt[_24,_8]], aux4: Exp[FltPt[_24,_8]], mode: Exp[FixPt[FALSE,_8,_0]], nav_mode: Exp[FixPt[FALSE,_8,_0]]) extends Op[HilControls] {
+    def mirror(f: Tx) = stage(NewHilControls(f(roll_ailerons), f(pitch_elevator), f(yaw_rudder), f(throttle), f(aux1), f(aux2), f(aux3), f(aux4), f(mode), f(nav_mode)))(EmptyContext)
+  }
+
   object HilControls {
+
+  @api def apply(roll_ailerons: FltPt[_24,_8], pitch_elevator: FltPt[_24,_8], yaw_rudder: FltPt[_24,_8], throttle: FltPt[_24,_8], aux1: FltPt[_24,_8], aux2: FltPt[_24,_8], aux3: FltPt[_24,_8], aux4: FltPt[_24,_8], mode: FixPt[FALSE,_8,_0], nav_mode: FixPt[FALSE,_8,_0]): HilControls = HilControls(stage(NewHilControls(roll_ailerons.s, pitch_elevator.s, yaw_rudder.s, throttle.s, aux1.s, aux2.s, aux3.s, aux4.s, mode.s, nav_mode.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenHilControls extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

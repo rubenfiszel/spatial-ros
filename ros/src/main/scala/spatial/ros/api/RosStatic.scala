@@ -9,7 +9,9 @@ import forge._
 trait RosStaticApi extends RosStaticExp {
   this: RosExp =>
 
-  @api def init(t: Exp[Text]) = Init(t)
+  object Ros {
+    @api def init(t: Text) = Void(ros_init(t.s))
+  }
 }
 
 
@@ -19,12 +21,12 @@ trait RosStaticExp extends Staging {
 
   /** IR Nodes **/
   case class Init(name: Exp[Text]) extends Op[Void] {
-    def mirror(f:Tx) = ros_init(name)
+    def mirror(f:Tx) = ros_init(f(name))
   }
 
   /** Constructors **/
-  @api def ros_init(t: Exp[Text]): Sym[Void] = {
-    stage(Init(t))(ctx)
+  @api protected def ros_init(t: Exp[Text]): Sym[Void] = {
+    stageSimple(Init(t))(ctx)
   }
 
 }

@@ -1,4 +1,4 @@
-#!/usr/bin/env scala
+#!/usr/bin/env scala 
 
 import java.io._
 
@@ -27,8 +27,9 @@ for (srv <- srvs) {
 
 val mavrosExp = "trait MavrosExp extends " + names.map(_+"Exp").mkString(" with ") + "{ self: RosExp => }"
 val mavrosApi = "trait MavrosApi extends " + names.map(_+"Api").mkString(" with ") + "{ self: RosApi => }"
+val scalaGenMavros = "trait ScalaGenMavros extends " + names.map("ScalaGen"+_).mkString(" with ") + "{ val IR: RosCompiler }"
 val mavF = new File("Mavros.scala")
-writeFile(mavF, "package spatial.ros\n\n" + mavrosExp + "\n\n" + mavrosApi)
+writeFile(mavF, "package spatial.ros\n\n"+ "import spatial.ros.api._\n\n" + mavrosExp + "\n\n" + mavrosApi + "\n\n" + scalaGenMavros)
 
 def getName(file: File) =
   remap(file.getName.split('.')(0))
@@ -37,6 +38,7 @@ def quote(s:String) = s match {
   case "type" => "`type`"
   case _ => s
 }
+
 def remap(tp: String) = {
   val t = tp.split('/').last.takeWhile(_ != '[') match {
     case "Quaternion" => "Quaternion"                
@@ -88,7 +90,7 @@ def msgToScala(f: File) = {
     case data(a, b) if !a.contains("Header") => (a, b)
   }
 
-  val apis = datas.map { case (t, n) =>
+  val apis = datas map { case (t, n) =>
     s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${name}_${n}(s))(ctx))"
   }
   val nodes = datas map { case (t, n) =>
@@ -99,15 +101,32 @@ case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
 """
   }
   
-  val cs = constants.map { case (t, n, v) =>
+  val cs = constants map { case (t, n, v) =>
     s"val ${quote(n)}: ${remap(t)} = $v"
   }
 
+  val ctorArgs = datas.map { case (t, n) =>
+    s"${quote(n)}: ${remap(t)}"
+  }.mkString(", ")
+
+  val ctorArgsAppliedS  = datas.map { case (t, n) =>
+    s"${quote(n)}.s"
+  }.mkString(", ")
+
+  val ctorArgsAppliedF  = datas.map { case (t, n) =>
+    s"f(${quote(n)})"
+  }.mkString(", ")
+  
+  val ctorArgsExp = datas.map { case (t, n) =>
+    s"${quote(n)}: Exp[${remap(t)}]"
+  }.mkString(", ")
+  
 s"""
 package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ${name}Api extends ${name}Exp {
   self: RosApi =>
@@ -131,11 +150,24 @@ ${ident(apis, 2)}
   }
 
 ${ident(nodes, 1)}
-  
-  object $name {
-${ident(cs, 2)}
+  case class New$name($ctorArgsExp) extends Op[$name] {
+    def mirror(f: Tx) = stage(New$name($ctorArgsAppliedF))(EmptyContext)
   }
 
+  object $name {
+
+  @api def apply($ctorArgs): $name = $name(stage(New$name($ctorArgsAppliedS))(ctx))
+${ident(cs, 2)}
+
+  }
+
+}
+
+trait ScalaGen$name extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 """
 }
@@ -190,12 +222,28 @@ case class ${nameRep}_reply_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
     s"val ${quote(n)}: ${remap(t)} = $v"
   }
 
+  val ctorArgs = datas.map { case (t, n) =>
+    s"${quote(n)}: ${remap(t)}"
+  }.mkString(", ")
 
-s"""
+  val ctorArgsAppliedS  = datas.map { case (t, n) =>
+    s"${quote(n)}.s"
+  }.mkString(", ")
+
+  val ctorArgsAppliedF  = datas.map { case (t, n) =>
+    s"f(${quote(n)})"
+  }.mkString(", ")
+  
+  val ctorArgsExp = datas.map { case (t, n) =>
+    s"${quote(n)}: Exp[${remap(t)}]"
+  }.mkString(", ")
+
+  s"""
 package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ${name}Api extends ${name}Exp {
   self: RosApi =>
@@ -237,10 +285,14 @@ ${ident(nodesRep, 1)}
   case class ${name}Reply(srv: Exp[$name]) extends Op[$nameRep]{
     def mirror(f: Tx) = stage(${name}Reply(f(srv)))(EmptyContext)
   }
+  case class New$name($ctorArgsExp) extends Op[$name] {
+    def mirror(f: Tx) = stage(New$name($ctorArgsAppliedF))(EmptyContext)
+  }
 
   
   object $name {
 ${ident(cs, 2)}
+  @api def apply($ctorArgs): $name = $name(stage(New$name($ctorArgsAppliedS))(ctx))
   }
 
   object $nameRep {
@@ -248,8 +300,13 @@ ${ident(csRep, 2)}
   }
 
 }
-"""  
+
+trait ScalaGen$name extends ScalaCodegen{
 }
+"""  
+
+}
+
 def writeFile(f: File, s: String) = {
   val name = getName(f)
   val out = new File("ros/src/main/scala/mavros_msgs/"+ name +".scala")

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileRemoveDirApi extends FileRemoveDirExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class FileRemoveDirRep_reply_r_errno(srv: Exp[FileRemoveDirRep]) extends Op
   case class FileRemoveDirReply(srv: Exp[FileRemoveDir]) extends Op[FileRemoveDirRep]{
     def mirror(f: Tx) = stage(FileRemoveDirReply(f(srv)))(EmptyContext)
   }
+  case class NewFileRemoveDir(dir_path: Exp[Text]) extends Op[FileRemoveDir] {
+    def mirror(f: Tx) = stage(NewFileRemoveDir(f(dir_path)))(EmptyContext)
+  }
 
   
   object FileRemoveDir {
 
+  @api def apply(dir_path: Text): FileRemoveDir = FileRemoveDir(stage(NewFileRemoveDir(dir_path.s))(ctx))
   }
 
   object FileRemoveDirRep {
 
   }
 
+}
+
+trait ScalaGenFileRemoveDir extends ScalaCodegen{
 }
 

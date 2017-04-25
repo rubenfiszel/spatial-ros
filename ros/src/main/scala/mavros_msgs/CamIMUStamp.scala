@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CamIMUStampApi extends CamIMUStampExp {
   self: RosApi =>
@@ -26,10 +27,23 @@ trait CamIMUStampExp {
   }
 
 
-  
+  case class NewCamIMUStamp() extends Op[CamIMUStamp] {
+    def mirror(f: Tx) = stage(NewCamIMUStamp())(EmptyContext)
+  }
+
   object CamIMUStamp {
+
+  @api def apply(): CamIMUStamp = CamIMUStamp(stage(NewCamIMUStamp())(ctx))
+
 
   }
 
+}
+
+trait ScalaGenCamIMUStamp extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

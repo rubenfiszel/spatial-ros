@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait PointApi extends PointExp {
   self: RosApi =>
@@ -42,10 +43,23 @@ case class Point_z(msg: Exp[Point]) extends Op[FltPt[_53,_11]] {
   def mirror(f: Tx) = stage(Point_z(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewPoint(x: Exp[FltPt[_53,_11]], y: Exp[FltPt[_53,_11]], z: Exp[FltPt[_53,_11]]) extends Op[Point] {
+    def mirror(f: Tx) = stage(NewPoint(f(x), f(y), f(z)))(EmptyContext)
+  }
+
   object Point {
+
+  @api def apply(x: FltPt[_53,_11], y: FltPt[_53,_11], z: FltPt[_53,_11]): Point = Point(stage(NewPoint(x.s, y.s, z.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenPoint extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

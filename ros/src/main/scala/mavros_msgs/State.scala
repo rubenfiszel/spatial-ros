@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait StateApi extends StateExp {
   self: RosApi =>
@@ -48,10 +49,23 @@ case class State_mode(msg: Exp[State]) extends Op[Text] {
   def mirror(f: Tx) = stage(State_mode(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewState(connected: Exp[Bool], armed: Exp[Bool], guided: Exp[Bool], mode: Exp[Text]) extends Op[State] {
+    def mirror(f: Tx) = stage(NewState(f(connected), f(armed), f(guided), f(mode)))(EmptyContext)
+  }
+
   object State {
+
+  @api def apply(connected: Bool, armed: Bool, guided: Bool, mode: Text): State = State(stage(NewState(connected.s, armed.s, guided.s, mode.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenState extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

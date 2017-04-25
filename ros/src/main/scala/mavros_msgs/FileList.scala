@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileListApi extends FileListExp {
   self: RosApi =>
@@ -64,15 +65,22 @@ case class FileListRep_reply_r_errno(srv: Exp[FileListRep]) extends Op[FixPt[TRU
   case class FileListReply(srv: Exp[FileList]) extends Op[FileListRep]{
     def mirror(f: Tx) = stage(FileListReply(f(srv)))(EmptyContext)
   }
+  case class NewFileList(dir_path: Exp[Text]) extends Op[FileList] {
+    def mirror(f: Tx) = stage(NewFileList(f(dir_path)))(EmptyContext)
+  }
 
   
   object FileList {
 
+  @api def apply(dir_path: Text): FileList = FileList(stage(NewFileList(dir_path.s))(ctx))
   }
 
   object FileListRep {
 
   }
 
+}
+
+trait ScalaGenFileList extends ScalaCodegen{
 }
 

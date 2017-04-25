@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandHomeApi extends CommandHomeExp {
   self: RosApi =>
@@ -76,15 +77,22 @@ case class CommandHomeRep_reply_result(srv: Exp[CommandHomeRep]) extends Op[FixP
   case class CommandHomeReply(srv: Exp[CommandHome]) extends Op[CommandHomeRep]{
     def mirror(f: Tx) = stage(CommandHomeReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandHome(current_gps: Exp[Bool], latitude: Exp[FltPt[_24,_8]], longitude: Exp[FltPt[_24,_8]], altitude: Exp[FltPt[_24,_8]]) extends Op[CommandHome] {
+    def mirror(f: Tx) = stage(NewCommandHome(f(current_gps), f(latitude), f(longitude), f(altitude)))(EmptyContext)
+  }
 
   
   object CommandHome {
 
+  @api def apply(current_gps: Bool, latitude: FltPt[_24,_8], longitude: FltPt[_24,_8], altitude: FltPt[_24,_8]): CommandHome = CommandHome(stage(NewCommandHome(current_gps.s, latitude.s, longitude.s, altitude.s))(ctx))
   }
 
   object CommandHomeRep {
 
   }
 
+}
+
+trait ScalaGenCommandHome extends ScalaCodegen{
 }
 

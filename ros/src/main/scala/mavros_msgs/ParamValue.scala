@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ParamValueApi extends ParamValueExp {
   self: RosApi =>
@@ -36,10 +37,23 @@ case class ParamValue_real(msg: Exp[ParamValue]) extends Op[FltPt[_53,_11]] {
   def mirror(f: Tx) = stage(ParamValue_real(f(msg)))(EmptyContext)
 }
 
-  
+  case class NewParamValue(integer: Exp[FixPt[TRUE,_64,_0]], real: Exp[FltPt[_53,_11]]) extends Op[ParamValue] {
+    def mirror(f: Tx) = stage(NewParamValue(f(integer), f(real)))(EmptyContext)
+  }
+
   object ParamValue {
+
+  @api def apply(integer: FixPt[TRUE,_64,_0], real: FltPt[_53,_11]): ParamValue = ParamValue(stage(NewParamValue(integer.s, real.s))(ctx))
+
 
   }
 
+}
+
+trait ScalaGenParamValue extends ScalaCodegen{
+  override def emitFileHeader() = {
+//    emit(src"import DataImplicits._")
+    super.emitFileHeader()
+  }
 }
 

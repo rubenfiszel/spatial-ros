@@ -11,6 +11,7 @@ import scala.language.postfixOps
 trait RosCodegen extends CppCodegen{
   import IR._
   override val name = "Ros Codegen"
+  override val lang: String = "roscpp"
   //override def copyDependencies(out: String): Unit =
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait WaypointPullApi extends WaypointPullExp {
   self: RosApi =>
@@ -54,15 +55,22 @@ case class WaypointPullRep_reply_wp_received(srv: Exp[WaypointPullRep]) extends 
   case class WaypointPullReply(srv: Exp[WaypointPull]) extends Op[WaypointPullRep]{
     def mirror(f: Tx) = stage(WaypointPullReply(f(srv)))(EmptyContext)
   }
+  case class NewWaypointPull() extends Op[WaypointPull] {
+    def mirror(f: Tx) = stage(NewWaypointPull())(EmptyContext)
+  }
 
   
   object WaypointPull {
 
+  @api def apply(): WaypointPull = WaypointPull(stage(NewWaypointPull())(ctx))
   }
 
   object WaypointPullRep {
 
   }
 
+}
+
+trait ScalaGenWaypointPull extends ScalaCodegen{
 }
 

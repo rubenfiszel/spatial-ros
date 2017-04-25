@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileRenameApi extends FileRenameExp {
   self: RosApi =>
@@ -64,15 +65,22 @@ case class FileRenameRep_reply_r_errno(srv: Exp[FileRenameRep]) extends Op[FixPt
   case class FileRenameReply(srv: Exp[FileRename]) extends Op[FileRenameRep]{
     def mirror(f: Tx) = stage(FileRenameReply(f(srv)))(EmptyContext)
   }
+  case class NewFileRename(old_path: Exp[Text], new_path: Exp[Text]) extends Op[FileRename] {
+    def mirror(f: Tx) = stage(NewFileRename(f(old_path), f(new_path)))(EmptyContext)
+  }
 
   
   object FileRename {
 
+  @api def apply(old_path: Text, new_path: Text): FileRename = FileRename(stage(NewFileRename(old_path.s, new_path.s))(ctx))
   }
 
   object FileRenameRep {
 
   }
 
+}
+
+trait ScalaGenFileRename extends ScalaCodegen{
 }
 

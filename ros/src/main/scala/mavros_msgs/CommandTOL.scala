@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandTOLApi extends CommandTOLExp {
   self: RosApi =>
@@ -76,15 +77,22 @@ case class CommandTOLRep_reply_result(srv: Exp[CommandTOLRep]) extends Op[FixPt[
   case class CommandTOLReply(srv: Exp[CommandTOL]) extends Op[CommandTOLRep]{
     def mirror(f: Tx) = stage(CommandTOLReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandTOL(yaw: Exp[FltPt[_24,_8]], latitude: Exp[FltPt[_24,_8]], longitude: Exp[FltPt[_24,_8]], altitude: Exp[FltPt[_24,_8]]) extends Op[CommandTOL] {
+    def mirror(f: Tx) = stage(NewCommandTOL(f(yaw), f(latitude), f(longitude), f(altitude)))(EmptyContext)
+  }
 
   
   object CommandTOL {
 
+  @api def apply(yaw: FltPt[_24,_8], latitude: FltPt[_24,_8], longitude: FltPt[_24,_8], altitude: FltPt[_24,_8]): CommandTOL = CommandTOL(stage(NewCommandTOL(yaw.s, latitude.s, longitude.s, altitude.s))(ctx))
   }
 
   object CommandTOLRep {
 
   }
 
+}
+
+trait ScalaGenCommandTOL extends ScalaCodegen{
 }
 

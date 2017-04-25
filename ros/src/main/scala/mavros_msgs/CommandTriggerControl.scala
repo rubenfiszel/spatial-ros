@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait CommandTriggerControlApi extends CommandTriggerControlExp {
   self: RosApi =>
@@ -54,15 +55,22 @@ case class CommandTriggerControlRep_reply_result(srv: Exp[CommandTriggerControlR
   case class CommandTriggerControlReply(srv: Exp[CommandTriggerControl]) extends Op[CommandTriggerControlRep]{
     def mirror(f: Tx) = stage(CommandTriggerControlReply(f(srv)))(EmptyContext)
   }
+  case class NewCommandTriggerControl() extends Op[CommandTriggerControl] {
+    def mirror(f: Tx) = stage(NewCommandTriggerControl())(EmptyContext)
+  }
 
   
   object CommandTriggerControl {
 
+  @api def apply(): CommandTriggerControl = CommandTriggerControl(stage(NewCommandTriggerControl())(ctx))
   }
 
   object CommandTriggerControlRep {
 
   }
 
+}
+
+trait ScalaGenCommandTriggerControl extends ScalaCodegen{
 }
 

@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait FileTruncateApi extends FileTruncateExp {
   self: RosApi =>
@@ -64,15 +65,22 @@ case class FileTruncateRep_reply_r_errno(srv: Exp[FileTruncateRep]) extends Op[F
   case class FileTruncateReply(srv: Exp[FileTruncate]) extends Op[FileTruncateRep]{
     def mirror(f: Tx) = stage(FileTruncateReply(f(srv)))(EmptyContext)
   }
+  case class NewFileTruncate(file_path: Exp[Text], length: Exp[FixPt[FALSE,_64,_0]]) extends Op[FileTruncate] {
+    def mirror(f: Tx) = stage(NewFileTruncate(f(file_path), f(length)))(EmptyContext)
+  }
 
   
   object FileTruncate {
 
+  @api def apply(file_path: Text, length: FixPt[FALSE,_64,_0]): FileTruncate = FileTruncate(stage(NewFileTruncate(file_path.s, length.s))(ctx))
   }
 
   object FileTruncateRep {
 
   }
 
+}
+
+trait ScalaGenFileTruncate extends ScalaCodegen{
 }
 

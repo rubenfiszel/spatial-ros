@@ -3,6 +3,7 @@ package spatial.ros
 
 import forge._
 import org.virtualized._
+import argon.codegen.scalagen.ScalaCodegen
 
 trait ParamPullApi extends ParamPullExp {
   self: RosApi =>
@@ -58,15 +59,22 @@ case class ParamPullRep_reply_param_received(srv: Exp[ParamPullRep]) extends Op[
   case class ParamPullReply(srv: Exp[ParamPull]) extends Op[ParamPullRep]{
     def mirror(f: Tx) = stage(ParamPullReply(f(srv)))(EmptyContext)
   }
+  case class NewParamPull(force_pull: Exp[Bool]) extends Op[ParamPull] {
+    def mirror(f: Tx) = stage(NewParamPull(f(force_pull)))(EmptyContext)
+  }
 
   
   object ParamPull {
 
+  @api def apply(force_pull: Bool): ParamPull = ParamPull(stage(NewParamPull(force_pull.s))(ctx))
   }
 
   object ParamPullRep {
 
   }
 
+}
+
+trait ScalaGenParamPull extends ScalaCodegen{
 }
 
