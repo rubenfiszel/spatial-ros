@@ -13,14 +13,14 @@ var names: List[String] = List()
 
 for (msg <- msgs) {
   
-  val str = msgToScala(msg)
+  val str = new MsgToScala(msg).tmpl
   writeFile(msg, str)
   names ::= getName(msg)
 }
 
 for (srv <- srvs) {
   
-  val str = srvToScala(srv)
+  val str = new SrvToScala(srv).tmpl
   writeFile(srv, str)
   names ::= getName(srv)
 }
@@ -35,7 +35,7 @@ def getName(file: File) =
   remap(file.getName.split('.')(0))
 
 def quote(s:String) = s match {
-  case "type" => "`type`"
+  case "type" => "typ"
   case _ => s
 }
 
@@ -77,16 +77,17 @@ def remap_s(tp: String) =
 def ident(x: Seq[Any], tab: Int) =
   x.map(" "*(2*tab) + _).mkString("\n")
 
-def msgToScala(f: File) = {
-  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
+class MsgToScala(f: File) {
+  lazy val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
+  def input = lines
   val name = getName(f)
   println(name)
 
-  val constants = lines collect {
+  val constants = input collect {
     case constant(a, b, c) => (a, b, c)
   }
 
-  val datas = lines collect {
+  val datas = input collect {
     case data(a, b) if !a.contains("Header") => (a, b)
   }
 
@@ -100,6 +101,10 @@ case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
 }
 """
   }
+
+  val nodesGen = datas.map { case (t, n) =>
+    s"""case ${name}_${n}(msg) => emit(src"val $$lhs = $$msg.$n")"""
+  }
   
   val cs = constants map { case (t, n, v) =>
     s"val ${quote(n)}: ${remap(t)} = $v"
@@ -109,6 +114,15 @@ case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
     s"${quote(n)}: ${remap(t)}"
   }.mkString(", ")
 
+
+  val ctorArgsP = datas.map { case (t, n) =>
+    s"${quote(n)}"
+  }.mkString(", ")
+
+  val ctorArgsD = datas.map { case (t, n) =>
+    s"$$${quote(n)}"
+  }.mkString(", ")
+  
   val ctorArgsAppliedS  = datas.map { case (t, n) =>
     s"${quote(n)}.s"
   }.mkString(", ")
@@ -120,13 +134,15 @@ case class ${name}_${n}(msg: Exp[$name]) extends Op[${remap(t)}] {
   val ctorArgsExp = datas.map { case (t, n) =>
     s"${quote(n)}: Exp[${remap(t)}]"
   }.mkString(", ")
-  
+
+  def tmpl =
 s"""
 package spatial.ros
 
 import forge._
 import org.virtualized._
 import argon.codegen.scalagen.ScalaCodegen
+import spatial.ros.codegen.scalagen.RosScalaCodegen
 
 trait ${name}Api extends ${name}Exp {
   self: RosApi =>
@@ -141,6 +157,8 @@ trait ${name}Exp {
     def stagedClass = classOf[$name]
     def isPrimitive = false
   }
+
+  implicit object ${name}Msg extends Msg[$name]
 
   case class $name(s: Exp[$name]) extends MetaAny[$name] {
 ${ident(apis, 2)}
@@ -163,29 +181,27 @@ ${ident(cs, 2)}
 
 }
 
-trait ScalaGen$name extends ScalaCodegen{
-  override def emitFileHeader() = {
-//    emit(src"import DataImplicits._")
-    super.emitFileHeader()
+trait ScalaGen${name} extends RosScalaCodegen {
+  val IR: RosExp
+  import IR._
+
+  override protected def emitNode(lhs: Sym[_], rhs: Op[_]): Unit = rhs match {
+${ident(nodesGen, 2)}
+    case New$name($ctorArgsP) =>
+      emit(src"val $$lhs = $name($ctorArgsD)")
+    case _ => super.emitNode(lhs, rhs)
   }
+
 }
+
 """
 }
 
-def srvToScala(f: File) = {
-  val lines = io.Source.fromFile(f).getLines.filterNot(_.startsWith("#")).toList
-  val (req, repP) = lines.splitAt(lines.indexOf("---"))
-  val rep = repP.drop(1)
-  val name = getName(f)
+class SrvToScala(f: File) extends MsgToScala(f) {
+  def split = lines.splitAt(lines.indexOf("---"))
+  override def input = split._1
+  val rep = split._2.drop(1)
   val nameRep = name+"Rep"
-
-  val constants = req collect {
-    case constant(a, b, c) => (a, b, c)
-  }
-
-  val datas = req collect {
-    case data(a, b) if !a.contains("Header") => (a, b)
-  }
 
   val constantsRep = rep collect {
     case constant(a, b, c) => (a, b, c)
@@ -195,55 +211,33 @@ def srvToScala(f: File) = {
     case data(a, b) if !a.contains("Header") => (a, b)
   }
 
-  val apis = datas map { case (t, n) =>
-    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${name}_${n}(s))(ctx))"
-  }
   val apisRep = datasRep map { case (t, n) =>
-    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${nameRep}_reply_${n}(s))(ctx))"
+    s"@api def ${quote(n)}: ${remap(t)} = ${remap_s(t)}(stage(${nameRep}_${n}(s))(ctx))"
   }
-  val nodes = datas map { case (t, n) =>
-    s"""
-case class ${name}_${n}(srv: Exp[$name]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = stage(${name}_${n}(f(srv)))(EmptyContext)
-}
-"""
-  }
+
   val nodesRep = datasRep map { case (t, n) =>
     s"""
-case class ${nameRep}_reply_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
-  def mirror(f: Tx) = stage(${nameRep}_reply_${n}(f(srv)))(EmptyContext)
+case class ${nameRep}_${n}(srv: Exp[$nameRep]) extends Op[${remap(t)}] {
+  def mirror(f: Tx) = stage(${nameRep}_${n}(f(srv)))(EmptyContext)
 }
 """
   }
-  val cs = constants map { case (t, n, v) =>
-    s"val ${quote(n)}: ${remap(t)} = $v"
+
+  val nodesGenRep = datasRep map { case (t, n) =>
+    s"""case ${nameRep}_${n}(msg) => emit(src"val $$lhs = $$msg.$n")"""
   }
+
   val csRep = constantsRep map { case (t, n, v) =>
     s"val ${quote(n)}: ${remap(t)} = $v"
   }
 
-  val ctorArgs = datas.map { case (t, n) =>
-    s"${quote(n)}: ${remap(t)}"
-  }.mkString(", ")
-
-  val ctorArgsAppliedS  = datas.map { case (t, n) =>
-    s"${quote(n)}.s"
-  }.mkString(", ")
-
-  val ctorArgsAppliedF  = datas.map { case (t, n) =>
-    s"f(${quote(n)})"
-  }.mkString(", ")
-  
-  val ctorArgsExp = datas.map { case (t, n) =>
-    s"${quote(n)}: Exp[${remap(t)}]"
-  }.mkString(", ")
-
+  override def tmpl =
   s"""
 package spatial.ros
 
 import forge._
 import org.virtualized._
-import argon.codegen.scalagen.ScalaCodegen
+import spatial.ros.codegen.scalagen.RosScalaCodegen
 
 trait ${name}Api extends ${name}Exp {
   self: RosApi =>
@@ -257,6 +251,11 @@ trait ${name}Exp {
     def wrapped(x: Exp[$name]) = $name(x)
     def stagedClass = classOf[$name]
     def isPrimitive = false
+  }
+
+  implicit object ${name}Srv extends Srv[$name] {
+    type Response = ${nameRep}
+    def response(srv: $name) = srv.response
   }
 
   implicit object ${nameRep}Type extends Meta[$nameRep] {
@@ -301,7 +300,20 @@ ${ident(csRep, 2)}
 
 }
 
-trait ScalaGen$name extends ScalaCodegen{
+trait ScalaGen${name} extends RosScalaCodegen {
+  val IR: RosExp
+  import IR._
+
+  override protected def emitNode(lhs: Sym[_], rhs: Op[_]): Unit = rhs match {
+${ident(nodesGen, 2)}
+${ident(nodesGenRep, 2)}
+    case New$name($ctorArgsP) =>
+      emit(src"val $$lhs = $name($ctorArgsD)")
+    case ${name}Reply(srv) =>
+      emit(src"val $$lhs = $$srv.response")
+    case _ => super.emitNode(lhs, rhs)
+  }
+
 }
 """  
 

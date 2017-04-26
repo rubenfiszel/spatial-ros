@@ -6,8 +6,6 @@ version in ThisBuild := "0.1"
 
 isSnapshot := true
 
-retrieveManaged := true
-
 val paradiseVersion = "2.1.0"
 
 publishArtifact := false

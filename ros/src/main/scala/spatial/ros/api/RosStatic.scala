@@ -5,14 +5,16 @@ import forge._
 import spatial._
 import spatial.ros._
 
-trait RosStaticApi extends RosStaticExp { this: RosExp =>
+trait RosStaticApi extends RosStaticExp {
+  self: RosApi =>
 
   object Ros {
     @api def init(t: Text) = Void(ros_init(t.s))
   }
 }
 
-trait RosStaticExp extends Staging { this: SpatialExp =>
+trait RosStaticExp {
+  self: RosExp =>
 
   /** IR Nodes **/
   case class Init(name: Exp[Text]) extends Op[Void] {

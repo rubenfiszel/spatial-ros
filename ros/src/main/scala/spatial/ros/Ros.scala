@@ -13,8 +13,8 @@ import spatial.ros.codegen.scalagen.{
   RosScalaFileGen
 }
 
-trait RosExp extends SpatialExp with RosStaticExp with MavrosExp
-trait RosApi extends RosExp with SpatialApi with RosStaticApi with MavrosApi
+trait RosExp extends SpatialExp with RosStaticExp with MavrosExp with RosMsgExp with RosSrvExp
+trait RosApi extends RosExp with SpatialApi with RosStaticApi with MavrosApi with RosMsgApi with RosSrvApi
 
 trait RosGen
     extends RosCodegen
